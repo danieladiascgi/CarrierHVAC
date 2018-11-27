@@ -1,0 +1,85 @@
+<!--AddDealerStepOne-->
+
+
+<aura:component >
+    
+    
+    <div class="slds-p-left_small header slds-text-title_bold">
+        Distributer Info: Step 1
+    </div>
+    
+    <div class="slds-grid slds-gutters">
+        <div class="slds-col slds-size_1-of-3">
+            <span>
+                <div class="slds-form-element slds-p-left_small">
+                    <label class="slds-form-element__label slds-p-left_small" for="select-01">
+                        <abbr class="slds-required slds-p-left_small" title="Required">* </abbr>
+                        Distributer Name
+                    </label>
+                    <div class="slds-form-element__control slds-p-left_small" >
+                        <div class="slds-select_container slds-p-left_small pickListContaniner">
+                            <select class="slds-select" id="select-01" required="true">
+                                <option value="">Please select</option>
+                                <option>Option One</option>
+                                <option>Option Two</option>
+                                <option>Option Three</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </span>
+        </div>
+        <div class="slds-col slds-size_1-of-3">
+            <lightning:recordViewForm recordId="0030X00002Iz4JpQAJ" objectApiName="Contact">
+                Dealer Number
+                <lightning:outputField fieldName="Email" />
+            </lightning:recordViewForm>
+        </div>
+    </div>
+    <div class="slds-grid slds-gutters">
+        <div class="slds-col slds-size_1-of-6">
+        </div>
+        <div class="slds-col slds-size_1-of-6">
+        </div>
+        <div class="slds-col slds-size_1-of-6">
+        </div>
+         <div class="slds-col slds-size_1-of-6">
+            <div class="buttonNext">
+                <lightning:button  variant="brand" label="Next" title="Next action" onclick="{! c.handleClick }"/>
+            </div>
+        </div>
+        
+       
+    </div>
+    
+    
+    <!--lightning:button variant="Next" label="Next" title="Base action" onclick="{! c.handleClick }"/-->
+    
+    
+    
+</aura:component>
+
+
+
+
+######################################
+
+CSS
+
+
+.THIS.header {
+    font-size: 24px;
+    color: #2574a9;
+}
+
+.THIS .pickListContaniner{
+    font-size: 12px;
+    width: 100%;
+    
+}
+
+.THIS .buttonNext{
+    font-size: 20px;
+    padding: 10px 24px;
+    color: #2574a9;
+}
