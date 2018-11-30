@@ -1,0 +1,21 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes" access="global" >
+    
+    <div class="slds-p-top_small slds-p-left_small  slds-p-right_small">
+        <div class="slds-text-title_bold slds-p-bottom_large text">Distributor Info: Step 3</div>
+        <div class="slds-grid slds-wrap">
+            <div class="slds-col slds-size_1-of-1 slds-p-left_small slds-p-top_small">
+                <lightning:textarea name="sumary" label="Please provide a summary of your request:" placeholder="Summary of Request"/>
+            </div>
+            <div class="slds-col slds-size_1-of-1 slds-p-left_small slds-p-top_small">
+                <lightning:textarea name="issues" label="Please indicate any additional issues that need to be made aware of:" placeholder="Issues to be aware of"/>
+            </div>
+                <div class="slds-col slds-size_4-of-6" ></div>
+                <div class="slds-col slds-size_1-of-6 slds-p-top_small">
+                    <button class="slds-button slds-button_outline-brand btn" name="back"  aura:id="back" onclick="{!c.handleClick}">Back</button>
+                </div>
+                <div class="slds-col slds-size_1-of-6 slds-p-top_small slds-p-left_xx-small">
+                    <button class="slds-button slds-button_brand btn1" name="next"  onclick="{!c.handleClick}">Next</button>
+                </div>
+        </div>
+    </div>
+</aura:component>

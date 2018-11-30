@@ -1,0 +1,146 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes" controller="GetBrandValue" access="global" >
+    
+    <aura:attribute name="BrandList" type="String[]" default="Brand List"/>
+    <aura:handler name="init" action="{!c.init}" value="{!this}" />
+    <aura:attribute name="year" type="Integer" />
+    <aura:attribute name="NotReady" type="boolean" default="true"/>
+    <aura:attribute name="ShowBrands" type="boolean" default="false"/>
+    <aura:attribute name="CountFields" type="Integer" default="0"/>
+    <aura:attribute name="SelectedBrandList" type="List" default=""/>
+    
+    <div class="slds-text-title_bold slds-p-bottom_large text">
+        Dealer Profile
+    </div>
+    <div class="slds-grid slds-wrap ">
+        <div class="slds-col slds-size_1-of-6">
+            <div class="slds-form-element">
+                <label class="slds-form-element__label" for="text-input-id-1">RNC Single Family</label>
+                <div class="slds-form-element__control">
+                    <input id="text-input-id-1" class="slds-input" onchange="{!c.checkNumber}" type="number" />
+                </div>
+            </div>
+        </div>
+        <div class="slds-col slds-size_1-of-6">
+            <div class="slds-form-element">
+                <label class="slds-form-element__label" for="text-input-id-2">RNC Multi Family</label>
+                <div class="slds-form-element__control">
+                    <input id="text-input-id-2" class="slds-input" onchange="{!c.checkNumber}" type="number" />
+                </div>
+            </div>
+        </div>
+        <div class="slds-col slds-size_1-of-6">
+            <div class="slds-form-element">
+                <label class="slds-form-element__label" for="text-input-id-3">AOR</label>
+                <div class="slds-form-element__control">
+                    <input id="text-input-id-3" class="slds-input" onchange="{!c.checkNumber}" type="number"/>
+                </div>
+            </div>
+        </div>
+        <div class="slds-col slds-size_1-of-6">
+            <div class="slds-form-element">
+                <label class="slds-form-element__label" for="text-input-id-4">Commercial</label>
+                <div class="slds-form-element__control">
+                    <input id="text-input-id-4" class="slds-input" onchange="{!c.checkNumber}" type="number" />
+                </div>
+            </div>
+        </div>
+        <div class="slds-col slds-size_1-of-6">
+            <div class="slds-form-element">
+                <label class="slds-form-element__label" for="text-input-id-5">DLS</label>
+                <div class="slds-form-element__control">
+                    <input id="text-input-id-5" class="slds-input" onchange="{!c.checkNumber}" type="number" />
+                </div>
+            </div>
+        </div>
+        <div class="slds-col slds-size_1-of-6">
+            <div class="slds-form-element">
+                <label class="slds-form-element__label" for="text-input-id-6">Retail</label>
+                <div class="slds-form-element__control">
+                    <input id="text-input-id-6" class="slds-input" onchange="{!c.checkNumber}" type="number"/>
+                </div>
+            </div>
+        </div>
+        
+        <div class="slds-col slds-size_1-of-6">
+            <div class="slds-form-element">
+                <label class="slds-form-element__label" for="text-input-id-7">Other</label>
+                <div class="slds-form-element__control">
+                    <input id="text-input-id-7" class="slds-input" onchange="{!c.checkNumber}" type="number" />
+                </div>
+            </div>
+        </div>
+        <div class="slds-col slds-size_5-of-6">
+            <div class="slds-form-element">
+                <label class="slds-form-element__label" for="text-input-id-8">Comment</label>
+                <div class="slds-form-element__control">
+                    <input id="text-input-id-8" class="slds-input" type="text" />
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <aura:renderif isTrue="{!v.NotReady}">
+        Please, enter the values in order to the sum of all is 100%
+    </aura:renderif>
+    
+    <br/>
+    <div class="slds-grid slds-wrap ">
+        <div class="slds-col slds-size_1-of-6">
+        </div>
+        <div class="slds-col slds-size_1-of-6">
+            {!v.year-2}
+        </div>
+        <div class="slds-col slds-size_1-of-6">
+            {!v.year-1}
+        </div>
+        <div class="slds-col slds-size_1-of-6">
+            {!v.year}
+        </div>
+    </div>
+    <div class="slds-grid slds-wrap ">
+        <div class="slds-col slds-size_1-of-6">
+            Total
+        </div>
+        <div class="slds-col slds-size_1-of-6">
+            <div class="slds-form-element">
+                <input id="text-input-id-9" class="slds-input"  type="number" />
+            </div>
+        </div>
+        <div class="slds-form-element">
+            <input id="text-input-id-10" class="slds-input"  type="number" />
+        </div>
+        <div class="slds-form-element">
+            <input id="text-input-id-11" class="slds-input"  type="number" />
+        </div>
+    </div>   
+    <p>
+        List Selected: {!v.SelectedBrandList}
+        </p>
+    <aura:renderif isTrue="{!!v.ShowBrands}">
+        <lightning:button variant="brand" label="Select Brands" title="Brand action" onclick="{! c.showBrands }" />
+    </aura:renderif>
+    
+    <aura:renderif isTrue="{!v.ShowBrands}">
+        <div class="row">
+            <p class="title">Multiple Selection</p>
+            <ui:inputSelect multiple="true" class="multiple" aura:id="InputSelectMultiple" change="{!c.onMultiSelectChange}">
+                
+                <aura:iteration items="{!v.BrandList}" var="level">
+                    <ui:inputSelectOption text="{!level}" label="{!level}"/>
+                </aura:iteration>
+                
+            </ui:inputSelect>
+            <p>Selected Items:</p>
+            <p><ui:outputText class="result" aura:id="multiResult" value="" /></p>
+        </div>
+        <lightning:button variant="brand" label="Add Brands" title="Brand action" onclick="{! c.addBrands }" />
+    </aura:renderif>
+    
+    
+    
+    
+    
+    
+    
+    
+</aura:component>

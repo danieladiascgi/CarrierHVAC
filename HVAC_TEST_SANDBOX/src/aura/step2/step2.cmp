@@ -1,0 +1,92 @@
+<aura:component >
+    <div class="slds-p-top_small slds-p-left_small  slds-p-right_small">
+        <div class="slds-text-title_bold slds-p-bottom_large text">Distributor Info: Step 2</div>
+        <div class="slds-grid slds-wrap">
+            <div class="slds-col slds-size_3-of-6">
+                <span>Distributor Name</span>
+            </div>
+            <div class="slds-col slds-size_3-of-6">
+                <span>Distributor Number</span>
+            </div>
+            
+            <div class="slds-col slds-size_3-of-6 slds-p-right_small slds-p-bottom_small">
+                <lightning:input type="String" id="distributorName" />
+            </div>
+            <div class="slds-col slds-size_3-of-6 slds-p-bottom_small">
+                <lightning:input type="String" id="distributorNumber" />
+            </div>
+            
+            <div class="slds-col slds-size_3-of-6 ">
+                <span>Dealer Number</span>
+            </div>
+            <div class="slds-col slds-size_3-of-6">
+                <span>HVP Number</span>
+            </div>
+      
+            <div class="slds-col slds-size_3-of-6 slds-p-right_small slds-p-bottom_small">
+                <lightning:input type="String" id="dealerNumber" />
+            </div>
+            <div class="slds-col slds-size_3-of-6 slds-p-bottom_small">
+                <lightning:input type="String" id="hvpNumber" />
+            </div>
+        
+            <div class="slds-col slds-size_3-of-6 ">
+                <span>Dealer Name</span>
+            </div>
+            <div class="slds-col slds-size_3-of-6">
+                <span>Pricing Dealer</span>
+            </div>
+
+            <div class="slds-col slds-size_3-of-6 slds-p-right_small slds-p-bottom_small">
+                <lightning:input type="String" id="dealerName" />
+            </div>
+            <div class="slds-col slds-size_3-of-6 slds-p-bottom_small">
+                <lightning:input type="String" id="pricingDealer" />
+            </div>
+            
+            <div class="slds-col slds-size_3-of-6">
+                <span>Dealer Address 1</span>
+            </div>
+            <div class="slds-col slds-size_3-of-6">
+                <span>Dealer Address 2</span>
+            </div>
+
+            <div class="slds-col slds-size_3-of-6 slds-p-right_small slds-p-bottom_small">
+                <lightning:input type="String" id="dealerAddress1" />
+            </div>
+            <div class="slds-col slds-size_3-of-6 slds-p-bottom_small">
+                <lightning:input type="String" id="dealerAddress2" />
+            </div>
+            
+            <div class="slds-col slds-size_2-of-6">
+                <span>City/Location</span>
+            </div>
+            <div class="slds-col slds-size_2-of-6">
+                <span>State</span>
+            </div>
+            <div class="slds-col slds-size_2-of-6">
+                <span>Zip</span>
+            </div>
+
+            <div class="slds-col slds-size_1-of-6">
+                <lightning:input type="String" id="location" />
+            </div>
+            <div class="slds-col slds-size_1-of-6"></div>
+            <div class="slds-col slds-size_1-of-6">
+                <lightning:input type="String" id="state" />
+            </div>
+            <div class="slds-col slds-size_1-of-6"></div>
+            <div class="slds-col slds-size_1-of-6">
+                <lightning:input type="String" id="zip" />
+            </div>
+       
+            <div class="slds-col slds-size_4-of-6 " ></div>
+            <div class="slds-col slds-size_1-of-6 slds-p-top_small ">
+                <button class="slds-button slds-button_outline-brand btn" name="back"  aura:id="back" onclick="{!c.handleClick}">Back</button>
+            </div>
+            <div class="slds-col slds-size_1-of-6  slds-p-top_small slds-p-left_xx-small">
+                <button class="slds-button slds-button_brand btn1" name="next"  onclick="{!c.handleClick}">Next</button>
+            </div>
+        </div>
+    </div>
+</aura:component>
