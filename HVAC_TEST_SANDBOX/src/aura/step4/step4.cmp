@@ -17,10 +17,10 @@
                 
             </div>
             
-            <div class="slds-p-top_large slds-align_absolute-center">
+            <div class="slds-p-top_large slds-align_absolute-center text2">
                 <article aura:id="article1" class="slds-card">
                     <div class="slds-card__body">
-                        <div class="slds-grid slds-wrap slds-col slds-size_1-of-1 ">
+                        <div class="slds-grid slds-wrap">
                             <aura:renderIf isTrue="{!empty(v.quotes_List)}">
                                 <div class="slds-size_1-of-1">
                                     <div class="slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_warning" role="alert">
@@ -37,7 +37,7 @@
                                     <div class="slds-size_1-of-1">
                                         <table class="slds-table slds-table_bordered slds-no-row-hover slds-table_cell-buffer table">
                                             <thead>
-                                                <tr class="slds-text-title_caps">
+                                                <tr class="slds-text-title_caps text3">
                                                     <th scope="col">
                                                         <div class="slds-truncate"></div>
                                                     </th>

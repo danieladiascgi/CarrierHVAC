@@ -1,12 +1,13 @@
-<aura:component implements="forceCommunity:availableForAllPageTypes" controller="GetBrandValue" access="global" >
+<aura:component implements="forceCommunity:availableForAllPageTypes" access="global" >
     
     <aura:attribute name="BrandList" type="String[]" default="Brand List"/>
     <aura:handler name="init" action="{!c.init}" value="{!this}" />
+    <aura:handler event="c:BrandPickEvent" action="{!c.handleApplicationEvent}"/>
     <aura:attribute name="year" type="Integer" />
     <aura:attribute name="NotReady" type="boolean" default="true"/>
     <aura:attribute name="ShowBrands" type="boolean" default="false"/>
     <aura:attribute name="CountFields" type="Integer" default="0"/>
-    <aura:attribute name="SelectedBrandList" type="List" default=""/>
+    <aura:attribute name="SelectedBrandList" type="String" default=""/>
     
     <div class="slds-text-title_bold slds-p-bottom_large text">
         Dealer Profile
@@ -113,6 +114,8 @@
             <input id="text-input-id-11" class="slds-input"  type="number" />
         </div>
     </div>   
+    
+    
     <p>
         List Selected: {!v.SelectedBrandList}
         </p>
@@ -121,19 +124,7 @@
     </aura:renderif>
     
     <aura:renderif isTrue="{!v.ShowBrands}">
-        <div class="row">
-            <p class="title">Multiple Selection</p>
-            <ui:inputSelect multiple="true" class="multiple" aura:id="InputSelectMultiple" change="{!c.onMultiSelectChange}">
-                
-                <aura:iteration items="{!v.BrandList}" var="level">
-                    <ui:inputSelectOption text="{!level}" label="{!level}"/>
-                </aura:iteration>
-                
-            </ui:inputSelect>
-            <p>Selected Items:</p>
-            <p><ui:outputText class="result" aura:id="multiResult" value="" /></p>
-        </div>
-        <lightning:button variant="brand" label="Add Brands" title="Brand action" onclick="{! c.addBrands }" />
+        <c:BrandPick/>
     </aura:renderif>
     
     

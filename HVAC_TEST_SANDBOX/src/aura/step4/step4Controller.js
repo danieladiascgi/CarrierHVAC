@@ -6,12 +6,12 @@
         //console.log(obj.quote[0].quoteNumber);
         console.log(obj.quote[0].quoteNumber);
         
-        //if(!obj == undefined && !obj == null){
+        if(obj != undefined && obj != null){
             component.set("v.quotes_List", obj.quote);
-        //}
-        //else {
-         //   component.set("v.quotes_List", []);
-        //}    
+        }
+        else {
+            component.set("v.quotes_List", []);
+        }    
         
     },
     

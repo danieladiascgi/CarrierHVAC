@@ -1,0 +1,20 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes" controller="GetBrandValue" access="global">
+    
+    <aura:handler name="init" action="{!c.init}" value="{!this}" />
+    <aura:registerEvent name="BrandPickEvent" type="c:BrandPickEvent"/>
+    <aura:attribute name="BrandList" type="String[]" default="Brand List"/>
+    
+    <div class="row">
+        <p class="title">Multiple Selection</p>
+        <ui:inputSelect  multiple="true" class="multiple" aura:id="InputSelectMultiple" change="{!c.onMultiSelectChange}">
+            
+            <aura:iteration items="{!v.BrandList}" var="level">
+                <ui:inputSelectOption text="{!level}" label="{!level}"/>
+            </aura:iteration>
+            
+        </ui:inputSelect>
+        <p>Selected Items:</p>
+        <p><ui:outputText class="result" aura:id="multiResult" value="" /></p>
+    </div>
+    <lightning:button variant="brand" label="Add Brands" title="Brand action" onclick="{! c.FireEvent }" />
+</aura:component>

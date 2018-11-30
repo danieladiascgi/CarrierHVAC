@@ -1,3 +1,3 @@
 <aura:application extends="force:slds">
-    <div class="slds-size_3-of-6"><c.StepTabs/></div>
+    <div class="slds-size_5-of-6"><c.StepTabs/></div>
 </aura:application>
