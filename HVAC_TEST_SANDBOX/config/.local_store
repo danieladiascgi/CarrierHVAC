@@ -1,4 +1,18 @@
 {
+    "dynamicModelRow/dynamicModelRow.cmp.undefined": {
+        "createdById": "0051t000001fjehAAA",
+        "createdByName": "Bruno Monteiro",
+        "createdDate": "2018-11-30T15:46:44.000Z",
+        "fileName": "unpackaged/aura/dynamicModelRow/dynamicModelRow.cmp",
+        "fullName": "dynamicModelRow/dynamicModelRow.cmp",
+        "id": "0Ad1t000001RFqHCAW",
+        "lastModifiedById": "0051t000001fjehAAA",
+        "lastModifiedByName": "Bruno Monteiro",
+        "lastModifiedDate": "2018-11-30T15:48:11.000Z",
+        "manageableState": "unmanaged",
+        "type": "AuraDefinitionBundle",
+        "mmState": "clean"
+    },
     "step4/step4.cmp.undefined": {
         "createdById": "0051t000001fjehAAA",
         "createdByName": "Bruno Monteiro",
@@ -8,7 +22,35 @@
         "id": "0Ad1t000001RCNFCA4",
         "lastModifiedById": "0051t000001fjehAAA",
         "lastModifiedByName": "Bruno Monteiro",
-        "lastModifiedDate": "2018-11-30T14:16:25.000Z",
+        "lastModifiedDate": "2018-11-30T15:22:27.000Z",
+        "manageableState": "unmanaged",
+        "type": "AuraDefinitionBundle",
+        "mmState": "clean"
+    },
+    "rowModel/rowModel.cmp.undefined": {
+        "createdById": "0051t000001fjehAAA",
+        "createdByName": "Bruno Monteiro",
+        "createdDate": "2018-11-30T15:40:39.000Z",
+        "fileName": "unpackaged/aura/rowModel/rowModel.cmp",
+        "fullName": "rowModel/rowModel.cmp",
+        "id": "0Ad1t000001RFlgCAG",
+        "lastModifiedById": "0051t000001fjehAAA",
+        "lastModifiedByName": "Bruno Monteiro",
+        "lastModifiedDate": "2018-11-30T15:40:42.000Z",
+        "manageableState": "unmanaged",
+        "type": "AuraDefinitionBundle",
+        "mmState": "clean"
+    },
+    "BrandPick/BrandPick.cmp.undefined": {
+        "createdById": "0051t000001fjroAAA",
+        "createdByName": "Daniel Dias",
+        "createdDate": "2018-11-30T14:21:13.000Z",
+        "fileName": "unpackaged/aura/BrandPick/BrandPick.cmp",
+        "fullName": "BrandPick/BrandPick.cmp",
+        "id": "0Ad1t000001RFiCCAW",
+        "lastModifiedById": "0051t000001fjroAAA",
+        "lastModifiedByName": "Daniel Dias",
+        "lastModifiedDate": "2018-11-30T16:25:59.000Z",
         "manageableState": "unmanaged",
         "type": "AuraDefinitionBundle",
         "mmState": "clean"
@@ -27,16 +69,30 @@
         "type": "AuraDefinitionBundle",
         "mmState": "clean"
     },
-    "BrandPick/BrandPick.cmp.undefined": {
+    "rowModel/rowModelController.js.undefined": {
+        "createdById": "0051t000001fjehAAA",
+        "createdByName": "Bruno Monteiro",
+        "createdDate": "2018-11-30T15:40:54.000Z",
+        "fileName": "unpackaged/aura/rowModel/rowModelController.js",
+        "fullName": "rowModel/rowModelController.js",
+        "id": "0Ad1t000001RFllCAG",
+        "lastModifiedById": "0051t000001fjehAAA",
+        "lastModifiedByName": "Bruno Monteiro",
+        "lastModifiedDate": "2018-11-30T15:40:57.000Z",
+        "manageableState": "unmanaged",
+        "type": "AuraDefinitionBundle",
+        "mmState": "clean"
+    },
+    "BrandPick/BrandPickController.js.undefined": {
         "createdById": "0051t000001fjroAAA",
         "createdByName": "Daniel Dias",
-        "createdDate": "2018-11-30T14:21:13.000Z",
-        "fileName": "unpackaged/aura/BrandPick/BrandPick.cmp",
-        "fullName": "BrandPick/BrandPick.cmp",
-        "id": "0Ad1t000001RFiCCAW",
+        "createdDate": "2018-11-30T14:21:22.000Z",
+        "fileName": "unpackaged/aura/BrandPick/BrandPickController.js",
+        "fullName": "BrandPick/BrandPickController.js",
+        "id": "0Ad1t000001RFiHCAW",
         "lastModifiedById": "0051t000001fjroAAA",
         "lastModifiedByName": "Daniel Dias",
-        "lastModifiedDate": "2018-11-30T14:31:48.000Z",
+        "lastModifiedDate": "2018-11-30T15:49:08.000Z",
         "manageableState": "unmanaged",
         "type": "AuraDefinitionBundle",
         "mmState": "clean"
@@ -69,20 +125,6 @@
         "type": "AuraDefinitionBundle",
         "mmState": "clean"
     },
-    "BrandPick/BrandPickController.js.undefined": {
-        "createdById": "0051t000001fjroAAA",
-        "createdByName": "Daniel Dias",
-        "createdDate": "2018-11-30T14:21:22.000Z",
-        "fileName": "unpackaged/aura/BrandPick/BrandPickController.js",
-        "fullName": "BrandPick/BrandPickController.js",
-        "id": "0Ad1t000001RFiHCAW",
-        "lastModifiedById": "0051t000001fjroAAA",
-        "lastModifiedByName": "Daniel Dias",
-        "lastModifiedDate": "2018-11-30T14:36:00.000Z",
-        "manageableState": "unmanaged",
-        "type": "AuraDefinitionBundle",
-        "mmState": "clean"
-    },
     "BrandPickEvent/BrandPickEvent.evt.undefined": {
         "createdById": "0051t000001fjroAAA",
         "createdByName": "Daniel Dias",
@@ -92,7 +134,7 @@
         "id": "0Ad1t000001RFiMCAW",
         "lastModifiedById": "0051t000001fjroAAA",
         "lastModifiedByName": "Daniel Dias",
-        "lastModifiedDate": "2018-11-30T14:28:36.000Z",
+        "lastModifiedDate": "2018-11-30T16:28:45.000Z",
         "manageableState": "unmanaged",
         "type": "AuraDefinitionBundle",
         "mmState": "clean"
@@ -148,7 +190,7 @@
         "id": "0Ad1t000001RAmWCAW",
         "lastModifiedById": "0051t000001fjroAAA",
         "lastModifiedByName": "Daniel Dias",
-        "lastModifiedDate": "2018-11-30T14:32:47.000Z",
+        "lastModifiedDate": "2018-11-30T16:43:48.000Z",
         "manageableState": "unmanaged",
         "type": "AuraDefinitionBundle",
         "mmState": "clean"
@@ -162,7 +204,21 @@
         "id": "0Ad1t000001RAf5CAG",
         "lastModifiedById": "0051t000001fjroAAA",
         "lastModifiedByName": "Daniel Dias",
-        "lastModifiedDate": "2018-11-30T14:32:38.000Z",
+        "lastModifiedDate": "2018-11-30T16:47:32.000Z",
+        "manageableState": "unmanaged",
+        "type": "AuraDefinitionBundle",
+        "mmState": "clean"
+    },
+    "competitiveSellRequest/competitiveSellRequest.css.undefined": {
+        "createdById": "0051t000001fjehAAA",
+        "createdByName": "Bruno Monteiro",
+        "createdDate": "2018-11-30T14:40:18.000Z",
+        "fileName": "unpackaged/aura/competitiveSellRequest/competitiveSellRequest.css",
+        "fullName": "competitiveSellRequest/competitiveSellRequest.css",
+        "id": "0Ad1t000001RFiRCAW",
+        "lastModifiedById": "0051t000001fjehAAA",
+        "lastModifiedByName": "Bruno Monteiro",
+        "lastModifiedDate": "2018-11-30T14:40:20.000Z",
         "manageableState": "unmanaged",
         "type": "AuraDefinitionBundle",
         "mmState": "clean"
@@ -176,7 +232,7 @@
         "id": "0Ad1t000001RElvCAG",
         "lastModifiedById": "0051t000001fjehAAA",
         "lastModifiedByName": "Bruno Monteiro",
-        "lastModifiedDate": "2018-11-30T12:28:46.000Z",
+        "lastModifiedDate": "2018-11-30T15:49:40.000Z",
         "manageableState": "unmanaged",
         "type": "AuraDefinitionBundle",
         "mmState": "clean"
@@ -232,7 +288,7 @@
         "id": "0Ad1t000001RAgcCAG",
         "lastModifiedById": "0051t000001fjehAAA",
         "lastModifiedByName": "Bruno Monteiro",
-        "lastModifiedDate": "2018-11-30T14:22:01.000Z",
+        "lastModifiedDate": "2018-11-30T16:25:00.000Z",
         "manageableState": "unmanaged",
         "type": "AuraDefinitionBundle",
         "mmState": "clean"
@@ -279,6 +335,20 @@
         "type": "AuraDefinitionBundle",
         "mmState": "clean"
     },
+    "dynamicModelRow/dynamicModelRowController.js.undefined": {
+        "createdById": "0051t000001fjehAAA",
+        "createdByName": "Bruno Monteiro",
+        "createdDate": "2018-11-30T15:48:25.000Z",
+        "fileName": "unpackaged/aura/dynamicModelRow/dynamicModelRowController.js",
+        "fullName": "dynamicModelRow/dynamicModelRowController.js",
+        "id": "0Ad1t000001RFrPCAW",
+        "lastModifiedById": "0051t000001fjehAAA",
+        "lastModifiedByName": "Bruno Monteiro",
+        "lastModifiedDate": "2018-11-30T15:49:06.000Z",
+        "manageableState": "unmanaged",
+        "type": "AuraDefinitionBundle",
+        "mmState": "clean"
+    },
     "StepTabs/StepTabs.cmp.undefined": {
         "createdById": "0051t000001fjehAAA",
         "createdByName": "Bruno Monteiro",
@@ -307,6 +377,20 @@
         "type": "AuraDefinitionBundle",
         "mmState": "clean"
     },
+    "dynamicModelRow/dynamicModelRowHelper.js.undefined": {
+        "createdById": "0051t000001fjehAAA",
+        "createdByName": "Bruno Monteiro",
+        "createdDate": "2018-11-30T15:49:00.000Z",
+        "fileName": "unpackaged/aura/dynamicModelRow/dynamicModelRowHelper.js",
+        "fullName": "dynamicModelRow/dynamicModelRowHelper.js",
+        "id": "0Ad1t000001RFrUCAW",
+        "lastModifiedById": "0051t000001fjehAAA",
+        "lastModifiedByName": "Bruno Monteiro",
+        "lastModifiedDate": "2018-11-30T15:49:04.000Z",
+        "manageableState": "unmanaged",
+        "type": "AuraDefinitionBundle",
+        "mmState": "clean"
+    },
     "StepTabs/StepTabsController.js.undefined": {
         "createdById": "0051t000001fjehAAA",
         "createdByName": "Bruno Monteiro",
@@ -317,6 +401,20 @@
         "lastModifiedById": "0051t000001fjehAAA",
         "lastModifiedByName": "Bruno Monteiro",
         "lastModifiedDate": "2018-11-29T11:19:13.000Z",
+        "manageableState": "unmanaged",
+        "type": "AuraDefinitionBundle",
+        "mmState": "clean"
+    },
+    "AddNewRowEvt/AddNewRowEvt.evt.undefined": {
+        "createdById": "0051t000001fjehAAA",
+        "createdByName": "Bruno Monteiro",
+        "createdDate": "2018-11-30T15:37:30.000Z",
+        "fileName": "unpackaged/aura/AddNewRowEvt/AddNewRowEvt.evt",
+        "fullName": "AddNewRowEvt/AddNewRowEvt.evt",
+        "id": "0Ad1t000001RFlRCAW",
+        "lastModifiedById": "0051t000001fjehAAA",
+        "lastModifiedByName": "Bruno Monteiro",
+        "lastModifiedDate": "2018-11-30T15:37:40.000Z",
         "manageableState": "unmanaged",
         "type": "AuraDefinitionBundle",
         "mmState": "clean"
@@ -349,6 +447,20 @@
         "type": "AuraDefinitionBundle",
         "mmState": "clean"
     },
+    "DeleteRowEvt/DeleteRowEvt.evt.undefined": {
+        "createdById": "0051t000001fjehAAA",
+        "createdByName": "Bruno Monteiro",
+        "createdDate": "2018-11-30T15:37:59.000Z",
+        "fileName": "unpackaged/aura/DeleteRowEvt/DeleteRowEvt.evt",
+        "fullName": "DeleteRowEvt/DeleteRowEvt.evt",
+        "id": "0Ad1t000001RFlWCAW",
+        "lastModifiedById": "0051t000001fjehAAA",
+        "lastModifiedByName": "Bruno Monteiro",
+        "lastModifiedDate": "2018-11-30T15:38:12.000Z",
+        "manageableState": "unmanaged",
+        "type": "AuraDefinitionBundle",
+        "mmState": "clean"
+    },
     "step1/step1Controller.js.undefined": {
         "createdById": "0051t000001fjehAAA",
         "createdByName": "Bruno Monteiro",
@@ -375,6 +487,20 @@
         "lastModifiedDate": "2018-11-29T11:22:37.000Z",
         "manageableState": "unmanaged",
         "type": "AuraDefinitionBundle",
+        "mmState": "clean"
+    },
+    "addDeleteController.cls": {
+        "createdById": "0051t000001fjehAAA",
+        "createdByName": "Bruno Monteiro",
+        "createdDate": "2018-11-30T15:41:17.000Z",
+        "fileName": "unpackaged/classes/addDeleteController.cls",
+        "fullName": "addDeleteController",
+        "id": "01p1t00000FkT9GAAV",
+        "lastModifiedById": "0051t000001fjehAAA",
+        "lastModifiedByName": "Bruno Monteiro",
+        "lastModifiedDate": "2018-11-30T15:42:01.000Z",
+        "manageableState": "unmanaged",
+        "type": "ApexClass",
         "mmState": "clean"
     },
     "GetBrandValue.cls": {

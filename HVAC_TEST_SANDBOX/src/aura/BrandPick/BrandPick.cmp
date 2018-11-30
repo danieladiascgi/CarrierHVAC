@@ -1,8 +1,7 @@
-<aura:component implements="forceCommunity:availableForAllPageTypes" controller="GetBrandValue" access="global">
+<aura:component implements="forceCommunity:availableForAllPageTypes"  access="global">
     
-    <aura:handler name="init" action="{!c.init}" value="{!this}" />
     <aura:registerEvent name="BrandPickEvent" type="c:BrandPickEvent"/>
-    <aura:attribute name="BrandList" type="String[]" default="Brand List"/>
+    <aura:attribute name="BrandList" type="String[]" default="Brand List" access="public"/>
     
     <div class="row">
         <p class="title">Multiple Selection</p>

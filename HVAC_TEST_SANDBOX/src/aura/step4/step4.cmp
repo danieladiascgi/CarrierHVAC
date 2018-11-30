@@ -1,5 +1,6 @@
 <aura:component implements="forceCommunity:availableForAllPageTypes" access="global" >
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
     <aura:attribute name="quotes_List" type="List" />
     
     <div class="slds-p-top_small slds-p-left_small  slds-p-right_small">

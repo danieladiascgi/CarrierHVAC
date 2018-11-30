@@ -1,18 +1,31 @@
 ({
-	    init : function(component){
-        var action = component.get("c.getBrand");
-        action.setCallback(this , function(a){
-            			var returnValue = a.getReturnValue();
-                           component.set("v.BrandList",returnValue)
-                           });
-         $A.enqueueAction(action);
-    }
-    ,
+    
     FireEvent : function(cmp, event){
         var appEvent = $A.get("e.c:BrandPickEvent");
-        var brands =cmp.get("v.result");
+        
+        var selectedBrands =cmp.find("InputSelectMultiple").get("v.value").split(";");
+        var Brands =cmp.get("v.BrandList");
+        var UnselectedBrands = [];
+        var i;
+        var x;
+        for(i=0;i<Brands.length;i++){
+            var currentBrand = Brands[i];
+            var isUnselected = true;
+            for(x=0;x<selectedBrands.length;x++){
+                var selectBrand = selectedBrands[i];
+                if( currentBrand == selectBrand){
+                    isUnselected = false;
+                }
+            }
+            if(isUnselected){
+                UnselectedBrands.push(Brands[i]) ;
+            }
+        }
+        
         appEvent.setParams({
-            "SelectedBrands" : brands });
+            "SelectedBrands" : selectedBrands,
+            "NonSelectedBrands" :UnselectedBrands
+        });
         appEvent.fire();
         
     },
@@ -22,5 +35,5 @@
         var resultCmp = cmp.find("multiResult");
         resultCmp.set("v.value", selectCmp.get("v.value"));
     },
-
+    
 })
