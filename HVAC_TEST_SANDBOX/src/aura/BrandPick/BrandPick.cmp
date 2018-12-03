@@ -5,7 +5,7 @@
     
     <div class="row">
         <p class="title">Multiple Selection</p>
-        <ui:inputSelect  multiple="true" class="multiple" aura:id="InputSelectMultiple" change="{!c.onMultiSelectChange}">
+        <ui:inputSelect  multiple="true" class="multiple" aura:id="InputSelectMultiple" change="{!c.onMultiSelectChange}" >
             
             <aura:iteration items="{!v.BrandList}" var="level">
                 <ui:inputSelectOption text="{!level}" label="{!level}"/>

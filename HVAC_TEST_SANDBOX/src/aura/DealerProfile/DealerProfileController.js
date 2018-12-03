@@ -32,14 +32,15 @@
     
     init : function(component, event, helper) {
         var today = new Date();
-        
         component.set('v.year', today.getFullYear());
-                var action = component.get("c.getBrand");
+        
+        
+        var action = component.get("c.getBrand");
         action.setCallback(this , function(a){
-            			var returnValue = a.getReturnValue();
-                           component.set("v.BrandList",returnValue)
-                           });
-         $A.enqueueAction(action);
+            var returnValue = a.getReturnValue();
+            component.set("v.BrandList",returnValue)
+        });
+        $A.enqueueAction(action);
     },
     
     
@@ -48,16 +49,54 @@
     },
     
     handleApplicationEvent : function(cmp, event) {
-        cmp.set("v.ShowBrands", false);
-        var brand = event.getParam("SelectedBrands");
-        var test =event.getParam("NonSelectedBrands");
-        var isArray = Array.isArray(brand);
-        cmp.set("v.SelectedBrandList", event.getParam("SelectedBrands"));
-        var testtegjsdcjcd = cmp.get("v.SelectedBrandList");
+        
+        var AddBrandList = event.getParam("SelectedBrands");
+        var BrandList = cmp.get("v.SelectedBrandList");
+        var nonseleced= event.getParam("NonSelectedBrands");
+        var i;
+        if(AddBrandList!=""){
+            for(i=0;i<AddBrandList.length;i++){
+            var current = AddBrandList[i];
+            BrandList.push(current);
+        }
+        }
+        
+        cmp.set("v.SelectedBrandList", BrandList);
         cmp.set("v.BrandList", event.getParam("NonSelectedBrands"));
+        
+        
+        if( event.getParam("NonSelectedBrands").length == 0){
+            cmp.set("v.NonBrandLeft",true);
+            cmp.set("v.ShowBrands", false);
+        }
+        else{
+            cmp.set("v.ShowBrands", false);
+        }
+        
+        
+        
+    },
+    
+    RemoveBrand : function(cmp, event){
+        var removedBrand = event.getSource().get("v.name"); 
+        var selectedList = cmp.get("v.SelectedBrandList"); 
+        var BrandList=cmp.get("v.BrandList"); 
+        var i;
+        var remove;
+        for(i=0;i<selectedList.length;i++){
+            if(selectedList[i]==removedBrand){
+                remove=i;
+                break;
+            }
+            
+        }
+       	selectedList.splice(remove,1);
+        cmp.set("v.SelectedBrandList",selectedList);
+        BrandList.push(removedBrand);
+        cmp.set("v.BrandList",BrandList);
+        cmp.set("v.NonBrandLeft",false);
+        
     }
-    
-    
     
     
     

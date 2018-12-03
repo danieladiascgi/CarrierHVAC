@@ -16,17 +16,31 @@
         <thead>
             <tr class="slds-text-title_caps">
                 <th scope="col">
-                    <div class="slds-truncate">S.No</div>
+                    <div class="slds-truncate" title="Your Model">Your Model</div>
                 </th>
                 <th scope="col">
-                    <div class="slds-truncate" title="First Name">First Name</div>
+                    <div class="slds-truncate" title="Requested Sell">Requested Sell</div>
                 </th>
                 <th scope="col">
-                    <div class="slds-truncate" title="Last Name">Last Name</div>
+                    <div class="slds-truncate" title="Competitor's Model">Competitor's Model</div>
                 </th>
                 <th scope="col">
-                    <div class="slds-truncate" title="Phone">Phone</div>
+                    <div class="slds-truncate" title="Competitor's Sell">Competitor's Sell</div>
                 </th>
+                <!--formulas-->
+                <th scope="col">
+                    <div class="slds-truncate" title="BUY 1">BUY 1</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="DGM 1">DGM 1</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="BUY 2">BUY 2</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="DGM 2">DGM 2</div>
+                </th>
+                
             </tr>
         </thead>   
         <tbody>

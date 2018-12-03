@@ -8,19 +8,47 @@
     <aura:registerEvent name="DeleteRowEvt" type="c:DeleteRowEvt"/> 
     <aura:registerEvent name="AddRowEvt" type="c:AddNewRowEvt"/> 
     
+    
+    <aura:attribute name="modelN" type="String"/>
+    <aura:attribute name="requestedSell" type="String"/>
+    <aura:attribute name="competitorM" type="String"/>
+    <aura:attribute name="competitorS" type="String"/>
+    <aura:attribute name="buy1" type="String"/>
+    <aura:attribute name="buy2" type="String"/>
+    <aura:attribute name="dgm1" type="String"/>
+    <aura:attribute name="dgm2" type="String"/>
+    
     <!-- Table Row -->   
     <tr class="slds-text-title_caps">
         <td> 
-            {!v.rowIndex + 1}
+            <select class="slds-select" id="select-01" required="true" value="{!v.modelN}">
+                        <option value="">Please select</option>
+                        <option>Model One</option>
+                        <option>Model Two</option>
+                        <option>Model Three</option>
+                    </select>
         </td>
         <td>
-            <ui:inputText class="slds-input" value="{!v.ContactInstance.FirstName}"/>
+            <ui:inputText class="slds-input" value="{!v.requestedSell}"/>
         </td>
         <td>
-            <ui:inputText class="slds-input" value="{!v.ContactInstance.LastName}"/>
+            <ui:inputText class="slds-input" value="{!v.competitorM}"/>
         </td>
         <td>
-            <ui:inputPhone class="slds-input" value="{!v.ContactInstance.Phone}"/>
+            <ui:inputText class="slds-input" value="{!v.competitorS}"/>
+        </td>
+        <!--formulas-->
+        <td>
+            <ui:inputText class="slds-input" value="{!v.buy1}"/>
+        </td>
+        <td>
+            <ui:inputText class="slds-input" value="{!v.dgm1}"/>
+        </td>
+        <td>
+            <ui:inputText class="slds-input" value="{!v.buy2}"/>
+        </td>
+        <td>
+            <ui:inputText class="slds-input" value="{!v.dgm2}"/>
         </td>
         <td>
             <!-- conditionally Display Add or Delete Icons
