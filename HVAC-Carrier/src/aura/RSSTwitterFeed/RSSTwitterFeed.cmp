@@ -1,0 +1,55 @@
+<aura:component access="global" implements="force:appHostable,forceCommunity:availableForAllPageTypes">
+
+<aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+<aura:attribute name="rssData" type="map"/>
+	
+	<div class="row">
+		<!-- RSS feed -->
+		<div class="col-xs-6 col-sm-6 col-md-6 grid-item">
+			<div class="panel panel-default shadow-depth-2 text-left feed-container">
+	            <div class="panel-heading feed-container-header">
+	                <div class="row">
+                        <h3 class="heading-alt">
+							<img src="{!$Resource.rssIcon}" class="feed-logo-rss" />
+							News Feed
+						</h3>
+	                </div>
+	            </div>
+	            <div class="panel-body">
+					<!-- RSS feed container -->
+					<div class="news-feed-container">
+						<aura:iteration items="{!v.rssData.channel.item}" var="entry">
+							<p class="publish-date">{!entry.pubDate}</p>
+							<p class="news-headline">{!entry.title}</p>
+							<a href="{!'http://carrier.com' + entry.link}" target="_blank">READ MORE</a>
+							<hr />
+						</aura:iteration>
+					</div>
+	            </div>
+	        </div>
+		</div>
+
+		<!-- Twitter feed -->
+		<div class="col-xs-6 col-sm-6 col-md-6 grid-item">
+			<div class="panel panel-default shadow-depth-2 text-left feed-container">
+	            <div class="panel-heading feed-container-header header-twitter">
+	                <div class="row">
+						<h3 class="heading-alt">
+							<img src="{!$Resource.TwitterLogo}" class="feed-logo-twitter" />
+							Twitter Feed
+						</h3>
+	                </div>
+	            </div>
+	            <div class="panel-body">
+	                <a class="twitter-timeline" 
+			            href="https://twitter.com/Carrier"
+			            data-width="100%"
+			            data-height="310"
+			            data-chrome="noheader nofooter"
+			            data-link-color="#7AA72D">
+			        </a>
+	            </div>
+	        </div>
+		</div>
+	</div>
+</aura:component>

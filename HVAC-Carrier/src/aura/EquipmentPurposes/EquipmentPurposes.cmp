@@ -1,0 +1,89 @@
+<aura:component controller="EquipmentPurposeCtrl" implements="flexipage:availableForAllPageTypes,force:appHostable,force:hasRecordId">
+  <aura:handler name="init" action="{!c.doInit}" value="{!this}" />
+  <aura:handler event="force:refreshView" action="{!c.doInit}" />
+  <aura:attribute name="casesLength" type="String"/>
+   <aura:attribute name="listOfPurposes" type="List"/> 
+    <aura:attribute name="recordId" type="Id" />
+    <aura:attribute name="purposeGroups" type="List"/> 
+ 
+     <aura:attribute name="saveStatus" type="boolean" default="false"/>
+   
+<lightning:button variant="brand" label="Save" onclick="{!c.handleSave}" />  
+<lightning:button variant="brand" label="Claim" onclick="{!c.isClaim}" />
+ 
+  <div class="slds">
+    <div class="slds-page-header noborderbottom" role="banner"> 
+      <div class="slds-grid">
+     
+            <div class="slds-grid slds-type-focus slds-no-space">
+              <h1 class="slds-page-header__title slds-truncate" title="My Items" style="font-family: 'Salesforce Sans',Arial,sans-serif; font-weight: 300; padding-bottom: 5px;">Purposes</h1>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+      <div class="slds-grid">
+       <div class="slds-col slds-align-bottom slds-p-left_small">
+        <ui:inputSelect aura:id="pg" label="Purpose Group" change="{!c.onChangeOfVal}">
+         <aura:iteration items="{!v.purposeGroups}" var="pgs">
+          <aura:if isTrue="{!pgs == 'All'}" >
+            <ui:inputSelectOption text="{!pgs}" label="{!pgs}" value="true"/>
+            <aura:set attribute="else">
+              <ui:inputSelectOption text="{!pgs}" label="{!pgs}"/>
+            </aura:set>
+          </aura:if>                                    
+         </aura:iteration>
+        </ui:inputSelect><br></br>
+       </div>
+      </div>
+   
+   
+   <!-- </div>   
+  </div>  -->     
+  <div class="slds">
+    <table class="slds-table slds-table_bordered slds-table_cell-buffer">
+         
+      <thead>
+        <tr class="slds-text-title_caps">
+          <th scope="col" title="Purposes">
+            <div>Purposes</div>
+          </th>
+          <th scope="col"  title="Count">
+            <div>Count</div>
+          </th>
+                    
+        </tr>
+      </thead>
+      <tbody>
+        <aura:iteration items="{!v.listOfPurposes}" var="purpose">     
+          <tr>
+            <td><ui:outputText aura:id="prval" value="{!purpose.purpose}" /></td>
+                       
+            <td>
+              <ui:inputText aura:id="cval" value="{!purpose.count}" />
+            </td>
+            
+          </tr>
+        </aura:iteration>
+      </tbody>
+    </table> 
+  </div>
+     <aura:if isTrue="{!v.saveStatus}">
+      <div role="alertdialog" tabindex="-1" aria-labelledby="prompt-heading-id" aria-describedby="prompt-message-wrapper" class="slds-modal slds-fade-in-open slds-modal--prompt">
+         <div class="slds-modal__container">
+            <div class="slds-modal__header slds-theme_success slds-theme--alert-texture">
+               <h2 class="slds-text-heading--medium" id="prompt-heading-id">Success Message</h2>
+            </div>
+            <div class="slds-modal__content slds-p-around--medium">
+               <div>
+                  <p>Record Saved Succesfully</p>
+               </div>
+            </div>
+            <div class="slds-modal__footer slds-theme--default">
+               <button class="slds-button slds-button--brand" onclick="{!c.closeMessage}">Close</button>
+            </div>
+         </div>
+      </div>
+      <div class="slds-backdrop slds-backdrop--open"></div>
+   </aura:if>
+</aura:component>

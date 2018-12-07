@@ -1,0 +1,21 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global">
+    <aura:attribute name="attachmentId" type="String"  />
+    <aura:attribute name="attachmentName" type="String"  />
+    <aura:attribute name="defaultImageURL" type="String" default=""  />
+    <aura:attribute name="isIMage" type="Boolean" default="false"  />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <div style="float:left; width:5%; height:5%; margin:1%;">
+        
+        <aura:if isTrue="{!v.isIMage}">
+            <div>
+                <img style="max-height:100px; margin:0 auto" id="theImage1" src="{!'/servlet/servlet.FileDownload?file='+v.attachmentId}"></img>
+            </div>
+            <aura:set attribute="else">
+                <div>
+                    <img style="max-height:100px; margin:0 auto" id="theImage1" src="{!$Resource.EmptyDocumentLogo}"></img>
+                </div>
+            </aura:set>
+        </aura:if>
+    </div>
+    <a href="{!'/servlet/servlet.FileDownload?file='+v.attachmentId}" target="_blank" id="theLink1"><b>{!v.attachmentName}</b></a>
+</aura:component>

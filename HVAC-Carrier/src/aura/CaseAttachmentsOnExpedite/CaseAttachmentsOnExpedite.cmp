@@ -1,0 +1,12 @@
+<aura:component controller="ExpediteSendEmailController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId" access="global" >
+    <aura:attribute name="recId" type="Id" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:attribute name="attachmentsList" type="List"/>
+    <div class="slds-form-element">
+        <aura:iteration items="{!v.attachmentsList}" var="item">
+            
+            <td><c:EachAttachmentPreview attachmentId="{!item.attachmentId}" attachmentName="{!item.attachmentName}" /></td>           
+            
+        </aura:iteration>
+    </div>    
+</aura:component>

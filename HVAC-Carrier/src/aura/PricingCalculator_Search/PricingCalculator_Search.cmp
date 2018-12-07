@@ -1,0 +1,142 @@
+<aura:component implements="lightning:availableForFlowScreens" controller="DealerAddData" access="global">
+    
+    <!-- CREATE ATTRIBUTE/VARIABLE-->
+    <aura:attribute name="searchSKU" type="String" description="use for store SKU search input" access="global"/>
+    <aura:attribute name="searchSellPrice" type="String" description="use for store Sell Price search input" access="global"/>
+    <aura:attribute name="sortedBy" type="String" default="Quote_number" access="global"/>
+    <aura:attribute name="sortedDirection" type="String" default="asc" access="global"/>
+    <aura:attribute name="groupName" type="String" description="use to create group Name"/>
+    <aura:attribute name="errorMessage1" type="String" default="To create a Group please select the Quotes"/>
+    <aura:attribute name="currentPageNumber" type="Integer" default="1"/>
+    <aura:attribute name="pageSize" type="Integer" default="10"/>
+    <aura:attribute name="totalPages" type="Integer" default="false"/>
+    
+    <aura:attribute name="isFromCalc" type="boolean" default="true"/>
+    <aura:attribute name="showPriceCal" type="boolean" default="true"/>
+    <aura:attribute name="isOpen" type="boolean" default="false"/>
+    <aura:attribute name="showGroupCreation" type="boolean" default="false"/>
+    <aura:attribute name="showGroupButton" type="boolean" default="true"/>
+    <aura:attribute name="checkList" type="boolean" default="false"/>
+    
+    <aura:attribute name="columns" type="List" access="global"/> 
+    <aura:attribute name="selectedRows" type="List" access="global"/>
+    <aura:attribute name="pageList" type="List" default="false"/>
+    <aura:attribute name="allData" type="List"/>
+    
+    <aura:attribute name="data" type="Object" access="global"/>
+    <aura:attribute name="output_K_Quotes_List" type="K_Quote__c[]"/>    
+    <aura:attribute name="out_K_Quote" type="K_Quote__c" default="{ 'sobjectType': 'K_Quote',
+                                                                  'Quote_number':'', 
+                                                                  'Quote_Reference_Number':'',
+                                                                  'Quote_Description':'',
+                                                                  'Effective_Date':'',
+                                                                  'Expired_Date':''
+                                                                  
+                                                                  }"/>    
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <lightning:flow aura:id="flowData" />    
+    <aura:if isTrue="{!v.showPriceCal}">
+        <div class="slds-m-around_medium">
+            <lightning:layout>
+                <lightning:layoutItem size="3" padding="around-small">
+                    <lightning:input value="{!v.searchSKU}" required="true" placeholder="Search SKU....." aura:id="searchField" label="SKU"/>
+                </lightning:layoutItem>
+                <lightning:layoutItem size="3" padding="around-small">
+                    <lightning:input value="{!v.searchSellPrice}" required="true" placeholder="Search Sell Price....." label="Sell Price"/>
+                </lightning:layoutItem>            
+                <lightning:layoutItem size="2" padding="around-small">
+                    <div><br></br><lightning:button onclick="{!c.Search}" variant="brand" label="Submit"/></div>
+                </lightning:layoutItem>             
+            </lightning:layout>
+            <div>
+                <br></br>
+                <aura:if isTrue="{!v.showGroupCreation}">
+                    {!v.groupName}
+                    <div>
+                        <lightning:datatable data="{! v.selectedRows }"
+                                             columns="{! v.columns}"
+                                             keyField="id"
+                                             onrowselection="{! c.updateSelectedText }"
+                                             onsort="{!c.updateColumnSorting}"
+                                             sortedBy="{!v.sortedBy}"  
+                                             sortedDirection="{!v.sortedDirection}"
+                                             hideCheckboxColumn="true"/>
+                    </div>
+                    <div> <br></br><lightning:button onclick="{!c.CreatePDF}" variant="brand" label="Create PDF"/> </div>
+                </aura:if>
+            </div> 
+            <div>
+                <br></br>
+                <lightning:card title="">
+                    <lightning:layout multipleRows="true" horizontalAlign="center">
+                        <lightning:layoutItem padding="around-small" size="12">
+                            <br></br><lightning:datatable data="{! v.data }"
+                                                          columns="{! v.columns}"
+                                                          keyField="id"
+                                                          onrowselection="{! c.updateSelectedText }"
+                                                          onsort="{!c.updateColumnSorting}"
+                                                          sortedBy="{!v.sortedBy}"  
+                                                          sortedDirection="{!v.sortedDirection}"/>               
+                        </lightning:layoutItem>
+                        <lightning:layoutItem padding="around-small" flexibility="auto">
+                            <lightning:button label="First" iconName="utility:left" iconPosition="left"
+                                              onclick="{!c.onFirst}" disabled="{! v.currentPageNumber == 1}"/>
+                            <lightning:button iconName="utility:chevronleft" iconPosition="left"
+                                              onclick="{!c.onPrev}" disabled="{! v.currentPageNumber == 1}"/>
+                            
+                            
+                            <aura:iteration items="{!v.pageList}" var="item">
+                                <span class="slds-p-horizontal_x-small">
+                                    <a onclick="{!c.processMe}" name="{!item}"
+                                       class="{! (v.currentPageNumber == item) ? 'selected' : ''}">{!item}</a>
+                                </span>
+                            </aura:iteration>                
+                            <lightning:button iconName="utility:chevronright" iconPosition="right" 
+                                              disabled="{! v.currentPageNumber == v.totalPages}" onclick="{!c.onNext}"/>
+                            <lightning:button label="Last" iconName="utility:right" iconPosition="right" 
+                                              disabled="{! v.currentPageNumber == v.totalPages}" onclick="{!c.onLast}"/>
+                        </lightning:layoutItem>
+                    </lightning:layout>
+                </lightning:card>  
+            </div>
+            <lightning:layout>
+                <aura:if isTrue="{!v.showGroupButton}"><lightning:layoutItem size="2" padding="around-small">
+                    <div> <br></br><lightning:button onclick="{!c.group}" variant="brand" label="Group"/>
+                        <br></br><br></br><aura:if isTrue="{!v.checkList}">
+                        {!v.errorMessage1}
+                        </aura:if>
+                    </div>
+                    </lightning:layoutItem></aura:if>
+                <lightning:layoutItem size="2" padding="around-small">
+                    <div><br></br><lightning:button onclick="{!c.addDealer}" variant="brand" label="Add Dealer"/></div>
+                </lightning:layoutItem>
+                <lightning:layoutItem size="2" padding="around-small">
+                    <div><br></br><lightning:button onclick="{!c.priceStudy}" variant="brand" label="Price Study"/></div>
+                </lightning:layoutItem>
+            </lightning:layout>            
+        </div>
+        <div class="slds-m-around_xx-large">        
+            <aura:if isTrue="{!v.isOpen}">
+                <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                    <div class="slds-modal__container">
+                        <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                            <lightning:layout>
+                                <lightning:layoutItem size="5" padding="around-small">
+                                    <lightning:input value="{!v.groupName}" required="true" aura:id="groupName" label="Group Name"/>
+                                </lightning:layoutItem>            
+                                <lightning:layoutItem size="3" padding="around-small">
+                                    <div><br></br><lightning:button onclick="{!c.submit}" variant="brand" label="Submit"/></div>
+                                </lightning:layoutItem>             
+                            </lightning:layout>
+                        </div>
+                        <footer class="slds-modal__footer">
+                            <lightning:button variant="neutral" label="Close" title="Close" onclick="{! c.closeModel }"/>
+                        </footer>
+                    </div>
+                </section>
+                <div class="slds-backdrop slds-backdrop_open"></div>
+            </aura:if>
+        </div>
+    </aura:if>
+</aura:component>

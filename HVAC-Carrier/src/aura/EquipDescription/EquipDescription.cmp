@@ -1,0 +1,60 @@
+<aura:component controller="CaseFetch" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global">
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+   <aura:handler event="force:refreshView" action="{!c.doInit}" />
+
+    <aura:attribute name="recordId" type="Id" />
+<aura:attribute name="case" type="Case" default="{ 'sobjectType': 'Case' }"/>
+    <aura:attribute name="isEditPage" type="Boolean" default="false" />
+    <aura:attribute name="saveStatus" type="boolean" default="false"/>
+    <div> <p> <lightning:button variant="brand" label="Send To Junk" onclick="{!c.MoveToJunk}" />
+        <lightning:button variant="brand" label="Expedite" onclick="{!c.Expedite}" /></p></div>
+    <br/>
+    <div>
+        
+     <aura:if isTrue="{!v.isEditPage}">
+      <div class="slds-align--absolute-center">
+       <button type="button" class="slds-button slds-button--neutral slds-m-around--medium" onclick="{!c.clickCancel}" aura:id="btnCancel">
+         Cancel
+       </button> 
+       <button type="button" class="slds-button slds-button--brand slds-m-around--medium" onclick="{!c.saveDesc1}" aura:id="btnSave">
+         Save
+       </button>
+      </div> 
+     </aura:if>
+        
+     <aura:if isTrue="{!v.isEditPage}">
+      
+      <p><b>New Comment:&nbsp;</b> <ui:inputCheckbox value="{!v.case.New_Comment__c}"/></p>
+      <p><b>Subject:&nbsp;</b>  <ui:inputText value="{!v.case.Subject}" /></p>   
+      <p><b>Description:&nbsp;</b>  <ui:inputTextArea value="{!v.case.Description}" rows="15" /></p>
+      <aura:set attribute="else">
+      <span class="slds-float--right litIcon editIcon" onclick="{!c.changeEditLayout}">
+         <lightning:icon iconName="utility:edit" size="xx-small" alternativeText="Indicates approval"/>
+      </span>
+      <p><b>New Comment:&nbsp;</b> <ui:outputCheckbox value="{!v.case.New_Comment__c}"/></p>
+      <p><b>Subject:&nbsp;</b> <ui:outputText class="slds-output" value="{!v.case.Subject}" /></p>
+          <p><b>Description:&nbsp;</b> <div style="word-wrap: break-word;"><ui:outputText class="slds-output" value="{!v.case.Description}" /></div></p>
+      </aura:set>
+      </aura:if>
+    </div>
+    
+
+<aura:if isTrue="{!v.saveStatus}">
+      <div role="alertdialog" tabindex="-1" aria-labelledby="prompt-heading-id" aria-describedby="prompt-message-wrapper" class="slds-modal slds-fade-in-open slds-modal--prompt">
+         <div class="slds-modal__container">
+            <div class="slds-modal__header slds-theme_success slds-theme--alert-texture">
+               <h2 class="slds-text-heading--medium" id="prompt-heading-id">Success Message</h2>
+            </div>
+            <div class="slds-modal__content slds-p-around--medium">
+               <div>
+                  <p>The case is closed and moved to Junk queue</p>
+               </div>
+            </div>
+            <div class="slds-modal__footer slds-theme--default">
+               <button class="slds-button slds-button--brand" onclick="{!c.closeMessage}">Close</button>
+            </div>
+         </div>
+      </div>
+      <div class="slds-backdrop slds-backdrop--open"></div>
+   </aura:if>
+</aura:component>

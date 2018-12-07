@@ -1,0 +1,169 @@
+<aura:component controller="ResolutionFetch" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global">
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+   <!-- <aura:handler event="force:refreshView" action="{!c.doInit}" />-->
+    <aura:attribute name="message" type="String"/>
+    <aura:attribute name="spinnerShow" type="String"/>
+    <aura:attribute name="selVal" type="String"/>
+    <aura:attribute name="selValTB" type="String"/>
+    <aura:attribute name="selValStatus" type="String"/>
+    <aura:attribute name="selValDefectCode" type="String"/>
+    <aura:attribute name="selValDefectSubCode" type="String"/>
+    <aura:attribute name="PickReason" type="String"/>
+    <aura:attribute name="PickStatus" type="String"/>
+    <aura:attribute name="PickTB" type="String"/>
+    <aura:attribute name="defCode" type="String"/>
+    <aura:attribute name="defSubCode" type="String"/>
+    <aura:attribute name="Reasons" type="List"/> 
+    <aura:attribute name="Status" type="List"/> 
+    <aura:attribute name="depnedentFieldMap" type="map" description="store controller(key)--> dependent(values) picklist value as a map." /> 
+    <aura:attribute name="DefectCode" type="String" description="use for, make disbale depandent field." />
+    <aura:attribute name="DefectSubCode" type="String" description="use for, make disbale depandent field." />
+    <aura:attribute name="case" type="Case" default="{ 'sobjectType': 'Case' }"/>
+    <aura:attribute name="objInfo" type="string" default="case" description="store object Info." />
+    <aura:attribute name="displayTurnback" type="Boolean" default="false"/>
+    <aura:attribute name="RecordType" type="String"/>
+    <aura:attribute name="CaseOwner" type="String"/>
+    <aura:attribute name="PurposeCount" type="Boolean" default="false"/>
+    <aura:attribute name="ClaimCases" type="Boolean" default="false"/>
+    <aura:attribute name="ContactVal" type="Boolean" default="false"/>
+    <aura:attribute name="Solution" type="Case" default="{ 'sobjectType': 'Case' }"/>
+    <aura:attribute name="displayPSS" type="Boolean" default="false"/>	
+    <aura:attribute name="displayNoPSS" type="Boolean" default="false"/>
+    <aura:attribute name="displaySolution" type="Boolean" default="false"/>
+    <aura:attribute name="displayResolution" type="Boolean" default="false"/>
+    <aura:attribute name="displayDefectCode" type="Boolean" default="false"/>
+    <aura:attribute name="displayDefectSubCode" type="Boolean" default="false"/>
+    <aura:attribute name="displayPurpose" type="Boolean" default="false"/>
+    <aura:attribute name="displayContact" type="Boolean" default="false"/>
+    <div>
+        ResultMessage:<ui:outputText value="{!v.message}"/>
+    </div>
+    <aura:if isTrue="{!v.displayPurpose}"> 
+        <ui:message title="Error" severity="error" closable="true">
+            Please enter Purpose or Claims Purpose/Sub-Purpose.
+        </ui:message>
+    </aura:if>
+    <aura:if isTrue="{!v.displayContact}"> 
+        <ui:message title="Error" severity="error" closable="true">
+            Please enter a contact.
+        </ui:message>
+    </aura:if>
+    <aura:if isTrue="{!v.displayDefectCode}"> 
+        <ui:message title="Error" severity="error" closable="true">
+            Please select a Defect Code.
+        </ui:message>
+    </aura:if>
+    <aura:if isTrue="{!v.displayDefectSubCode}"> 
+        <ui:message title="Error" severity="error" closable="true">
+            Please select a Defect Sub-Code.
+        </ui:message>
+    </aura:if>
+    <aura:if isTrue="{!v.displayTurnback}"> 
+        <ui:message title="Error" severity="error" closable="true">
+            Please select a Turnback.
+        </ui:message>
+    </aura:if>
+    
+    <aura:if isTrue="{!v.displaySolution}"> 
+        <ui:message title="Error" severity="error" closable="true">
+            Please enter a Solution.
+        </ui:message>
+    </aura:if>
+    
+    <aura:if isTrue="{!v.displayResolution}"> 
+        <ui:message title="Error" severity="error" closable="true">
+            Please select a Resolution.
+        </ui:message>
+    </aura:if>
+    
+ 
+    
+    <aura:attribute name="recordId" type="Id" />
+    <!-- <aura:attribute name="case" type="Case" default="{ 'sobjectType': 'Case' }"/> -->
+    <aura:attribute name="Turnback" type="Turnback__c" default="{ 'sobjectType': 'Turnback__c' }"/>
+    <aura:attribute name="rcode" type="Case" default="{ 'sobjectType': 'Case' }"/>
+   
+    
+    <aura:if isTrue="{!v.displayNoPSS}">
+        <p><b>Resolution Code:&nbsp;</b>
+            
+            <ui:inputselect aura:id="rcode" value="{!v.PickReason}" change="{!c.onSelectChange}"> 
+                <aura:iteration items="{!v.Reasons}" var="rs">
+                    <aura:if isTrue="{!rs == v.PickReason}">                        
+                        <ui:inputSelectOption text="{!rs}" label="{!rs}" value="true"/>
+                        <aura:set attribute="else">
+                            <ui:inputSelectOption text="{!rs}" label="{!rs}" value="false"/>
+                        </aura:set>
+                    </aura:if>
+                </aura:iteration>
+            </ui:inputselect>
+            
+        </p>
+    </aura:if>  
+    
+    <aura:if isTrue="{!v.displayPSS}">
+        <p><b>Defect Code:&nbsp;</b>
+            
+            <ui:inputSelect aura:id="defectCode" class="slds-select" change="{!c.onControllerFieldChange}" value="{!v.defCode}" />
+            
+        </p>
+        
+        
+        <p><b>Defect Sub-Code:&nbsp;</b>
+            
+            <ui:inputSelect aura:id="defectSubCode" value="{!v.defSubCode}"  disabled="{!v.isDependentDisable}" class="slds-select" change="{!c.onDependentFieldChange}" />
+            
+        </p>
+        
+        <p><b>Solution:&nbsp;</b> <ui:inputTextArea aura:id="Solution" value="{!v.case.CCC_Solution__c}" /> </p> 
+    </aura:if>
+    
+    <p><b>Status:&nbsp;</b>
+        
+        <ui:inputselect aura:id="scode" value="{!v.PickStatus}" change="{!c.onStatusChange}"> 
+            <aura:iteration items="{!v.Status}" var="s">
+                <aura:if isTrue="{!s == v.PickStatus}">                        
+                    <ui:inputSelectOption text="{!s}" label="{!s}" value="true"/>
+                    <aura:set attribute="else">
+                        <ui:inputSelectOption text="{!s}" label="{!s}" value="false"/>
+                    </aura:set>
+                </aura:if>
+            </aura:iteration>
+        </ui:inputselect>
+        
+    </p>
+    <aura:if isTrue="{!v.displayNoPSS}">
+        <p><b>Internal Comments:&nbsp;</b> <ui:inputTextArea aura:id="internal_comments" value="{!v.case.Internal_Comments__c}" /> </p>
+    </aura:if>
+    <!--  <p><b>Solution:&nbsp;</b> <ui:inputText aura:id="solution" value="{!v.case.CCC_Solution__c}" /> </p> -->
+    <!-- <p><b>Turnback:&nbsp;</b> <force:inputField aura:id="Turnback" value="{!v.case.CCC_Turn_Back_Code__c}" /></p> -->
+    
+    <p><b>Turnback:&nbsp;</b> 
+        
+        <ui:inputselect aura:id="Turnback" value="{!v.PickTB}" change="{!c.onTBChange}" disabled="{!v.turnbackDefault}"> 
+            <aura:iteration items="{!v.Turnback}" var="level">
+                <aura:if isTrue="{!level.Title__c == v.PickTB}"> 
+                    
+                    <ui:inputSelectOption text="{!level.Title__c}" label="{!level.Title__c}" value="true"/>
+                    <aura:set attribute="else">
+                        
+                        <ui:inputSelectOption text="{!level.Title__c}" label="{!level.Title__c}" value="false"/>
+                    </aura:set>
+                </aura:if>
+            </aura:iteration>
+        </ui:inputselect>
+    </p>
+    
+    
+    <ui:button label="Save and Close" press="{!c.saveCaseAndClose}"/>
+    <!--   <lightning:button label="Save and Close" variant="brand" onclick="{!c.saveCase1}"/>-->
+    <aura:if isTrue="{!v.spinnerShow}">
+        <div class="exampleHolder">
+            <lightning:spinner aura:id="mySpinner" />
+        </div>
+    </aura:if>
+    
+    <ui:button label="Save" press="{!c.saveOnlyCase}"/>
+    <!--  <ui:button aura:id="mybtn"/> --> 
+    
+</aura:component>

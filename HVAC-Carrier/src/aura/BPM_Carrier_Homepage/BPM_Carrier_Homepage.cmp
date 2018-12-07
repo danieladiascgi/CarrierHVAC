@@ -1,0 +1,268 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes" >
+    <aura:renderIf isTrue="{!equals($Browser.formFactor, 'DESKTOP')}">
+        <div class="slds-container ">
+            <div class="slds-size_1-of-1"><br/></div>
+            <div class="slds-grid slds-gutters   slds-align_absolute-center">
+                <div class="slds-col slds-size_2-of-12 BoxNotM" onclick="">
+                    <div class="slds-size_1-of-1"> <br/></div>
+                    <div class="slds-size_1-of-1">
+                        <div class="slds-align_absolute-center">
+                            <div class="slds-align_absolute-center dollar_sign_icon">$</div>
+                        </div>
+                    </div>   
+                    <div class="slds-size_1-of-1">
+                        <div class="slds-align_absolute-center">
+                            <div class="slds-p-top_small text" >
+                                <span >Request a Price Change</span>
+                            </div>
+                            
+                        </div> 
+                    </div>
+                </div>
+                
+                <div class="slds-p-around_small"></div>
+                
+                <div class="slds-col slds-size_2-of-12 BoxNotM" onclick="{!c.dealer_red}">
+                    <div class="slds-size_1-of-1"> <br/></div>
+                    <div class="slds-size_1-of-1">
+                        <div class="slds-align_absolute-center">
+                            <div class="slds-align_absolute-center dollar_sign_icon1">$</div>
+                        </div>
+                    </div>   
+                    <div class="slds-size_1-of-1">
+                        <div class="slds-align_absolute-center">
+                            <div class="slds-p-top_small text">
+                                <span >Dealer Add</span>
+                            </div>
+                            
+                        </div> 
+                    </div>
+                </div>
+                
+                <div class="slds-p-around_small"></div>
+                
+                <div class="slds-col slds-size_2-of-12 BoxNotM" onclick="">
+                    <div class="slds-size_1-of-1"> <br/></div>
+                    <div class="slds-size_1-of-1">
+                        <div class="slds-align_absolute-center">
+                            <div class="slds-align_absolute-center dollar_sign_icon2">$</div>
+                        </div>
+                    </div>   
+                    <div class="slds-size_1-of-1">
+                        <div class="slds-align_absolute-center">
+                            <div class="slds-p-top_small text">
+                                <span >Calculator</span>
+                            </div>
+                            
+                        </div> 
+                    </div>
+                </div>   
+            </div>
+            
+            <div class="slds-size_1-of-1 slds-p-around_small"></div>
+            
+            
+            <div class="slds-grid slds-gutters   slds-align_absolute-center cenas">
+                
+                
+                <div class="slds-col slds-size_2-of-12 BoxNotM" onclick="">
+                    <div class="slds-size_1-of-1"> <br/></div>
+                    <div class="slds-size_1-of-1">
+                        <div class="slds-align_absolute-center">
+                            <div class="slds-align_absolute-center dollar_sign_icon2">$</div>
+                        </div>
+                    </div>   
+                    <div class="slds-size_1-of-1">
+                        <div class="slds-align_absolute-center">
+                            <div class="slds-p-top_small text">
+                                <span >View Metrics</span>
+                            </div>
+                            
+                        </div> 
+                    </div>
+                </div>
+                
+                <div class="slds-p-around_small"></div>
+                
+                <div class="slds-col slds-size_2-of-12 BoxNotM" onclick="">
+                    <div class="slds-size_1-of-1"> <br/></div>
+                    <div class="slds-size_1-of-1">
+                        <div class="slds-align_absolute-center">
+                            <div class="slds-align_absolute-center dollar_sign_icon">$</div>
+                        </div>
+                    </div>   
+                    <div class="slds-size_1-of-1">
+                        <div class="slds-align_absolute-center">
+                            <div class="slds-p-top_small text">
+                                <span >Pricing Change Status</span>
+                            </div>
+                            
+                        </div> 
+                    </div>
+                </div>
+                
+                <div class="slds-p-around_small"></div>
+                
+                <div class="slds-col slds-size_2-of-12 BoxNotM" onclick="">
+                    <div class="slds-size_1-of-1"> <br/></div>
+                    <div class="slds-size_1-of-1">
+                        <div class="slds-align_absolute-center">
+                            <div class="slds-align_absolute-center dollar_sign_icon1">$</div>
+                        </div>
+                    </div>   
+                    <div class="slds-size_1-of-1">
+                        <div class="slds-align_absolute-center">
+                            <div class="slds-p-top_small text">
+                                <span >Dealer Add Status</span>
+                            </div>
+                            
+                        </div> 
+                    </div>
+                </div>    
+            </div>
+            <div class="slds-size_1-of-1"><br/></div>
+        </div>
+    </aura:renderIf>
+    <aura:renderIf isTrue="{!equals($Browser.formFactor, 'PHONE')}">
+        <div class="slds-container ">
+            <div class="slds-size_1-of-1"><br/></div>
+            
+            <div class="slds-grid slds-gutters   slds-align_absolute-center">
+                
+                <div class="slds-col slds-size_3-of-12 BoxM" onclick="">
+                    <div class="slds-p-top_small"></div>
+                    <div class="slds-size_1-of-1">
+                        <div class="slds-align_absolute-center">
+                            <div class="slds-align_absolute-center dollar_sign_iconM">$</div>
+                        </div>
+                    </div>   
+                    <div class="slds-size_1-of-1">
+                        <div class="slds-align_absolute-center">
+                            <div class="slds-p-top_small textM" >
+                                <span >Request a Price Change</span>
+                            </div>
+                            
+                        </div> 
+                    </div>
+                    
+                </div>
+                
+                <div class="slds-p-around_small"></div>
+                
+                <div class="slds-col slds-size_3-of-12 BoxM" onclick="{!c.dealer_red}">
+                    <div class="slds-p-top_small"></div>
+                    <div class="slds-size_1-of-1">
+                        <div class="slds-align_absolute-center">
+                            <div class="slds-align_absolute-center dollar_sign_icon1M">$</div>
+                        </div>
+                    </div>   
+                    <div class="slds-size_1-of-1">
+                        <div class="slds-align_absolute-center">
+                            <div class="slds-p-top_small textM">
+                                <span >Dealer Add</span>
+                            </div>
+                            
+                        </div> 
+                    </div>
+                </div>
+                
+                <div class="slds-p-around_small"></div>
+            </div>
+            
+            <div class="slds-size_1-of-1 slds-p-around_small"></div>
+            
+            
+            <div class="slds-grid slds-gutters   slds-align_absolute-center">
+                
+                <div class="slds-col slds-size_3-of-12 BoxM" onclick="">
+                    <div class="slds-p-top_small"></div>
+                    <div class="slds-size_1-of-1">
+                        <div class="slds-align_absolute-center">
+                            <div class="slds-align_absolute-center dollar_sign_icon2M">$</div>
+                        </div>
+                    </div>   
+                    <div class="slds-size_1-of-1">
+                        <div class="slds-align_absolute-center">
+                            <div class="slds-p-top_small textM">
+                                <span >Calculator</span>
+                            </div>
+                            
+                        </div> 
+                    </div>
+                </div> 
+                <div class="slds-p-around_small"></div>
+                
+                <div class="slds-col slds-size_3-of-12 BoxM" onclick="">
+                    <div class="slds-p-top_small"></div>
+                    <div class="slds-size_1-of-1">
+                        <div class="slds-align_absolute-center">
+                            <div class="slds-align_absolute-center dollar_sign_icon2M">$</div>
+                        </div>
+                    </div>   
+                    <div class="slds-size_1-of-1">
+                        <div class="slds-align_absolute-center">
+                            <div class="slds-p-top_small textM">
+                                <span >View Metrics</span>
+                            </div>
+                            
+                        </div> 
+                    </div>
+                </div>
+                <div class="slds-p-around_small"></div>
+                
+                
+            </div>
+            
+            <div class="slds-size_1-of-1 slds-p-around_small"></div>
+            
+            <div class="slds-grid slds-gutters   slds-align_absolute-center">
+                
+                <div class="slds-col slds-size_3-of-12 BoxM" onclick="">
+                    <div class="slds-p-top_small"></div>
+                    <div class="slds-size_1-of-1">
+                        <div class="slds-align_absolute-center">
+                            <div class="slds-align_absolute-center dollar_sign_iconM">$</div>
+                        </div>
+                    </div>   
+                    <div class="slds-size_1-of-1">
+                        <div class="slds-align_absolute-center">
+                            <div class="slds-p-top_small textM">
+                                <span >Pricing Change Status</span>
+                            </div>
+                            
+                        </div> 
+                    </div>
+                </div>
+                
+                <div class="slds-p-around_small"></div>
+                
+                <div class="slds-col slds-size_3-of-12 BoxM" onclick="">
+                    <div class="slds-p-top_small"></div>
+                    <div class="slds-size_1-of-1">
+                        <div class="slds-align_absolute-center">
+                            <div class="slds-align_absolute-center dollar_sign_icon1M">$</div>
+                        </div>
+                    </div>   
+                    <div class="slds-size_1-of-1">
+                        <div class="slds-align_absolute-center">
+                            <div class="slds-p-top_small textM">
+                                <span >Dealer Add Status</span>
+                            </div>
+                            
+                        </div> 
+                    </div>
+                </div>  
+                
+                <div class="slds-p-around_small"></div>
+                
+            </div>
+            
+            
+            <div class="slds-size_1-of-1"><br/></div>
+        </div>
+        
+    </aura:renderIf>
+    
+    
+    
+</aura:component>

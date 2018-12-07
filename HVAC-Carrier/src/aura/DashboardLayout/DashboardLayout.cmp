@@ -1,0 +1,51 @@
+<!-- Copyright 2017 | Summa Technologies -->
+<aura:component implements="forceCommunity:layout" description="Custom Content Layout" access="global">
+	<ltng:require scripts="{!join(',', $Resource.jquery,
+                           			   $Resource.bootstrapJS,
+									   $Resource.datatableJS,
+                           			   $Resource.chartBundleJS,
+                                       $Resource.chartJS
+                           			   )}"
+		afterScriptsLoaded="{!c.afterScriptsLoaded}"/>
+	<ltng:require styles="{!$Resource.bootstrapCSS}"/>
+
+	<!-- Custom Bootstrap Layout Components -->
+    <aura:attribute name="row1" type="Aura.Component[]" required="false"/>
+    <aura:attribute name="row2" type="Aura.Component[]" required="false"/>
+    <aura:attribute name="row3" type="Aura.Component[]" required="false"/>
+	<aura:attribute name="row4" type="Aura.Component[]" required="false"/>
+    <aura:attribute name="row5" type="Aura.Component[]" required="false"/>
+    <aura:attribute name="row6" type="Aura.Component[]" required="false"/>
+
+    <!-- Dashboard Home -->
+    <div class="row">
+        <div class="col-xs-12 col-md-12">
+            {!v.row1}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-md-12">
+            {!v.row2}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-md-12">
+            {!v.row3}
+        </div>
+    </div>
+	<div class="row">
+        <div class="col-xs-12 col-md-12">
+            {!v.row4}
+        </div>
+    </div>
+	<div class="row">
+        <div class="col-xs-12 col-md-12">
+            {!v.row5}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-md-12">
+            {!v.row6}
+        </div>
+    </div>
+</aura:component>

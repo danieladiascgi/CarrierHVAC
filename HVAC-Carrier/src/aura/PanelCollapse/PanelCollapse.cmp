@@ -1,0 +1,18 @@
+<aura:component >
+	<aura:attribute name="title" type="String" access="public" required="true"/>
+	<aura:attribute name="collapseId" type="String" access="public"/>
+	<aura:attribute name="bodyClass" type="String" access="public" default="" required="false"/>
+	<aura:attribute name="bodyId" type="String" access="public" default="" required="false"/>
+
+	<aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+	<div class="panel panel-default text-left">
+		<div class="panel-heading" data-target="{!'#' + v.collapseId}" role="button" data-toggle="collapse" aria-expanded="true" aria-controls="{!v.collapseId}">
+			<span class="glyphicon glyphicon-chevron-down pull-right"></span>
+			<h3 class="panel-title">{#v.title}</h3>
+		</div>
+		<div id="{!v.collapseId}" class="collapse panel-collapse">
+			<div id="{!v.bodyId}" class="{!'panel-body ' + v.bodyClass}">{!v.body}</div>
+        </div>
+    </div>
+</aura:component>

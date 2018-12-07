@@ -1,0 +1,21 @@
+.THIS .slds-text-link{
+    overflow:hidden;
+}
+.THIS .slds-text{
+    overflow:hidden;
+}
+.THIS.popoverclass {
+    min-height: 100px;
+     
+}
+.THIS.no-pointer .pointer{
+    visibility: hidden;
+}
+/*.divCss.THIS{
+    min-height: 100px;
+    min-width: 60rem;
+}
+div.THIS {
+    color: blue;
+    font-weight: bold;
+}*/

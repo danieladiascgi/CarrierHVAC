@@ -1,0 +1,232 @@
+<aura:component controller="DMIS_Controller" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+<aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+
+<aura:attribute name="recordId" type="Id" />
+<aura:attribute name="lstDocs" type="String[]"/> 
+<aura:attribute name="suggDocs" type="String[]"/> 
+<aura:attribute name="Subject" type="String"/>  
+<aura:attribute name="searchKeyword" type="String" />
+<aura:attribute name="searchByModelNo" type="String" />    
+<aura:attribute name="searchByBrand" type="String" />   
+<aura:attribute name="showDocumentResult" type="boolean" default="false"/>
+<aura:attribute name="showMoreDocumentSection" type="boolean" default="false"/>
+<aura:attribute name="setBrandVal" type="boolean" default="false"/>
+<aura:attribute name="showSection" type="boolean" default="true"/>
+<aura:attribute name="showRemovedListSection" type="boolean" default="false"/>    
+<aura:attribute name="dispayModal" type="boolean" default="true"/>
+<aura:attribute name="case" type="Case" default="{ 'sobjectType': 'Case' }"/>   
+<aura:attribute name="myURL" type="String" default="http://www.google.com"/>
+<aura:attribute name="Brand" type="String[]" default="-None-,Bryant,Carrier,Payne,ICP"/>
+    
+
+    <div class="slds-page-header" style="cursor: pointer;" onclick="{!c.sectionOne}">
+      <section class="slds-clearfix">
+        <div class="slds-float--left ">
+            <lightning:icon class="slds-show" aura:id="articleOne" iconName="utility:add" size="x-small" alternativeText="Indicates add"/>
+            <lightning:icon class="slds-hide" aura:id="articleOne" iconName="utility:dash" size="x-small" alternativeText="Indicates dash"/>
+        </div>                                    
+        <div class="slds-m-left--large"><h3 class="slds-section-title--divider">Suggested Documents</h3></div>                                      
+      </section>
+    </div> 
+     <!--aura:if isTrue="{!v.dispayModal}"-->
+        <div role="dialog" tabindex="-1" aria-labelledby="header43" aura:id="Modalbox" class="slds-modal">      
+            <div class="slds-modal__container" style="margin-top: 7%;height: 89%;">
+                <div class="slds-modal__header">
+                      <button class="slds-button slds-modal__close slds-button--icon-inverse" title="Close" onclick="{!c.closeModal}">
+                        X<span class="slds-assistive-text">Cancel</span>
+                      </button>
+                      <h3 class="slds-section-title--divider">Suggested Documents</h3>
+                </div>
+                 <div class="slds-modal__content slds-p-around--medium slds-scrollable">
+                   
+                    <table class="slds-table slds-table--bordered slds-table--cell-buffer slds-no-row-hover" >
+     
+                      <tr>
+                        <th class="slds-text-heading--label">Document Title</th> 
+                        <th class="slds-text-heading--label">Access</th>
+                                    
+                      </tr>
+                      <aura:iteration items="{!v.suggDocs}" var="obj" >
+                          <tr>                    
+                            <td><ui:outputURL value="{!obj.DocumentBaseURL+obj.DocumentPath}" label="{!obj.DocumentTitle}"/></td>
+                                 <td>{!obj.AccessLevel}</td>      
+                          
+                          </tr>
+   
+                      </aura:iteration>      
+                     </table> 
+                    </div>
+                  
+                  
+                <div class="slds-modal__footer">
+              </div> 
+            </div>
+        </div>
+        <div class="slds-backdrop " aura:id="Modalbackdrop"></div>  
+         
+    <!--/aura:if-->
+     
+    
+<div class="slds-hide slds-p-around--medium" aura:id="articleOne">
+  <table class="slds-table slds-table--bordered slds-table--cell-buffer slds-no-row-hover" >
+     
+            <tr>
+                <th class="slds-text-heading--label">Document Title</th> 
+                <th class="slds-text-heading--label">Access</th>
+               
+               
+            </tr>
+    <aura:iteration items="{!v.suggDocs}" var="obj" >
+       <tr> 
+                   
+                    <td><ui:outputURL value="{!obj.DocumentBaseURL+obj.DocumentPath}" label="{!obj.DocumentTitle}"/></td>
+                    <td>{!obj.AccessLevel}</td>       
+                
+       </tr>
+   
+    </aura:iteration>      
+  </table> 
+</div>
+    
+ <div class="slds-page-header" style="cursor: pointer;" onclick="{!c.sectionTwo}">
+      <section class="slds-clearfix">
+        <div class="slds-float--left ">
+            <lightning:icon class="slds-hide" aura:id="articleTwo" iconName="utility:add" size="x-small" alternativeText="Indicates add"/>
+            <lightning:icon class="slds-show" aura:id="articleTwo" iconName="utility:dash" size="x-small" alternativeText="Indicates dash"/>
+        </div>
+        <div class="slds-m-left--large"><h3 class="slds-section-title--divider">Find Documents</h3></div>
+      </section>
+  </div>
+    
+  <div class="slds-show slds-p-around--medium" aura:id="articleTwo">  
+    <div class="slds-list_horizontal">
+        <div class="slds-form-element">
+            <label class="slds-form-element__label" for="input1">Keyword</label>
+            <div class="slds-form-element__control">    
+                <ui:inputText aura:id="Subject" value="{!v.searchKeyword}"  />
+                <!-- <input id="inputNameSample1" class="slds-input" type="text" /> -->
+            </div>
+        </div>
+        
+        <div class="slds-list_horizontal">
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      
+            <div class="slds-form-element__control">
+                <ui:inputSelect aura:id="Brand" label="Brand" change="{!c.onSelectChange}">                   
+                    <aura:iteration items="{!v.Brand}" var="Brand"> &nbsp;&nbsp;&nbsp;&nbsp;
+                      <aura:if isTrue="{!Brand == v.searchByBrand}">                        
+                        <ui:inputSelectOption text="{!Brand}" label="{!Brand}" value="true" />
+                        <aura:set attribute="else">
+                            <ui:inputSelectOption text="{!Brand}" label="{!Brand}" value="false"/>
+                        </aura:set>
+                      </aura:if>                                             
+                    </aura:iteration>
+                </ui:inputSelect>
+            </div>
+        </div>
+        <div class="slds-list_horizontal">
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+            <div class="slds-form-element__control">
+                <label class="slds-form-element__label" for="input1">Model Number</label> 
+                <ui:inputText aura:id="modelno" value="{!v.searchByModelNo}"  />
+                <!-- <input id="inputNameSample3" class="slds-input" type="text" /> -->   
+            </div>
+        </div>
+    </div> 
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  
+    <div class="slds-list_horizontal">         
+            <div class="slds-form-element">    
+                <ui:button label="Find Documents" press="{!c.findDocument}" />
+            </div>
+        &nbsp;&nbsp;&nbsp;&nbsp;
+            <div class="slds-list_horizontal">  
+                <div class="slds-form-element">    
+                    <ui:button label="Cancel" press="{!c.Cancel}" />
+                </div>
+            </div>       
+    </div>
+  </div>
+
+    
+<aura:if isTrue="{!v.showSection}">
+    <h3 class="slds-section-title--divider">DMIS Search Results</h3>
+    <table class="slds-table slds-table--bordered slds-table--cell-buffer slds-no-row-hover" >
+         
+        <tr>
+            <th class="slds-text-heading--label">Select</th>
+            <th class="slds-text-heading--label">Document Title</th> 
+            <th class="slds-text-heading--label">Access</th>
+            <th class="slds-text-heading--label">Size</th>
+            <th class="slds-text-heading--label">Document URL</th>
+            
+        </tr>
+        <aura:iteration items="{!v.lstDocs}" var="obj" >
+            <tr> 
+                <td><ui:inputCheckbox value="{!obj.isSelected}">  </ui:inputCheckbox></td>
+                <td>{!obj.DocumentTitle}</td>
+                <td>{!obj.AccessLevel}</td>       
+                <td>{!obj.DocumentSize}</td>
+                <td>{!obj.DocumentBaseURL}{!obj.DocumentPath}</td>
+            </tr>   
+        </aura:iteration>
+       
+    </table>
+</aura:if>
+    
+<aura:if isTrue="{!v.showRemovedListSection}">
+    <h3 class="slds-section-title--divider">DMIS Search Results</h3>
+    <table class="slds-table slds-table--bordered slds-table--cell-buffer slds-no-row-hover" >
+         
+        <tr>
+            <th class="slds-text-heading--label">Select</th>
+            <th class="slds-text-heading--label">Document Title</th> 
+            <th class="slds-text-heading--label">Access</th>
+            <th class="slds-text-heading--label">Size</th>
+            <th class="slds-text-heading--label">Document URL</th>
+            
+        </tr>
+        <aura:iteration items="{!v.lstDocs}" var="obj" >
+            <tr> 
+                <td><ui:inputCheckbox value="{!obj.isSelected}">  </ui:inputCheckbox></td>
+                <td>{!obj.DocumentTitle}</td>
+                <td>{!obj.AccessLevel}</td>       
+                <td>{!obj.DocumentSize}</td>
+                <td>{!obj.DocumentBaseURL}{!obj.DocumentPath}</td>
+            </tr>   
+        </aura:iteration>
+       
+    </table>
+</aura:if>
+    
+<aura:if isTrue="{!v.showMoreDocumentSection}">
+<h3 class="slds-section-title--divider">DMIS Search Results</h3>
+   	 <table class="slds-table slds-table--bordered slds-table--cell-buffer slds-no-row-hover" >
+            <tr>
+                <th class="slds-text-heading--label">Select</th>
+                <th class="slds-text-heading--label">Document Title</th> 
+                <th class="slds-text-heading--label">Access</th>
+                <th class="slds-text-heading--label">Size</th>
+                <th class="slds-text-heading--label">Document URL</th>
+               
+            </tr>
+         <aura:iteration items="{!v.lstDocs}" var="obj" >
+             <tr> 
+                    <td><ui:inputCheckbox value="{!obj.isSelected}">  </ui:inputCheckbox></td>
+                    <td>{!obj.DocumentTitle}</td>
+                    <td>{!obj.AccessLevel}</td>       
+                    <td>{!obj.DocumentSize}</td>
+                    <td>{!obj.DocumentBaseURL}{!obj.DocumentPath}</td>
+             </tr>   
+         </aura:iteration>
+    </table>
+</aura:if>
+    
+     <div class="slds-list_horizontal">
+        <div class="slds-form-element">    
+           <ui:button label="Add Suggested Documents" press="{!c.addDocument}" />
+        </div>
+     </div>
+    <ul class="slds-list--vertical slds-has-dividers--top">
+      <ui:outputURL value="" label="Show More Documents" click="{!c.showMoreRecords}"/>
+    </ul>
+</aura:component>

@@ -1,0 +1,104 @@
+<aura:component access="global" controller="EmailDetailPageController">
+    <aura:attribute name="emsg" type="EmailMessage" />
+    <aura:attribute name="showBody" type="Boolean" default="false" />
+    <aura:attribute name="attachmentsList" type="List"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:registerEvent name="NavgToSendEmailReply" type="c:NavgToSendEmailReply"/>
+    <aura:registerEvent name="NavgToSendEmailReplyAll" type="c:NavgToSendEmailReplyAll"/>
+    <aura:registerEvent name="NavgToSendEmailForward" type="c:NavgToSendEmailForward"/>
+    <aura:attribute name="spinnerShow" type="String" default="false" />
+    <aura:attribute name="source" type="String"/>
+    <aura:attribute name="TextBodyPart" type="String"/>
+    <aura:attribute name="showReplyAllButton" type="boolean" default="true"/>
+    <aura:if isTrue="{!v.spinnerShow}">
+        <div class="exampleHolder">
+            <lightning:spinner aura:id="mySpinner" />
+        </div>
+    </aura:if>
+    <tr> 
+        
+        <td scope="row" data-label="Attachment" class="alignTop">
+            
+            <div class="slds-truncate">
+                <aura:if isTrue="{!v.emsg.HasAttachment}">
+                    <lightning:Icon size="xx-small" iconName="utility:attach"  alternativeText="Mark emails read"/><br/>  
+                </aura:if>   
+            </div>
+        </td>
+        
+        <td scope="row" data-label="Action" class="alignTop" >
+            <div class="">
+                <!--<ui:outputText class="slds-text-link" value="Reply" title="{!email.Id}" click="{!c.navToSendEmailReply}" />  
+                                    |
+                                    <ui:outputText class="slds-text-link" value="Reply All" title="{!email.Id}" click="{!c.navToSendEmailReplyAll}" />  
+                                    |
+                                    <ui:outputText class="slds-text-link" value="Forward" title="{!email.Id}" click="{!c.navToSendEmailForward}" /> -->
+                <aura:if isTrue="{!v.showReplyAllButton}">        
+                    
+                    <lightning:buttonMenu title="{!v.emsg.Id}" iconName="utility:settings" alternativeText="Settings" onselect="{!c.NavgToSendEmail}">
+                        <lightning:menuItem label="Reply" value="Reply" />
+                        <lightning:menuItem label="Reply All" value="ReplyAll"/>
+                        <lightning:menuItem label="Forward" value="Forward" />
+                    </lightning:buttonMenu>
+                </aura:if>    
+                
+            </div>
+        </td>
+        <td scope="row" data-label="Status" class="alignTop" >
+            <div class="slds-truncate">
+                <!--<ui:outputText value="{!v.emsg.Status}" /> --> 
+                <aura:if isTrue="{!v.emsg.Status == 'Outbound Draft'}">
+                    <lightning:Icon size="small" iconName="standard:drafts" title="{!v.emsg.Status}"  alternativeText="{!v.emsg.Status}"/><br/>  
+                    <aura:set attribute="else">
+                        <aura:if isTrue="{!v.emsg.Status == 'Sent'}">
+                            <lightning:Icon size="small" iconName="standard:product_request_line_item" title="{!v.emsg.Status}" alternativeText="{!v.emsg.Status}"/><br/>  
+                            <aura:set attribute="else">
+                                <aura:if isTrue="{!v.emsg.Status == 'New'}">
+                                    <lightning:Icon size="small" iconName="standard:email_chatter" title="{!v.emsg.Status}"  alternativeText="{!v.emsg.Status}"/><br/>
+                                    <aura:set attribute="else">
+                                        <lightning:Icon size="small" iconName="standard:return_order_line_item" title="{!v.emsg.Status}"  alternativeText="{!v.emsg.Status}"/><br/>
+                                    </aura:set>
+                                </aura:if>
+                            </aura:set>
+                        </aura:if>
+                    </aura:set>
+                </aura:if>
+            </div>
+        </td>                                        
+        
+        <th scope="row" class="slds-cell-shrink alignTop" data-label="Opportunity Name">
+            Message Date:  <b><lightning:formattedDateTime value="{!v.emsg.MessageDate}" year="numeric" month="numeric" day="numeric"  hour="2-digit" minute="2-digit" timeZoneName="short" /></b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;From: <b><ui:outputText value="{!v.emsg.FromName}" />(<ui:outputText value="{!v.emsg.FromAddress}" />)</b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;To: <b><ui:outputText value="{!v.emsg.ToAddress}" /><br></br>Cc: <ui:outputText value="{!v.emsg.CcAddress}" /></b> 
+            <div class="slds-size_2-of-3">    
+                <div class="slds-text-link slds-wrap slds-truncate subjectBold" aura:id="{!v.emsg.Id}" title="{!v.emsg.Subject}" onclick="{!c.showDescription}">{!v.emsg.Subject}</div>
+                <aura:if isTrue="{!(v.showBody==false)}">
+                    <div class="descriptionFont" title="{!v.emsg.TextBody}">{!v.TextBodyPart}</div>
+                </aura:if>    
+            </div>
+            <aura:if isTrue="{!v.showBody}">
+                <div class="slds-form-element__control">
+                    <aura:unescapedHtml aura:id="desc" value="{!v.emsg.HtmlBody}"/>
+                    <aura:if isTrue="{!v.emsg.HasAttachment}">
+                        <div class="slds-form-element">
+                            <table>
+                                <thead>
+                                    <tr><th>Attachment Name</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <aura:iteration items="{!v.attachmentsList}" var="item">
+                                        <tr>
+                                            <!--<td><ui:inputCheckbox class="myCheckbox" aura:id="checkboxLeads" text="{!item.attachmentId}" change="{!c.onSelect}" value="{!item.selected}"/></td>-->
+                                            <td><c:EachAttachmentPreview attachmentId="{!item.attachmentId}" attachmentName="{!item.attachmentName}" /></td>           
+                                        </tr>       
+                                    </aura:iteration>
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                    </aura:if>    
+                </div>
+            </aura:if>
+        </th>
+        
+    </tr>
+</aura:component>

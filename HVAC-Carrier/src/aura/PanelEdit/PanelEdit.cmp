@@ -1,0 +1,32 @@
+<aura:component >
+	<aura:attribute name="title" type="String" access="public" required="true"/>
+	<aura:attribute name="isEdit" type="Boolean" default="false" access="private" required="false"/>
+    <aura:attribute name="isDisabled" type="Boolean" default="false" access="private" required="false"/>
+
+    <aura:registerEvent name="SaveEdit" type="c:SaveEdit"/>
+    <aura:registerEvent name="CancelEdit" type="c:CancelEdit"/>
+
+    <aura:handler name="CheckInputValidity" event="c:CheckInputValidity" action="{!c.validate}"/>
+
+	<div class="panel panel-default text-left">
+        <div class="panel-heading">
+            <div class="row">
+                <div class="col-sm-8 col-md-9">
+                    <h3 class="panel-title slds-p-around--small">{#v.title}</h3>
+                </div>
+                <div class="col-sm-4 col-md-3">
+                    <aura:if isTrue="{!!v.isEdit}">
+                        <ui:button press="{!c.doEdit}" class="btn btn-primary" label="Edit"/>
+                        <aura:set attribute="else">
+                            <ui:button press="{!c.doSave}" class="btn btn-primary slds-m-right_small" label="Save" disabled="{!v.isDisabled}"/>
+                            <ui:button press="{!c.doCancel}" class="btn btn-default" label="Cancel"/>
+                        </aura:set>
+                    </aura:if>
+                </div>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="inner-container">{#v.body}</div>
+		</div>
+    </div>
+</aura:component>

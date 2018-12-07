@@ -1,0 +1,12 @@
+.THIS .alignTop {
+    vertical-align:top;
+    width: 20px;
+}
+.THIS .subjectBold {
+    font-weight: bold;
+    font-size: 15px;
+}
+.THIS .descriptionFont {
+    font-style: italic;
+    font-size: 11px;
+}

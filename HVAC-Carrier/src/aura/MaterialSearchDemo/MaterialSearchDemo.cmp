@@ -1,0 +1,123 @@
+<aura:component controller="MaterialSearchDemoController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+	
+    <aura:attribute name="MaterialNo" Type="String" />
+    <aura:attribute name="Quantity" Type="Integer" />
+    <aura:attribute name="ExpDate" Type="Date" />
+    <aura:attribute name="Acct" Type="Account" />
+    <aura:attribute name="MaterialResult" Type="Map"/>
+    <aura:attribute name="materialsList" Type="MaterialSearchDemoController.JSONWrapper"/>
+    <aura:attribute name="materialsPriceList" Type="MaterialSearchDemoController.onHoverWrapper"/>
+    <aura:attribute name="selectedRecords" type="List"/>
+    <aura:attribute name="sapShipToVal" type="String"/>
+    <aura:attribute name="dispayToolTip" type="Boolean" default="false"/>
+    <aura:attribute name="showSection" Type="Boolean" default="false"/>
+    <aura:attribute name="checkboxVal" Type="Boolean" default="false"/>
+    <aura:attribute name="displayOnInvalidPartNo" type="Boolean" default="false"/>
+    <aura:attribute name="displayOnNoPriceData" type="Boolean" default="false"/>
+    <aura:attribute name="displayEnterCustNo" type="Boolean" default="false"/>
+    <aura:attribute name="displayEnterMatNo" type="Boolean" default="false"/>
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:handler event="force:refreshView" action="{!c.doInit}" />
+    
+    <aura:if isTrue="{!v.displayOnInvalidPartNo}"> 
+      <ui:message title="Error" severity="error" closable="true">
+        Please enter a valid part number.
+      </ui:message>
+    </aura:if>
+    <aura:if isTrue="{!v.displayOnNoPriceData}"> 
+      <ui:message title="Error" severity="error" closable="true">
+        There is no price data available for this part number.
+      </ui:message>
+    </aura:if>
+    <aura:if isTrue="{!v.displayEnterCustNo}"> 
+      <ui:message title="Error" severity="error" closable="true">
+        Please enter a customer number.
+      </ui:message>
+    </aura:if>
+    <aura:if isTrue="{!v.displayEnterMatNo}"> 
+      <ui:message title="Error" severity="error" closable="true">
+        Please enter a material number.
+      </ui:message>
+    </aura:if>
+    
+    
+    <p> Material search from ERP: </p><br></br>
+    <p> 
+        <ui:inputText aura:id="mno" label="Enter Material Number" value="{!v.MaterialNo}" required="true"/> 
+    </p><br></br>
+    <p>   Customer </p>
+    <p> 
+       <ui:inputText aura:id="sapShipTo" value="{!v.sapShipToVal}" required="true"/>
+    </p><br></br>
+    <p>
+        <div class="slds-form-element">
+    <label class="slds-checkbox_toggle slds-grid">
+      <span class="slds-form-element__label slds-m-bottom_none"></span>
+       <ui:inputCheckbox value="{!v.checkboxVal}"/>
+      <span id="toggle-desc" class="slds-checkbox_faux_container" aria-live="assertive">
+        <span class="slds-checkbox_faux"></span>
+        <span class="slds-checkbox_on">CAN</span>
+        <span class="slds-checkbox_off">USA</span>
+      </span>
+    </label>
+  </div>
+    </p><br/>
+    <p>
+        <ui:button label="Search" press="{!c.handleClick2}"/> 
+    </p>
+    <p> 
+        <b>Material Number:&nbsp;</b> <ui:outputText value="{!v.MaterialNo}" /> 
+    </p>
+    
+    <!--<p> 
+        <b>Available:&nbsp;</b> <ui:outputText value="200" />   
+    </p>-->
+  
+ <!--aura:if isTrue="{!v.showSection}"-->
+        
+  <div onmouseover="{!c.showToolTip}" onmouseout="{!c.hideToolTip}">
+   <table>
+    <thead>
+       <tr><th>Quantity</th><!--<th>Lead Time Days</th>--><th>Recovery Date</th>
+       </tr>
+    </thead>
+    <tbody>      
+       <tr>         
+         <td><ui:outputText value="{!v.materialsList.quantity}" /></td>
+         <!--<td><ui:outputText value="{!v.materialsList.leadTimeDays}" /></td>-->
+         <td><ui:outputText value="{!v.materialsList.recoveryDate}" /></td>
+       </tr>             
+     </tbody>
+    </table>
+   </div><br></br>
+    
+ <aura:if isTrue="{!v.dispayToolTip}"> 
+   <div class="slds-popover slds-popover_tooltip slds-nubbin_top-left" role="tooltip" id="help" style="position: left;left: 40px;background-color: #ccffcc;">
+     <div class="slds-popover__body">
+        <table>     
+            <tr>
+                <th class="slds-text-heading--label">List Price</th> 
+                <th class="slds-text-heading--label">Multiplier</th>
+                <th class="slds-text-heading--label">Net Price</th>
+                <th class="slds-text-heading--label">Currency Code</th>
+            </tr>
+            
+               <tr>                   
+                 <td class="slds-color__text_gray-12"><ui:outputText value="{!v.materialsPriceList.listPrice}" /></td>
+                 <td class="slds-align_absolute-center slds-color__text_gray-12"><ui:outputText value="{!v.materialsPriceList.multiplier}" /></td> 
+                 <td class="slds-color__text_gray-12"><ui:outputText value="{!v.materialsPriceList.netPrice}" /></td>
+                 <td class="slds-color__text_gray-12"><ui:outputText value="{!v.materialsPriceList.currencyCode}" /></td>
+               </tr>   
+                  
+        </table> 
+     </div>
+   </div>
+  </aura:if>   
+  <!--/aura:if-->
+    <div class="slds-align--absolute-center">
+      
+      <button type="button" class="slds-button slds-button--brand slds-m-around--medium" onclick="{!c.clickSave}" aura:id="btnSave">Save</button>
+    </div> 
+ 
+</aura:component>

@@ -1,0 +1,20 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes,lightning:availableForFlowScreens" access="global" >
+    <aura:attribute name="sumRequest" type="String" access="global" />
+    <aura:attribute name="issues" type="String" access="global" />
+    
+    <div class="slds-p-top_small slds-p-left_small  slds-p-right_small">
+        <div class="slds-text-title_bold slds-p-bottom_large text">Distributor Info: Step 3</div>
+        <div class="slds-grid slds-wrap">
+            <div class="slds-col slds-size_1-of-1 slds-p-left_small slds-p-top_small">
+                <span>Please provide a summary of your request:</span>
+                <lightning:textarea class="txtarea" name="sumary" placeholder="Summary of Request" value="{!v.sumRequest}"/>
+            </div>
+            <div class="slds-col slds-size_1-of-1 slds-p-left_small slds-p-top_small">
+                <span>Please indicate any additional issues that need to be made aware of:</span>
+                <lightning:textarea class="txtarea" name="issues" placeholder="Issues to be aware of" value="{!v.issues}"/>
+            </div>
+            <div class="slds-col slds-size_1-of-1" ></div>
+            
+        </div>
+    </div>
+</aura:component>

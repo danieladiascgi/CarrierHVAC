@@ -1,0 +1,50 @@
+<aura:component access="global" implements="force:appHostable,forceCommunity:availableForAllPageTypes" >
+	<aura:attribute name="equipment" type="Object" required="false"/>
+	<aura:attribute name="location" type="Object" required="false"/>
+	<aura:attribute name="requestType" type="String" required="false" default=""/>
+	<aura:attribute name="isTypeSpecifiedOnLoad" type="Boolean" default="false"/>
+	<aura:attribute name="buttonText" type="String" />
+	<aura:attribute name="formHeaderText" type="String" />
+	<aura:attribute name="isOpen" type="Boolean" access="private" default="false"/>
+	<aura:attribute name="className" type="String" default="btn btn-primary" access="public"/>
+    <aura:attribute name="AccIdval" type="String" />
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}"/>
+    <aura:handler event="c:AccountChangeEvent" action="{!c.searchkeyModalchangectrl}" /> 
+
+	<!-- This is the button that spawns the modal -->
+	<div class="request-container">
+		<a onclick="{!c.makeModal}" class="{!v.className}">{!v.buttonText}</a>
+	</div>
+
+	<!-- This is the modal itself -->
+	<div class="{!'modal face in ' + (v.isOpen ? 'modal-is-open' : '')}">
+		<div class="modal-dialog modal-md" role="document">
+			<div class="modal-content shadow-depth-2">
+				<div class="modal-header">
+					<div class="request-options">
+						<aura:if isTrue="{!!v.isTypeSpecifiedOnLoad}">
+							<div class="requst-type-header">
+								<p>Please choose your request type:</p>
+							</div>
+						    <ui:inputRadio name="options" aura:id="option1" text="case"  change="{!c.switchModalForm}" label="Request Service"/>
+						    <ui:inputRadio name="options" aura:id="option2" text="quote" label="Request Proposal"  change="{!c.switchModalForm}"/>
+						    <ui:inputRadio name="options" aura:id="option3" text="caseChange" label="Service Request Change"  change="{!c.switchModalForm}"/>
+						</aura:if>
+					</div>
+					<aura:if isTrue="{!!empty(v.requestType)}">
+						<h3>{!v.formHeaderText}</h3>
+					</aura:if>
+				</div>
+				<div class="modal-body">
+					<div class="container-fluid">
+						{!v.body}
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" onclick="{!c.closeModal}" class="btn btn-default">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="{!v.isOpen ? 'slds-backdrop slds-backdrop--open' : ''}"/>
+</aura:component>

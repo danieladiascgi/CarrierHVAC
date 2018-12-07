@@ -1,0 +1,29 @@
+<aura:component >
+	<aura:attribute name="title" type="String" access="public" required="false"/>
+    <aura:attribute name="bodyClass" type="String" access="public" default="" required="false"/>
+    <aura:attribute name="actionButtons" type="Aura.Component[]" access="public" required="false" />
+
+	<div class="panel panel-default text-left">
+        <aura:if isTrue="{#!empty(v.title)}">
+            <div class="{#'panel-heading ' + (!empty(v.actionButtons) ? 'has-action-buttons' : '')}">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-6 col-md-6">
+                        <h3 class="panel-title">{#v.title}</h3>
+                    </div>
+                    <aura:if isTrue="{#!empty(v.actionButtons)}">
+                        <div class="col-xs-12 col-sm-6 col-md-6">
+                            <div class="action-buttons-container">
+                                <div>
+                                    {#v.actionButtons}
+                                </div>
+                            </div>
+                        </div>
+                    </aura:if>
+                </div>
+            </div>
+        </aura:if>
+        <div class="{!'panel-body ' + v.bodyClass}">
+            {#v.body}
+		</div>
+    </div>
+</aura:component>

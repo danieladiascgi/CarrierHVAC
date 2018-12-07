@@ -1,0 +1,165 @@
+<aura:component >
+	<aura:attribute name="wrap" type="object" />
+    <td scope="row" data-label="Line" title="Line" class="" >
+                                    <div class="slds-truncate">
+                                       <!--  <ui:button press="{!c.contactCustService}" label="Create Case"/>-->
+                                        <!--<ui:outputText value="{!v.wrap.lineId}" />--> 
+                                         <!--<lightning:buttonIcon iconName="utility:record_create" variant="bare" size="medium" alternativeText="Create Case" iconClass="dark" />-->
+										 <lightning:buttonIcon iconName="utility:chat" variant="bare" size="medium" alternativeText="Chat" iconClass="dark" onclick="{!c.initiateChat}"/>
+                                    </div>
+                                </td>
+                                <td scope="row" data-label="Line" title="Line" class="">
+                                    <div class="slds-truncate">
+                                        {!v.wrap.lineId}
+                                        <!--<ui:outputText value="{!v.wrap.lineId}" />--> 
+                                    </div>
+                                </td>
+    							<td scope="row" data-label="Line" title="Line" class="">
+                                    <div class="slds-truncate">
+                                        {!v.wrap.lineType}
+                                        <!--<ui:outputText value="{!v.wrap.lineId}" />--> 
+                                    </div>
+                                </td>
+                                <td aura:id="{!v.wrap.partId}" data-label="Part Id" title="Part Id" class="">
+                                    <div class="slds-truncate">
+                                        {!v.wrap.partId}
+                                        <!--<ui:outputText value="{!v.wrap.partId}" />-->    
+                                        <!--<a href="{!'/one/one.app?#/sObject/'+ opp.Id + '/view'}" target="_blank">{!v.wrap.partId}</a>-->
+                                        <!--<ui:outputText aura:id="{!v.wrap.partId}" value="{!v.wrap.partId}" click="{!c.popupDisp}" />-->
+                                    </div>
+                                </td>
+                                <td data-label="Priority Code" title="Priority Code" class="">
+                                    <div class="slds-truncate">
+                                        {!v.wrap.priorityCode}
+                                        <!--<ui:outputText value="{!v.wrap.priorityCode}" />-->  
+                                    </div>
+                                </td>
+                                <td data-label="Description" title="Description" class="">
+                                    <div class="slds-truncate">
+                                        {!v.wrap.description}
+                                        <!--<ui:outputText value="{!v.wrap.description}" />  -->       
+                                    </div>
+                                </td>
+                                <td data-label="Quantity" title="Quantity" class="">
+                                    <div class="slds-truncate">                                        
+                                          {!v.wrap.quantity}                                        
+                                        <!--<ui:outputText value="{!v.wrap.quantity}" /> -->
+                                    </div>
+                                </td>
+                                <td data-label=" Last Status" title=" Last Status" class="">
+                                    <div class="slds-truncate">
+                                        {!v.wrap.lastStatus}
+                                        <!--<ui:outputText value="{!v.wrap.lastStatus}" />-->  
+                                    </div>
+                                </td>
+                                <td data-label="Next Status" title="Next Status" class="">
+                                    <div class="slds-truncate">
+                                        {!v.wrap.nextStatus}
+                                        <!--<ui:outputText value="{!v.wrap.nextStatus}" /> --> 
+                                    </div>
+                                </td>
+                                <td data-label="Picklist" title="Picklist" class="" >
+                                    <div class="slds-truncate" >
+                                        <aura:if isTrue="{!v.wrap.pickListId == 0}"> 
+                                           
+                                        <aura:set attribute="else" >
+                                          {!v.wrap.pickListId}
+                                        </aura:set>
+                                        </aura:if>
+                                        <!--<ui:outputText value="{!v.wrap.pickListId}" />  -->
+                                    </div>
+                                </td>
+    							<td data-label="Order Date" title="Order Date" class="">
+                                    <div class="slds-truncate">
+                                        {!v.wrap.orderDate}
+                                    </div>
+                                </td> 
+                                <td scope="row" data-label="Promise Ship Date" title="Promise Ship Date" class="">
+                                    <div class="slds-truncate">
+                                        {!v.wrap.promiseShipDate}
+                                        <!--<ui:outputText value="{!v.wrap.promiseShipDate}" /> --> 
+                                    </div>
+                                </td>
+                                <td scope="row" data-label="Carrier" title="Carrier" class="">
+                                    <div class="slds-truncate">
+                                        {!v.wrap.carrier}
+                                        <!--<ui:outputText value="{!v.wrap.carrier}" /> --> 
+                                    </div>
+                                </td>
+                                <td data-label="Tracking Code" title="Tracking Code" class="">
+                                    <div class="slds-truncate">
+                                        {!v.wrap.trackingId}
+                                        <!--<ui:outputText value="{!v.wrap.trackingId}" />  -->
+                                    </div>
+                                </td>
+                                <td data-label="Invoice Code" title="Invoice Code" class="">
+                                    <div class="slds-truncate">
+                                        <aura:if isTrue="{!v.wrap.invoiceId == 0}"> 
+                                           
+                                        <aura:set attribute="else">
+                                          {!v.wrap.invoiceId}
+                                        </aura:set>
+                                        </aura:if>
+                                        <!--<ui:outputText value="{!v.wrap.invoiceId}" /> --> 
+                                    </div>
+                                </td>
+                                <td scope="row" data-label="Unit Price" title="Unit Price" class="">
+                                    <div class="slds-truncate">
+                                        {!v.wrap.unitPrice}
+                                        <!--<ui:outputText value="{!v.wrap.unitPrice}" />  -->
+                                    </div>
+                                </td>
+                                <td data-label="Extended Price" title="Extended Price" class="">
+                                    <div class="slds-truncate">
+                                        {!v.wrap.extendedPrice}
+                                        <!--<ui:outputText value="{!v.wrap.extendedPrice}" />-->  
+                                    </div>
+                                </td>                                                                                             
+                                <td data-label="Line Type" title="Related Order No" class="">
+                                    <div class="slds-truncate">
+                                        {!v.wrap.relatedOrderNumber}
+                                        <!--<ui:outputText value="{!v.wrap.relatedOrderNumber}" />  -->
+                                    </div>
+                                </td>
+                                <td data-label="Line Type" title="Related Order Type" class="">
+                                    <div class="slds-truncate">
+                                        {!v.wrap.relatedOrderType}
+                                        <!--<ui:outputText value="{!v.wrap.relatedOrderType}" />  -->
+                                    </div>
+                                </td>                                                               
+                                <td data-label="Line Type" title="Quantity BackOrdered" class="">
+                                    <div class="slds-truncate">
+                                        <aura:if isTrue="{!v.wrap.quantityBackordered == 0}"> 
+                                           
+                                        <aura:set attribute="else">
+                                          {!v.wrap.quantityBackordered}
+                                        </aura:set>
+                                        </aura:if>
+                                        
+                                        <!--<ui:outputText value="{!v.wrap.quantityBackordered}" /> --> 
+                                    </div>
+                                </td>
+                                <td data-label="Actual Ship Date" title="Actual Ship Date" class="">
+                                    <div class="slds-truncate">
+                                        {!v.wrap.shipDate}
+                                        <!--<ui:outputText value="{!v.wrap.actualShipDate}" /> --> 
+                                    </div>
+                                </td> 
+                                <!--<td data-label="Hold Code" title="Gas Valve" class="">
+                                    <div class="slds-truncate">
+                                        <ui:outputText value="GV" /> 
+                                        <lightning:helptext content="Gas Valve" />
+                                    </div>
+                                </td>   -->
+    							 
+    							<td data-label="Sales Order No" title="Sales Order No" class="">
+                                    <div class="slds-truncate">
+                                        {!v.wrap.salesOrderNo}
+                                    </div>
+                                </td>  
+    							<td data-label="Customer PO No" title="Customer PO No" class="" >
+                                    <div class="slds-truncate"  >
+                                        {!v.wrap.customPoNo}
+                                    </div>
+                                </td>  
+</aura:component>

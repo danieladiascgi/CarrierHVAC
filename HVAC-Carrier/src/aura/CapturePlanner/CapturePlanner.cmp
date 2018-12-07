@@ -1,0 +1,9 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global">
+	<aura:attribute name="ExpediteId" type="Id"/>
+    <lightning:recordEditForm recordId="{!v.ExpediteId}" objectApiName="Expedite__c" onsuccess="{!c.successSave}">
+        <lightning:messages />
+        <lightning:inputField fieldName="Planner__c" />
+        <lightning:button class="slds-m-top_small" variant="brand" type="submit" name="update" label="Update" />
+    </lightning:recordEditForm>
+
+</aura:component>

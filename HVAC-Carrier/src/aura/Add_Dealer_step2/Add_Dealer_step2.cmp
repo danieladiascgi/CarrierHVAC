@@ -1,0 +1,98 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes,lightning:availableForFlowScreens"  access="global" >
+    
+    <aura:attribute name="distributorName" type="String" access="global" />
+    <aura:attribute name="distributorNumber" type="String" access="global" />
+    <aura:attribute name="dealerNumber" type="String" access="global" />
+    <aura:attribute name="hvpNumber" type="String" access="global" />
+    <aura:attribute name="dealerName" type="String" access="global" />
+    <aura:attribute name="pricingDealer" type="Boolean" access="global" />
+    <aura:attribute name="dealerAddress1" type="String" access="global" />
+    <aura:attribute name="city" type="String" access="global" />
+    <aura:attribute name="state" type="String" access="global" />
+    <aura:attribute name="zip" type="String" access="global" />
+    
+    
+    <div class="slds-p-top_small slds-p-left_small  slds-p-right_small">
+        <div class="slds-text-title_bold slds-p-bottom_large text">Distributor Info: Step 2</div>
+        <div class="slds-grid slds-wrap">
+            <div class="slds-col slds-size_3-of-6">
+                <span>Distributor Name</span>
+            </div>
+            <div class="slds-col slds-size_3-of-6">
+                <span>Distributor Number</span>
+            </div>
+            
+            <div class="slds-col slds-size_3-of-6 slds-p-right_small slds-p-bottom_small">
+                <lightning:input type="String" id="distributorName" value="{!v.distributorName}" />
+            </div>
+            <div class="slds-col slds-size_3-of-6 slds-p-bottom_small">
+                <lightning:input type="String" id="distributorNumber" value="{!v.distributorNumber}" />
+            </div>
+            
+            <div class="slds-col slds-size_3-of-6 ">
+                <span>Dealer Number</span>
+            </div>
+            <div class="slds-col slds-size_3-of-6">
+                <span>HVP Number</span>
+            </div>
+            
+            <div class="slds-col slds-size_3-of-6 slds-p-right_small slds-p-bottom_small">
+                <lightning:input type="String" id="dealerNumber" value="{!v.dealerNumber}" />
+            </div>
+            <div class="slds-col slds-size_3-of-6 slds-p-bottom_small">
+                <lightning:input type="String" id="hvpNumber" value="{!v.hvpNumber}" />
+            </div>
+            
+            <div class="slds-col slds-size_3-of-6 ">
+                <span>Dealer Name</span>
+            </div>
+            <div class="slds-col slds-size_3-of-6">
+                <span>Pricing Dealer</span>
+            </div>
+            
+            <div class="slds-col slds-size_3-of-6 slds-p-right_small slds-p-bottom_small">
+                <lightning:input type="String" id="dealerName" value="{!v.dealerName}" />
+            </div>
+            <div class="slds-col slds-size_3-of-6 slds-p-top_small slds-p-bottom_small slds-p-left_small">
+                <!--checkbox-->
+                <lightning:input type="checkbox" id="pricingDealer" value="{!v.pricingDealer}"/>
+            </div>
+            
+            <div class="slds-col slds-size_3-of-6">
+                <span>Dealer Address 1</span>
+            </div>
+            <div class="slds-col slds-size_3-of-6"></div>
+            <div class="slds-col slds-size_3-of-6 slds-p-right_small slds-p-bottom_small">
+                <lightning:input type="String" id="dealerAddress1" value="{!v.dealerAddress1}" />
+            </div>
+            <div class="slds-col slds-size_3-of-6"></div>
+            <div class="slds-col slds-size_2-of-6">
+                <span>City/Location</span>
+            </div>
+            <div class="slds-col slds-size_2-of-6">
+                <span>State</span>
+            </div>
+            <div class="slds-col slds-size_2-of-6">
+                <span>Zip</span>
+            </div>
+            
+            <div class="slds-col slds-size_1-of-6">
+                <lightning:input type="String" id="city" value="{!v.city}" />
+            </div>
+            <div class="slds-col slds-size_1-of-6"></div>
+            <div class="slds-col slds-size_1-of-6">
+                <lightning:input type="String" id="state" value="{!v.state}" />
+            </div>
+            <div class="slds-col slds-size_1-of-6"></div>
+            <div class="slds-col slds-size_1-of-6">
+                <lightning:input type="String" id="zip" value="{!v.zip}" />
+            </div>
+            <div class="slds-col slds-size_6-of-6" ><br/></div>
+            <div class="slds-col slds-size_2-of-6" ></div>
+            <div class="slds-col slds-size_1-of-6" ></div>
+            <div class="slds-col slds-size_1-of-1" ></div>
+            
+        </div>
+    </div>
+    
+</aura:component>

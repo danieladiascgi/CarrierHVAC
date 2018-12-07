@@ -1,7 +1,8 @@
-<aura:component implements="forceCommunity:availableForAllPageTypes" access="global" >
+<aura:component  implements="forceCommunity:availableForAllPageTypes,lightning:availableForFlowScreens" access="global" >
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
     
     <aura:attribute name="quotes_List" type="List" />
+    <aura:attribute name="quotes_selected" type="String" />
     
     <div class="slds-p-top_small slds-p-left_small  slds-p-right_small">
         <div class="slds-text-title_bold slds-p-bottom_large text">Distributor Info: Step 4</div>
@@ -46,7 +47,10 @@
                                                         <div class="slds-truncate">Quote Number</div>
                                                     </th>
                                                     <th scope="col">
-                                                        <div class="slds-truncate">Quote Ref Number</div>
+                                                        <div class="slds-truncate">Quote Name</div>
+                                                    </th>
+                                                    <th scope="col">
+                                                        <div class="slds-truncate">Quote Reference Number</div>
                                                     </th>
                                                     <th scope="col">
                                                         <div class="slds-truncate">Quote Description</div>
@@ -63,22 +67,25 @@
                                                 <aura:iteration items="{!v.quotes_List}" var="quotes_List" indexVar="i">
                                                     <tr class="slds-hint-parent L_tr G_fontColor" id="{!i}">
                                                         <td>
-                                                            <ui:inputCheckbox  aura:id="NIGGAS" value="{!quotes_List.isSelected}" />
+                                                            <ui:inputCheckbox  aura:id="quotes" value="{!quotes_List.isSelected}" click="{!c.onclick}" />
                                                         </td>
                                                         <td scope="row" data-label="Quote Number"> 
-                                                            <span class="slds-cell-wrap" >{!quotes_List.quoteNumber}</span>
+                                                            <span class="slds-cell-wrap" >{!quotes_List.Quote_number__c}</span>
+                                                        </td>
+                                                        <td scope="row" data-label="Quote Number"> 
+                                                            <span class="slds-cell-wrap" >{!quotes_List.Name}</span>
                                                         </td>
                                                         <td scope="row" data-label="Quote Ref Number" >
-                                                            <span class="slds-cell-wrap" >{!quotes_List.quoteRefNumber}</span>
+                                                            <span class="slds-cell-wrap" >{!quotes_List.Quote_Reference_Number__c}</span>
                                                         </td>
                                                         <td scope="row" data-label="Quote Description">
-                                                            <span class="slds-cell-wrap " >{!quotes_List.quoteDescription}</span>
+                                                            <span class="slds-cell-wrap " >{!quotes_List.Quote_Description__c}</span>
                                                         </td>
                                                         <td scope="row" data-label="Eff Date">
-                                                            <span class="slds-cell-wrap " >{!quotes_List.effDate}</span>
+                                                            <span class="slds-cell-wrap " >{!quotes_List.Effective_Date__c}</span>
                                                         </td>
                                                         <td scope="row" data-label="Exp Datw">
-                                                            <span class="slds-cell-wrap " >{!quotes_List.expDate}</span>
+                                                            <span class="slds-cell-wrap " >{!quotes_List.Expired_Date__c}</span>
                                                         </td>
                                                     </tr>
                                                 </aura:iteration>
@@ -91,13 +98,9 @@
                     </div>
                 </article>
             </div>
-            <div class="slds-col slds-size_4-of-6 " ></div>
-            <div class="slds-col slds-size_1-of-6 slds-p-top_large ">
-                <button class="slds-button slds-button_outline-brand btn" name="back"  aura:id="back" onclick="{!c.handleClick}">Back</button>
+            <div class="slds-col slds-size_1-of-1 " >
             </div>
-            <div class="slds-col slds-size_1-of-6  slds-p-top_large slds-p-left_xx-small">
-                <button class="slds-button slds-button_brand btn1" name="next"  onclick="{!c.handleClick}">Next</button>
-            </div>
+            
         </div>
-    </div>  
+    </div>
 </aura:component>

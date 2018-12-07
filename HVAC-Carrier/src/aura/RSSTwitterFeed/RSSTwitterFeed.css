@@ -1,0 +1,60 @@
+.THIS {
+	margin-top: 2rem;
+}
+
+.THIS .feed-container .feed-container-header {
+	height: 82px;
+}
+
+.THIS .feed-container .feed-container-header.header-twitter {
+	padding: 18px 30px;
+}
+
+.THIS .feed-container .feed-container-header h3 {
+	margin: 0;
+}
+
+.THIS .feed-container .feed-container-header .feed-logo-twitter {
+	max-width: 46px;
+}
+
+.THIS .feed-container .feed-container-header .feed-logo-rss {
+	max-width: 31px;
+	margin: 0 10px 0 10px;
+}
+
+.THIS .feed-container .panel-body {
+	padding: 0;
+	height: 310px;
+	display: flex;
+	justify-content: center;
+}
+
+.THIS .news-feed-container {
+	overflow-y: scroll !important;
+	padding: 20px;
+}
+
+.THIS .publish-date {
+	font-size: .9em;
+	color: #666;
+}
+
+.THIS .news-headline {
+	font-size: 1.2em;
+	font-weight: 900 !important;
+	margin: -5px 0 20px 0;
+}
+
+/* Grid fixes */
+@media(max-width: 768px) {
+	.THIS .grid-filler {
+		display: none;
+	}
+}
+
+@media(max-width: 640px) {
+	.THIS .grid-item {
+		width: 100%;
+	}
+}

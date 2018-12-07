@@ -1,0 +1,11 @@
+.THIS.panel .panel-heading.has-action-buttons {
+	padding: 14px 30px;
+}
+
+.THIS.panel .panel-heading .panel-title {
+	line-height: 35px;
+}
+
+.THIS.panel .panel-heading .action-buttons-container {
+	float: right;
+}

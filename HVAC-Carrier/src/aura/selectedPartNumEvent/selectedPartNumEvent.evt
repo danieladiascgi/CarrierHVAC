@@ -1,0 +1,3 @@
+<aura:event type="COMPONENT" description="by this event we are pass the selected part number in the parent component">
+    <aura:attribute name="partnoByEvent" type="object"/>
+</aura:event>

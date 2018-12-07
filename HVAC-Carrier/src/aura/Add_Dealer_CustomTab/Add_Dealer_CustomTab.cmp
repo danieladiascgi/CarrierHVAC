@@ -1,0 +1,42 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes,lightning:availableForFlowScreens" access="global" >
+	    
+    <aura:attribute name="pageNumber" type="Integer" default="1" />
+
+    
+    
+    <div class="slds-m-around--medium"> 
+        <div class="slds-tabs--scoped">
+            <ul class="slds-tabs--scoped__nav " role="tablist">
+                <li  aura:id="step1Id" class="slds-tabs--scoped__item slds-text-title--caps slds-active"  title="Step One" role="presentation"><a class="slds-tabs--scoped__link" href="javascript:void(0);" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-1" id="tab-scoped-1__item">Step 1</a></li>
+                <li  aura:id="step2Id" class="slds-tabs--scoped__item slds-text-title--caps" title="Step Two" role="presentation"><a class="slds-tabs--scoped__link" href="javascript:void(0);" role="tab" tabindex="0" aria-selected="true" aria-controls="tab-scoped-2" id="tab-scoped-2__item">Step 2</a></li>
+                <li  aura:id="step3Id" class="slds-tabs--scoped__item slds-text-title--caps" title="Step Three" role="presentation"><a class="slds-tabs--scoped__link" href="javascript:void(0);" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3" id="tab-scoped-3__item">Step 3</a></li>
+                <li  aura:id="step4Id" class="slds-tabs--scoped__item slds-text-title--caps" title="Step Four" role="presentation"><a class="slds-tabs--scoped__link" href="javascript:void(0);" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3" id="tab-scoped-3__item">Step 4</a></li>
+            </ul>    
+            <aura:renderif isTrue="{!v.pageNumber == 1}">
+                <div aura:id="stepOneDataId" id="tab-scoped-1" class="slds-tabs--scoped__content slds-show" role="tabpanel" aria-labelledby="tab-scoped-1__item">
+                    <c:Add_Dealer_step1/>
+                </div>
+                
+            </aura:renderif>
+            <aura:renderif isTrue="{!v.pageNumber == 2}">
+
+                <div aura:id="stepTwoDataId" id="tab-scoped-2" class="slds-tabs--scoped__content slds-hide" role="tabpanel" aria-labelledby="tab-scoped-2__item">
+                    <c.Add_Dealer_step2/>
+                </div>
+                
+            </aura:renderif>
+            <aura:renderif isTrue="{!v.pageNumber == 3}">
+                <div aura:id="stepThreeDataId" id="tab-scoped-3" class="slds-tabs--scoped__content slds-hide" role="tabpanel" aria-labelledby="tab-scoped-3__item">
+                    <c.Add_Dealer_step3/>
+                </div>
+            </aura:renderif>
+            <aura:renderif isTrue="{!v.pageNumber == 4}">
+                <div aura:id="stepFourDataId" id="tab-scoped-4" class="slds-tabs--scoped__content slds-hide" role="tabpanel" aria-labelledby="tab-scoped-4__item">       
+                    <c.Add_Dealer_step4/>
+                </div>
+            </aura:renderif>
+        </div>
+        
+    </div>
+
+</aura:component>

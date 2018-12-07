@@ -1,0 +1,14 @@
+<aura:component implements="c:IsEditable">
+	<aura:attribute name="label" type="String" required="false" access="public" default=""/>
+	<aura:attribute name="className" type="String" default="" required="false" access="public"/>
+	<aura:attribute name="value" type="String" default="" required="true" access="public"/>
+	<aura:attribute name="isRequired" type="Boolean" required="false" default="false" access="public"/>
+	<aura:attribute name="pattern" type="String" required="false" default="" access="public"/>
+
+	<aura:if isTrue="{!v.isEdit}">
+		<c:HorizontalListInput label="{!v.label}" value="{!v.value}" isRequired="{!v.isRequired}" pattern="{!v.pattern}" className="{!v.className}" isValid="{!v.isValid}"/>
+		<aura:set attribute="else">
+			<c:HorizontalListItem label="{!v.label}" className="{!v.className}">{!v.value}</c:HorizontalListItem> 
+		</aura:set>
+	</aura:if>
+</aura:component>

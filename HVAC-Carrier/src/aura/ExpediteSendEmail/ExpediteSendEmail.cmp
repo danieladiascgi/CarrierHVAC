@@ -1,0 +1,192 @@
+<aura:component controller="ExpediteSendEmailController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global">
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:registerEvent name="navigateToEmailRL" type="c:NavigateToEmailsRelatedList"/>
+    <aura:handler event="c:NavigateToEmailsRelatedList" action="{!c.NavigateToEmailsRelatedList}"/>
+    <aura:registerEvent name="navigateToVendorEmailRL" type="c:NavigateToVendorEmailRelatedList"/>
+    <aura:handler event="c:NavigateToVendorEmailRelatedList" action="{!c.NavigateToVendorEmailRelatedList}"/>
+    <aura:registerEvent name="navigateToEmailDetailPage" type="c:NavigateToEmailDetailPage"/>
+    <aura:handler event="c:NavigateToEmailDetailPage" action="{!c.NavigateToEmailDetailPage}"/>
+    <aura:registerEvent name="NavToSendEmailReply" type="c:NavToSendEmailReply"/>
+    <aura:handler event="c:NavToSendEmailReply" action="{!c.navToSendEmailReply}"/>
+    
+    <aura:attribute name="emailMsg" type="EmailMessage" />
+    <aura:attribute name="Expedite" type="Expedite__c" default="{ 'sobjectType': 'Expedite__c' }"/>
+    <aura:attribute name="listTemplates" type="List" />
+    <aura:attribute name="attachmentsList" type="List"/>
+    <aura:attribute name="selectedRecords" type="List"/>
+    <aura:attribute name="displayModal" type="boolean" default="false" />
+    <aura:attribute name="mailStatus" type="boolean" default="false" />
+    <aura:attribute name="passedFromOtherCmp" type="boolean" default="false" />
+    <aura:attribute name="passedFromVendorEmail" type="boolean" default="false" />
+    <aura:attribute name="passedFromEmail" type="boolean" default="false" />
+    <aura:attribute name="type" type="boolean" default="false" />
+    <aura:attribute name="LoggedInEmail" type="String"  />
+    <aura:attribute name="expand_collapse_flag" type="Boolean" default="false" />
+    <div aura:id="content">
+        <div class="slds-align--absolute-center">
+            <ui:button label="Select Template" class="btnSubmit" press="{!c.selTemplate}" />
+            <ui:button label="Send" class="btnSend" press="{!c.sendMail}" />
+            <lightning:buttonIcon class="slds-float_right" iconName="utility:refresh" onclick="{!c.refreshAttachments}" alternativeText="Refresh"/>
+            <!-- <aura:if isTrue="{!v.passedFromOtherCmp}">
+           <ui:button label="Cancel" class="btnCancel" press="{!c.cancel}" />
+        </aura:if>-->
+            
+            <aura:if isTrue="{!v.passedFromEmail}">
+                <ui:button label="Cancel" class="btnCancel" press="{!c.cancel}" />
+            </aura:if>
+            <aura:if isTrue="{!v.passedFromVendorEmail}">
+                <ui:button label="Cancel" class="btnCancel" press="{!c.cancelvendoremail}" />
+            </aura:if>
+            <!--<ui:button label="Get Email Msg" class="btnCancel" press="{!c.printEmailMsg}" />-->
+        </div>    
+        
+        <aura:if isTrue="{!v.mailStatus}">
+            <div role="alertdialog" tabindex="-1" aria-labelledby="prompt-heading-id" aria-describedby="prompt-message-wrapper" class="slds-modal slds-fade-in-open slds-modal--prompt">
+                <div class="slds-modal__container">
+                    <div class="slds-modal__header slds-theme--error slds-theme--alert-texture">
+                        <h2 class="slds-text-heading--medium" id="prompt-heading-id">Mail Status</h2>
+                    </div>
+                    <div class="slds-modal__content slds-p-around--medium">
+                        <div>
+                            <p>Email Sent successfully to {!v.emailMsg.ToAddress}</p>
+                        </div>
+                    </div>
+                    <div class="slds-modal__footer slds-theme--default">
+                        <button class="slds-button slds-button--brand" onclick="{!c.closeMessage}">Close</button>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-backdrop slds-backdrop--open"></div>
+        </aura:if>
+        
+        <!-- From <br></br> <ui:outputText aura:id="from" value="{!v.emailMsg.FromAddress}"/><br></br>-->            
+        <!-- From <br></br> <ui:inputselect aura:id="from" ><br></br>-->
+        
+        From <br></br> <ui:inputSelect aura:id="from" ><br></br>
+        
+        <ui:inputSelectOption text="rcdexpediting@carrier.utc.com" label="rcdexpediting@carrier.utc.com" value="true"/> 
+        <ui:inputSelectOption text="{!v.LoggedInEmail.Email}" label="{!v.LoggedInEmail.Email}"/>
+        <ui:inputSelectOption text="contact.carrier@carrier.utc.com" label="contact.carrier@carrier.utc.com" />
+        <ui:inputSelectOption text="noreply.customergateway@carrier.utc.com" label="noreply.customergateway@carrier.utc.com"/>
+        <ui:inputSelectOption text="icpconsumeradvocate@icpusa.com" label="icpconsumeradvocate@icpusa.com"/>
+        <ui:inputSelectOption text="crnaorders@carrier.com" label="crnaorders@carrier.com"/>
+        <ui:inputSelectOption text="rcdcustomer.service@carrier.utc.com" label="rcdcustomer.service@carrier.utc.com"/>
+        <!--Added new Code Start-->
+        <ui:inputSelectOption text="rcdistvip@carrier.utc.com" label="RCD DIST VIP(rcdistvip@carrier.utc.com)"/>
+        <ui:inputSelectOption text="rc.poc@carrier.utc.com" label="RCD POC(rc.poc@carrier.utc.com)"/>
+        <ui:inputSelectOption text="rcdquotereworks@carrier.utc.com" label="RC Quote Reworks(rcdquotereworks@carrier.utc.com)"/>
+        <ui:inputSelectOption text="rcdintl@carrier.utc.com" label="International 1(rcdintl@carrier.utc.com)"/>
+        <ui:inputSelectOption text="rcdintlreg2@carrier.utc.com" label="International 2(rcdintlreg2@carrier.utc.com)"/>
+        <ui:inputSelectOption text="rcdintlreg3@carrier.utc.com" label="International 3(rcdintlreg3@carrier.utc.com)"/>
+        <ui:inputSelectOption text="usexporters@carrier.utc.com" label="International 3(usexporters@carrier.utc.com)"/>
+        <ui:inputSelectOption text="contractors.rcd@carrier.utc.com" label="CMA Contractors(contractors.rcd@carrier.utc.com)"/>
+        <ui:inputSelectOption text="rcd.nuclear@carrier.utc.com" label="Carrier RC Nuclear Cust Svc(rcd.nuclear@carrier.utc.com)"/>
+        <ui:inputSelectOption text="rcunitedrefrig@carrier.utc.com" label="National United/CCRP(rcunitedrefrig@carrier.utc.com)"/>
+        <ui:inputSelectOption text="cma.rcd@carrier.utc.com" label="Carrier-RCD Comm Applied Cust Service(cma.rcd@carrier.utc.com)"/>
+        <ui:inputSelectOption text="rcdnationalaccounts@carrier.utc.com" label="Carrier National Accts Cust Svc(rcdnationalaccounts@carrier.utc.com)"/>
+        
+        <!--Added new Code End-->
+        
+        
+        
+        </ui:inputSelect>   
+        
+        
+        <aura:if isTrue="{!v.passedFromOtherCmp}">
+            
+            
+            
+            To <ui:inputText aura:id="to" value="{!v.emailMsg.FromAddress}"/> 
+            
+            <aura:set attribute="else">
+                To <ui:inputText aura:id="to" value="{!v.emailMsg.ToAddress}"/>
+            </aura:set>
+        </aura:if>
+        <aura:if isTrue="{!v.passedFromOtherCmp}">
+            CC <ui:inputText aura:id="cc" value="{!v.emailMsg.CcAddress}"/> 
+            <aura:set attribute="else">
+                CC <ui:inputText aura:id="cc" value="{!v.emailMsg.CcAddress}"/>
+            </aura:set>
+        </aura:if>
+        
+        Subject <ui:inputText aura:id="subject" value="{!v.emailMsg.Subject}"/>
+        <div class="slds-grid slds-gutters">
+            <div class="slds-col slds-size_2-of-3">
+                <table aura:id="articleOne" >
+                    <thead>
+                        <tr><th>Select</th><th>Attachment Name</th>
+                        </tr>
+                    </thead>
+                    <tbody >
+                        <aura:iteration items="{!v.attachmentsList}" var="item">
+                            <tr>
+                                <td><ui:inputCheckbox class="myCheckbox" aura:id="checkboxLeads" text="{!item.attachmentId}" change="{!c.onSelect}" value="{!item.selected}"/></td>
+                                <!--<td><ui:outputText value="{!item.attachmentName}" /></td> -->
+                                <td><c:EachAttachmentPreview attachmentId="{!item.attachmentId}" attachmentName="{!item.attachmentName}" /></td>
+                            </tr>       
+                        </aura:iteration>
+                        <!--  <aura:iteration items="{!v.attachmentsList2}" var="item1">
+          <tr>
+            <td><ui:inputCheckbox class="myCheckbox" aura:id="checkboxLeads" text="{!item1}" change="{!c.onSelect}" value=""/></td>
+            <td><ui:outputDate value="{!item1.Attachments__r.Name}" /></td>            
+          </tr>       
+         </aura:iteration>-->
+                    </tbody>
+                </table>
+            </div>
+            <div class="slds-col slds-size_1-of-3">
+                <div class="slds-m-left--large" onclick="{!c.sectionOne}">{!v.expand_collapse_text} Attachments</div>
+                
+                <aura:if isTrue="{!v.expand_collapse_flag}">
+                    <div class="slds-m-left--large" onclick="{!c.sectionOne}">
+                        <lightning:Icon size="xx-small" iconName="utility:expand"  alternativeText="Mark emails read"/>
+                    </div>    
+                    <aura:set attribute="else">
+                        <div class="slds-m-left--large" onclick="{!c.sectionOne}">
+                            <lightning:Icon size="xx-small" iconName="utility:collapse_all"  alternativeText="Mark emails read"/>
+                        </div>
+                    </aura:set>
+                </aura:if>
+            </div>
+        </div>
+        
+        
+        Body <lightning:inputRichText aura:id="body" value="{!v.emailMsg.HtmlBody}"/>
+        
+        <!--aura:if isTrue="{!v.displayModal}"-->
+        <div role="dialog" tabindex="-1" aria-labelledby="header43" aura:id="Modalbox" class="slds-modal">      
+            <div class="slds-modal__container" style="margin-top: 7%;height: 89%;">
+                <div class="slds-modal__header">
+                    <button class="slds-button slds-modal__close slds-button--icon-inverse" title="Close" onclick="{!c.closeModal}">
+                        X<span class="slds-assistive-text">Cancel</span>
+                    </button>
+                    <h3 class="slds-section-title--divider">Select Template</h3>
+                </div>
+                <div class="slds-modal__content slds-p-around--medium slds-scrollable">
+                    
+                    <table class="slds-table slds-table--bordered slds-table--cell-buffer slds-no-row-hover" >
+                        
+                        <tr>
+                            <th class="slds-text-heading--label">Select</th>
+                            <th class="slds-text-heading--label">Name</th> 
+                            <th class="slds-text-heading--label">Template Type</th>
+                            <th class="slds-text-heading--label">Description</th>            
+                        </tr>
+                        <aura:iteration items="{!v.listTemplates}" var="obj" >
+                            <tr>
+                                <ui:inputRadio class="slds-m-top_medium " aura:id="recdId" text="{!obj.Id}" name="R1" value="" change="{!c.populateBodyWithTmplt}"/>
+                                <td><ui:outputText value="{!obj.Name}"/></td>
+                                <td><ui:outputText value="{!obj.TemplateType}" /></td>
+                                <td><ui:outputText value="{!obj.Subject}" /></td>
+                            </tr>   
+                        </aura:iteration>      
+                    </table> 
+                </div>                                    
+                <div class="slds-modal__footer">
+                </div> 
+            </div>
+        </div>
+        <div class="slds-backdrop " aura:id="Modalbackdrop"></div>           
+        <!--</aura:if>-->
+    </div>
+</aura:component>

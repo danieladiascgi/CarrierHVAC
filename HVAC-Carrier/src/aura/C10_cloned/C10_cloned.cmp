@@ -1,0 +1,568 @@
+<aura:component controller="C10_controller_cloned" extensible="true" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global">
+    
+    <aura:handler event="c:NavigateToOrderStatus" action="{!c.NavigateToOrderStatus}"/> 
+    <!--<ltng:require styles="{!$Resource.SLDS24 + '/assets/styles/lightning-design-system-ltng.css'}"/>-->
+    <!--<ltng:require styles="{!$Resource.boot}" />-->
+    <ltng:require styles="{!$Resource.datatablecss}" />
+    <!--<ltng:require styles="{!$Resource.fas}" />-->
+    
+    <!--<ltng:require scripts="{!join(',', $Resource.jqueryjs,$Resource.datatable)}" />-->
+    
+    <ltng:require styles="{! $Resource.DatatableLightning + '/DataTables-1.10.16/media/css/jquery.dataTables.min.css'}" 
+                  scripts="{!join(',', 
+                           $Resource.JQueryForDataTablesLightning , 
+                           $Resource.DatatableLightning + '/DataTables-1.10.16/media/js/jquery.dataTables.min.js')
+                           }" afterScriptsLoaded="{!c.scriptsLoaded}"/>
+    
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    
+    <aura:attribute name="recordId" type="Id" />
+    <aura:attribute name="populatedCustNo" type="string" default="CAC297439MW" />
+    <aura:attribute name="myText" type="string" />
+    <aura:attribute name="clickedPartId" type="string" />
+    <aura:attribute name="clickedDescription" type="string" />
+    <aura:attribute name="SearchText" type="string"/>
+    <aura:attribute name="secondTableTrue" type="Boolean" default="false" />
+    <aura:attribute name="firstTableTrue" type="Boolean" default="false" />
+    <aura:attribute name="thirdTableTrue" type="Boolean" default="false" />
+    <aura:attribute name="dispayToolTip" type="Boolean" default="false" />
+    <aura:attribute name="custnumMandat" type="Boolean" default="false" />
+    <aura:attribute name="atLeastOneMandat" type="Boolean" default="false" />
+    <aura:attribute name="noRecsErrMsg" type="Boolean" default="false" />
+    <aura:attribute name="lstWrapperMain" type="List" />
+    <aura:attribute name="searchResutsListTemp" type="List" />
+    <aura:attribute name="lstWrapper" type="List" />
+    <aura:attribute name="lstWrapperList" type="List" />
+    <aura:attribute name="lstWrapperPart" type="List" />
+    <aura:attribute name="spinnerShow" type="String" default="false"/>
+    <aura:attribute name="selectedAccRecord" type="Account"/>
+    <aura:attribute name="selectedRecord" type="object" default="{}" description="Use,for store SELECTED sObject Record"/>
+    <aura:attribute name="listOfSearchRecords" type="List" description="Use,for store the list of search records which returns from apex class"/>
+    <aura:attribute name="listOfAccountRecords" type="List"/>
+    <aura:attribute name="SearchKeyWord" type="string"/>
+    <aura:attribute name="SearchKeyWord1" type="string"/>
+    <aura:attribute name="value" type="string"/>
+    <aura:attribute name="Message" type="String" default="Search Result.."/>
+    <aura:attribute name="customerPOAfterSearch" type="String" default=""/>
+    <aura:attribute name="partNoAfterSearch" type="String" default=""/>
+    <aura:attribute name="purp" type="String[]" default=""/>
+    
+    <aura:attribute name="sd" type="Date" />
+    <aura:attribute name="ed" type="Date" />
+    
+    
+    <aura:handler name="oSelectedAccountEvent" event="c:selectedPartNumEvent" action="{!c.handleComponentEvent}"/>
+    <aura:handler name="selectedCustomerNumberEvent" event="c:selectedCustNumEvent" action="{!c.handleComponentEvent1}"/>
+    <aura:handler event="c:NavigateToOrderStatus" action="{!c.NavigateToOrderStatus}"/>
+    
+    <aura:registerEvent name="navigate" type="c:NavigateToCCS"/>
+    <aura:handler event="c:NavigateToCCS" action="{!c.NavigateToCCS}"/>
+    <div aura:id="content">
+        <div aura:id="div1"></div>
+        
+        <aura:if isTrue="{!v.custnumMandat}"> 
+            <ui:message title="Error" severity="error" closable="true">
+                Please chat with our agents to update your Customer#
+            </ui:message>
+        </aura:if>
+        <aura:if isTrue="{!v.noRecsErrMsg}"> 
+            <ui:message title="Error" severity="error" closable="true">
+                There are no matching records in C10 with the supplied Customer # and PO/C10 Order No, Please look into C10 manually or Contact your administrator.
+            </ui:message>
+        </aura:if>
+        <aura:if isTrue="{!v.atLeastOneMandat}"> 
+            <ui:message title="Error" severity="error" closable="true">
+                Please enter either Customer PO# or Sales Order# or Part#.
+            </ui:message>
+        </aura:if>
+        <div class= "slds-border_left slds-border_right slds-border_bottom" style="width : 100%;">
+            
+            <div class="slds-grid ">
+                <div class="slds-col--padded slds-size--1-of-2 slds-large-size--1-of-2" style="width:60%;">
+                    <b>Customer # : </b>
+                    <div class="slds-form-element__control">
+                        <!--<ui:outputText aura:id="custno" value="{!v.value}"/>-->
+                        <ui:outputText aura:id="custno" value='{!v.SearchKeyWord1}'/>
+                    </div>
+                </div>
+                
+                <div class="slds-col--padded slds-size--1-of-2 slds-large-size--1-of-2" style="width:40%;">
+                    <b>Customer PO# : </b>
+                    <div class="slds-form-element__control">
+                        <b><ui:inputText aura:id="custByPO" value="{!v.populatedCustNo}"/>  </b>
+                    </div>
+                </div>
+                
+            </div><br></br> 
+            <div class="slds-grid ">
+                <div class="slds-col--padded slds-size--1-of-2 slds-small-size--1-of-2" style="width:30%;">
+                    <div aura:id="searchRes" class="slds-form-element slds-lookup slds-is-close" data-select="single">
+                        <!--   <label class="slds-form-element__label" for="lookup-348"> </label> -->
+                        <b>Part # : </b>
+                        <!--This part is for display search bar for lookup-->  
+                        <div class="slds-form-element__control" style="width:100%;">
+                            <div class="slds-input-has-icon slds-input-has-icon--right">
+                               <!-- <aura:if isTrue="{!v.spinnerShow}">
+                                    <div class="exampleHolder">
+                                        <lightning:spinner aura:id="mySpinner" />
+                                    </div>
+                                </aura:if>-->
+                                
+                                <c:svgComp class="slds-input__icon slds-show" xlinkHref="{!$Resource.SLDS24 + '/assets/icons/utility-sprite/svg/symbols.svg#search'}" />
+                                
+                                
+                                <!-- This markup is for when an record is selected -->
+                                <div aura:id="lookup-pill" class="slds-pill-container slds-hide">
+                                    <span class="slds-pill">
+                                        <span class="slds-pill__label">
+                                            {!v.selectedRecord.compressedId} 
+                                            
+                                        </span>
+                                        <button class="slds-button slds-button--icon slds-pill__remove" onclick="{!c.clear}">
+                                            <c:svgComp class="slds-button__icon" xlinkHref="{!$Resource.SLDS24 + '/assets/icons/utility-sprite/svg/symbols.svg#close'}" />
+                                            <span class="slds-assistive-text">Remove</span>
+                                        </button>
+                                    </span>
+                                </div>
+                                <div aura:id="lookupField" class="slds-show">
+                                    <ui:inputText aura:id="search" updateOn="keyup" keyup="{!c.keyPressController}" class="slds-lookup__search-input slds-input " value="{!v.SearchKeyWord}" placeholder="search.." change="{!c.onValueSelect}"/>
+                                </div>   
+                            </div>
+                        </div>
+                        <!--This part is for Display typehead lookup result List-->  
+                        <div class="slds-lookup__menu slds" id="lookup-348">
+                            <div class="slds-lookup__item--label slds-text-body--small">{!v.Message}</div>
+                            <center> <ui:spinner aura:id="spinner"/> </center>
+                            <ul class="slds-lookup__list" role="listbox">
+                                <aura:iteration items="{!v.listOfSearchRecords}" var="singleRec">
+                                    <c:C10_typeahead_PartSearch oAccount="{!singleRec}" />
+                                </aura:iteration>
+                            </ul>
+                        </div>
+                    </div>
+                    <br></br>
+                    <aura:if isTrue="{!v.secondTableTrue}">
+                        
+                        <div>
+                            <table class="slds-table slds-table--bordered slds-size_large slds-table_cell-buffer slds-table_col-bordered slds-border_left slds-border_right" style="border-width: 2px;width:100%" >
+                                <thead>
+                                    <tr class="slds-text-title_caps">
+                                        <!--<th scope="col" class="">
+                                        <div class="slds-truncate" title="LineId">Order Type<br/> </div>                        
+                                    </th>-->
+                                        
+                                        <th scope="col" class="">
+                                            <div class="slds-truncate" title="Master List Price">Customer<br/>PO#</div>                        
+                                        </th>
+                                        <th scope="col" class="">
+                                            <div class="slds-truncate" title="US Area Price(Net Price)">Order<br/>Date</div>                        
+                                        </th>                             
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    
+                                    
+                                         <aura:iteration items="{!v.lstWrapperPart}" var="wrap">
+                                    <tr>     
+                                       <!-- <td scope="row" data-label="Unit Price" class="">
+                                            <div class="slds-truncate">
+                                                <ui:outputText value="{!wrap.orderType}" click="{!c.populateCustPO}" />  
+                                            </div>
+                                        </td>-->
+                                        
+                                             <td data-label="Picklist Id" >
+                                            <div class="slds-truncate" style="width:100%;">
+                                                <ui:outputText aura:id="cstPO" value="{!wrap.customerPurchaseOrderId}" click="{!c.populateCustPO}"/>  
+                                            </div>
+                                        </td>
+                                        <td scope="row" data-label="Promise Ship Date" class="">
+                                            <div class="slds-truncate">
+                                                 
+                                                <ui:outputText value="{!wrap.creationDate}" click="{!c.populateCustPO}"  />
+                                                
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </aura:iteration>
+                                    
+                                </tbody>
+                            
+                            </table> 
+                            
+                        </div><br></br><br></br> 
+                    </aura:if>  <br></br><br></br>
+                    
+                </div>
+                
+                <div class="slds-col--padded slds-size--1-of-2 slds-large-size--1-of-2" style="width:20%;">
+                    <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+                    <!--<div>
+                    <button class=""  onclick="{!c.onShowPartRecord}" style="">Order Search</button>   
+                </div>-->
+                    
+                    <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+                </div>
+                
+                <div class="slds-col--padded slds-size--1-of-2 slds-large-size--1-of-2" style="width:10%;">
+                    
+                </div>
+                
+                <div class="slds-col--padded slds-size--1-of-2 slds-large-size--1-of-2" style="width:40%;">
+                    <b>C10 Order # : </b>
+                    <div class="slds-form-element__control">
+                        <ui:inputText aura:id="salesOrderNo" value=""/>
+                    </div>                        
+                </div>
+                
+            </div>
+            
+            <div class="slds-align--absolute-center" >
+                <button class="slds-button slds-button--brand"  onclick="{!c.callSearch}"  style="line-height: 2.045rem;width:100px">Search</button> 
+                <button aura:id="createCaseBtn" class="slds-button slds-button--brand"   onclick="{!c.NavigateToCCS}" style="line-height: 2.045rem;width:100px">Create Case</button>   
+            </div> <br></br>
+            <aura:if isTrue="{!v.spinnerShow}">
+                <div class="exampleHolder">
+                    <lightning:spinner aura:id="mySpinner" />
+                </div>
+            </aura:if>
+            
+            
+            <aura:if isTrue="{!v.firstTableTrue}">
+                <div>
+                    
+                    <br></br> 
+                    
+                    
+                    <table class="slds-table slds-table--bordered slds-size_large slds-table_cell-buffer slds-table_col-bordered slds-border_left slds-border_right" style="border-width: 2px;" id="sampleTable">
+                        <thead>
+                            <tr class="slds-text-title_caps">
+                                <th scope="col" class="">
+                                    <div class="slds-truncate" title="LineId">Create case<br/> 
+                                    </div>                        
+                                </th>
+                                <th scope="col" class="">
+                                    <div class="slds-truncate" title="LineId">Line<br/> </div>                        
+                                </th>
+                                <th scope="col" class="">
+                                    <div class="slds-truncate" title="LineId">Line Type<br/> </div>                        
+                                </th>
+                                <th scope="col" class="">
+                                    <div class="slds-truncate" title="US Area Price(Net Price)">Part<br/>Id</div>                        
+                                </th> 
+                                <th scope="col" class="">
+                                    <div class="slds-truncate" title="Master List Price">Priority<br/>Code</div>                        
+                                </th>
+                                <th scope="col" class="">
+                                    <div class="slds-truncate" title="Discount Multiplier">Description</div>                        
+                                </th>
+                                <th scope="col" class="">
+                                    <div class="slds-truncate" title="Availability">Quantity</div>                        
+                                </th>
+                                <th scope="col" class="">
+                                    <div class="slds-truncate" title=" Last Status">&nbsp;&nbsp;Last Status</div>                        
+                                </th>
+                                <th scope="col" class="">
+                                    <div class="slds-truncate" title="Next Status">Next Status</div>                        
+                                </th>
+                                <th scope="col" class="">
+                                    <div class="slds-truncate" title="Quantity in receipt">Picklist</div>                        
+                                </th>
+                                <th scope="col" class="">
+                                    <div class="slds-truncate" title=" ">Order Date</div>                        
+                                </th>
+                                <th scope="col" class="">
+                                    <div class="slds-truncate" title="Promise Date">Promise<br/>Ship<br/>Date</div>                        
+                                </th>
+                                <th scope="col" class="">
+                                    <div class="slds-truncate" title="Promise Date">Carrier</div>                        
+                                </th>
+                                <th scope="col" class="">
+                                    <div class="slds-truncate" title="Master List Price">Tracking #</div>                        
+                                </th>
+                                <th scope="col" class="">
+                                    <div class="slds-truncate" title="Master List Price">Invoice #</div>                        
+                                </th>
+                                <th scope="col" class="" style="word-wrap: break-word;">
+                                    <div class="slds-truncate" title="Superseding part">Unit<br/>Price</div>                        
+                                </th>
+                                <th scope="col" class="">
+                                    <div class="slds-truncate" title="Flash Message">Extended<br/>Price</div>                        
+                                </th>                                 
+                                <th scope="col" class="">
+                                    <div class="slds-truncate" title=" ">Related<br/>Order No</div>                        
+                                </th>
+                                <th scope="col" class="">
+                                    <div class="slds-truncate" title=" ">Related<br/>Order<br/>Type</div>                        
+                                </th>                           
+                                <th scope="col" class="">
+                                    <div class="slds-truncate" title=" ">&nbsp;&nbsp;Quantity<br/>Backordered</div>                        
+                                </th>
+                                <th scope="col" class="">
+                                    <div class="slds-truncate" title=" ">&nbsp;&nbsp;Actual<br/>Ship<br/>Date</div>                        
+                                </th>
+                                <!--- <th scope="col" class="">
+                                <div class="slds-truncate" title=" ">Hold<br/>Code</div>                        
+                            </th> -->
+                                
+                                <th scope="col" class="">
+                                    <div class="slds-truncate" title=" ">C10 Order #</div>                        
+                                </th>
+                                <th scope="col" class="">
+                                    <div class="slds-truncate" title=" ">Customer PO #</div>                        
+                                </th>
+                                
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <aura:iteration items="{!v.lstWrapper}" var="wrap">                           
+                                <tr>
+                                    <c:EachC10Part wrap="{!wrap}"/>
+                                </tr>     
+                                
+                            </aura:iteration>
+                        </tbody>                     
+                    </table> 
+                    
+                </div><br></br><br></br> 
+            </aura:if>
+            
+            <aura:if isTrue="{!v.thirdTableTrue}">
+                <div>
+                    
+                    
+                    <div class="slds-grid">
+                        <div class="slds-col--padded slds-size--1-of-4 slds-small-size--1-of-2" style="width:20%;">
+                            <div class="slds-form-element__control">
+                                <ui:inputText aura:id="Search" label="Search" updateOn="keyup" value="" keyup="{!c.checkForMatchingRecords}" />
+                            </div>
+                        </div>
+                        
+                        <div class="slds-col--padded slds-size--1-of-4 slds-small-size--1-of-2" style="width:20%;">
+                            <div class="slds-form-element__control">
+                                <ui:inputDate aura:id="StartDate" label="Start Date"  value="{!v.sd}" displayDatePicker="true"/>
+                            </div>   
+                        </div>
+                        <div class="slds-col--padded slds-size--1-of-4 slds-small-size--1-of-2" style="width:20%;">
+                            <div class="slds-form-element__control">
+                                <ui:inputDate aura:id="EndDate" label="End Date"  value="{!v.ed}" displayDatePicker="true" />
+                            </div>
+                        </div>
+                        <div class="slds-col--padded slds-size--1-of-4 slds-small-size--1-of-2" style="width:20%;">
+                            <div class="slds-form-element__control">
+                                <button class="slds-button slds-button--brand" onclick="{!c.callSearch1}">DateFilter</button>
+                            </div>
+                        </div>
+                    </div>
+                    <br></br> 
+                    
+                    
+                    <table class="slds-table slds-table--bordered slds-size_large slds-table_cell-buffer slds-table_col-bordered slds-border_left slds-border_right" style="border-width: 2px;" id="sampleTable">
+                        <thead>
+                            <tr class="slds-text-title_caps">
+                                <th scope="col" class="">
+                                    <div class="slds-truncate" title="LineId">Create case<br/> 
+                                    </div>                        
+                                </th>
+                                <th scope="col" class="">
+                                    <div class="slds-truncate" title="LineId">Line<br/> </div>                        
+                                </th>
+                                <th scope="col" class="">
+                                    <div class="slds-truncate" title="LineId">Line Type<br/> </div>                        
+                                </th>
+                                <th scope="col" class="">
+                                    <div class="slds-truncate" title="US Area Price(Net Price)">Part<br/>Id</div>                        
+                                </th> 
+                                <th scope="col" class="">
+                                    <div class="slds-truncate" title="Master List Price">Priority<br/>Code</div>                        
+                                </th>
+                                <th scope="col" class="">
+                                    <div class="slds-truncate" title="Discount Multiplier">Description</div>                        
+                                </th>
+                                <th scope="col" class="">
+                                    <div class="slds-truncate" title="Availability">Quantity</div>                        
+                                </th>
+                                <th scope="col" class="">
+                                    <div class="slds-truncate" title=" Last Status">&nbsp;&nbsp;Last Status</div>                        
+                                </th>
+                                <th scope="col" class="">
+                                    <div class="slds-truncate" title="Next Status">Next Status</div>                        
+                                </th>
+                                <th scope="col" class="">
+                                    <div class="slds-truncate" title="Quantity in receipt">Picklist</div>                        
+                                </th>
+                                <th scope="col" class="">
+                                    <div class="slds-truncate" title=" ">Order Date</div>                        
+                                </th>
+                                <th scope="col" class="">
+                                    <div class="slds-truncate" title="Promise Date">Promise<br/>Ship<br/>Date</div>                        
+                                </th>
+                                <th scope="col" class="">
+                                    <div class="slds-truncate" title="Promise Date">Carrier</div>                        
+                                </th>
+                                <th scope="col" class="">
+                                    <div class="slds-truncate" title="Master List Price">Tracking #</div>                        
+                                </th>
+                                <th scope="col" class="">
+                                    <div class="slds-truncate" title="Master List Price">Invoice #</div>                        
+                                </th>
+                                <th scope="col" class="" style="word-wrap: break-word;">
+                                    <div class="slds-truncate" title="Superseding part">Unit<br/>Price</div>                        
+                                </th>
+                                <th scope="col" class="">
+                                    <div class="slds-truncate" title="Flash Message">Extended<br/>Price</div>                        
+                                </th>                                 
+                                <th scope="col" class="">
+                                    <div class="slds-truncate" title=" ">&nbsp;&nbsp;Related<br/>Order No</div>                        
+                                </th>
+                                <th scope="col" class="">
+                                    <div class="slds-truncate" title=" ">&nbsp;&nbsp;Related<br/>Order<br/>Type</div>                        
+                                </th>                           
+                                <th scope="col" class="">
+                                    <div class="slds-truncate" title=" ">&nbsp;&nbsp;Quantity<br/>Backordered</div>                        
+                                </th>
+                                <th scope="col" class="">
+                                    <div class="slds-truncate" title=" ">&nbsp;&nbsp;Actual<br/>Ship<br/>Date</div>                        
+                                </th>
+                                <!--- <th scope="col" class="">
+                                <div class="slds-truncate" title=" ">Hold<br/>Code</div>                        
+                            </th> -->
+                                
+                                <th scope="col" class="">
+                                    <div class="slds-truncate" title=" ">C10 Order #</div>                        
+                                </th>
+                                <th scope="col" class="">
+                                    <div class="slds-truncate" title=" ">Customer PO #</div>                        
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <aura:iteration items="{!v.lstWrapperList}" var="wrap">
+                                
+                                <tr>   
+                                    <c:EachC10Part wrap="{!wrap}"/>
+                                </tr>
+                            </aura:iteration>
+                        </tbody>                     
+                    </table> 
+                    
+                </div><br></br><br></br> 
+            </aura:if>
+        </div>       
+        
+        <div role="dialog" tabindex="-1" aria-labelledby="header43" aura:id="Modalbox" class="slds-modal">      
+            <div class="slds-modal__container" style="margin-top: 0%;height: 135%; width: 250%;">
+                <div class="slds-modal__header">
+                    
+                    <button class="slds-button slds-modal__close slds-button--icon-inverse" title="Close" onclick="{!c.closeModal}">
+                        <span class="slds-assistive-text">Cancel</span>
+                    </button>
+                    <h3 class="slds-section-title--divider"> Price and Availability </h3>
+                </div>
+                <div class="slds-modal__content slds-p-around--medium" style="height:60%">
+                    <div class="slds-grid ">
+                        <div class="slds-col--padded slds-size--1-of-2 slds-small-size--1-of-2" style="width:60%;">
+                            <b>Material # / Item # : </b>
+                            <ui:outputText aura:id="mno" value="{!v.clickedPartId}"/><br></br><br></br>
+                            <b>Material Description : </b>
+                            <ui:outputText aura:id="mdesc" value="{!v.clickedDescription}"/><br></br><br></br>
+                            <b>Master List Price : </b>
+                            <ui:outputText aura:id="mlistprice" value="$243"/><br></br><br></br>
+                            <b>Price : </b>
+                            <ui:outputText aura:id="netprice" value="$65"/><br></br><br></br>
+                        </div>
+                        <div class="slds-col--padded slds-size--1-of-2 slds-small-size--1-of-2" style="width:60%;">                                                                            
+                            <b>Basic Item Notes : </b>
+                            <ui:outputText aura:id="basicleadItem" value=""/><br></br><br></br>                          
+                            <b>Std. Pack : </b>
+                            <ui:outputText aura:id="stdPack" value="54"/><br></br><br></br>  
+                            <b>Stocking Type : </b>
+                            <ui:outputText aura:id="stockType" value="S"/><br></br><br></br>
+                            <b>Unit Weight : </b>
+                            <ui:outputText aura:id="unitWt" value="54 kgs"/><br></br><br></br>
+                        </div>
+                    </div>                      
+                    <table class="slds-table slds-table--bordered slds-size_large slds-table_cell-buffer slds-table_col-bordered slds-border_left slds-border_right" style="border-width: 2px;">
+                        <thead>
+                            <tr class="slds-text-title_caps">
+                                <th scope="col" class="">
+                                    <div class="slds-truncate" title="PO#"> PO# </div>                        
+                                </th>
+                                <th scope="col" class="">
+                                    <div class="slds-truncate" title="Qty"> Qty </div>                        
+                                </th> 
+                                <th scope="col" class="">
+                                    <div class="slds-truncate" title="Ship Date/Promise Date">Ship Date/Promise Date</div>                        
+                                </th>
+                                <th scope="col" class="">
+                                    <div class="slds-truncate" title="Lead Time"> Lead Time </div>                        
+                                </th>
+                                <th scope="col" class="">
+                                    <div class="slds-truncate" title="PO Notes"> PO Notes </div>                        
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>      
+                            <tr>         
+                                <td scope="row" data-label="PO#" class="">
+                                    <div class="slds-truncate">
+                                        <ui:outputText value="CAC297439MW" />  
+                                    </div>
+                                </td>
+                                <td scope="row" data-label="Qty" class="">
+                                    <div class="slds-truncate">
+                                        <ui:outputText value="3" />  
+                                    </div>
+                                </td>
+                                <td scope="row" data-label="Ship Date/Promise Date" class="">
+                                    <div class="slds-truncate">
+                                        <ui:outputText value="2016-02-01" />  
+                                    </div>
+                                </td>
+                                <td scope="row" data-label="Lead Time" class="">
+                                    <div class="slds-truncate">
+                                        <ui:outputText value="23 days" />  
+                                    </div>
+                                </td>
+                                <td scope="row" data-label="PO Notes" class="">
+                                    <div class="slds-truncate">
+                                        <ui:outputText value="Test Notes" />  
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="slds-grid ">
+                        <div class="slds-col--padded slds-size--1-of-2 slds-small-size--1-of-2" style="width:60%;">
+                            <b>Available (Quantity) : </b>
+                            <ui:outputText aura:id="availqty" value="23"/><br></br><br></br>                          
+                            <b>Flash Message : </b>
+                            <ui:outputText aura:id="flashmsg" value="Samsung"/><br></br><br></br>
+                            <b>Quantity in Receipt (KENPACK / KENWHR) : </b>
+                            <ui:outputText aura:id="qtyInRcpt" value="17"/><br></br><br></br>
+                            <b>Price Rule : </b>
+                            <ui:outputText aura:id="priceRule" value="Rule 1"/><br></br><br></br>
+                            <b>Promise Date : </b>
+                            <ui:outputText aura:id="promiseDt" value="23-4-1990"/><br></br><br></br>                          
+                        </div>
+                        <div class="slds-col--padded slds-size--1-of-2 slds-small-size--1-of-2" style="width:60%;">                                                                             
+                            <b>Gross Depth : </b>
+                            <ui:outputText aura:id="grossDepth" value="43.5cm"/><br></br><br></br>
+                            <b>Gross Width : </b>
+                            <ui:outputText aura:id="grossWidth" value="23.4cm"/><br></br><br></br>
+                            <b>Gross Height : </b>
+                            <ui:outputText aura:id="grossHeight" value="13.2cm"/><br></br><br></br>                          
+                            <b>Price Code Review : </b>
+                            <ui:outputText aura:id="priceCodeRvw" value="Review Comments"/>                          
+                        </div>
+                    </div>
+                </div>                                    
+                <div class="slds-modal__footer">
+                </div> 
+            </div>
+        </div>
+        
+        
+        <div class="slds-backdrop " aura:id="Modalbackdrop"></div>  
+    </div>
+</aura:component>

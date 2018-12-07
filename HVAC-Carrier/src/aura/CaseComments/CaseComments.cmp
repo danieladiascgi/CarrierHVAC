@@ -1,0 +1,42 @@
+<aura:component controller="CaseCommentsController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global">
+   <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+   <aura:handler event="force:refreshView" action="{!c.doInit}" />
+   <aura:attribute name="recordId" type="Id" />
+   <aura:attribute name="clickedCaseCmtRecId" type="Id" />
+   <aura:attribute name="case" type="Case" default="{ 'sobjectType': 'Case' }"/>
+    <lightning:overlayLibrary aura:id="overlayLib"/>
+    
+   <aura:attribute name="CmdList" type="List"/>
+        <div class="slds">
+        
+            <table >
+            
+            <thead>
+                <tr class="slds-text-title_caps">
+                    <th scope="col" title="Comments">
+                        <div><h6><b>COMMENTS</b></h6></div>
+                        
+                    </th>
+                    
+                    
+                </tr>
+            </thead><br></br>
+            <tbody >
+                <aura:iteration items="{!v.CmdList}" var="comlist">     
+                    <tr >
+                        <td >
+                            <!--<c:EachCaseComment eachcmt="{!comlist}"/>-->
+                            <a href="javascript:void(0)"   onclick="{!c.openModal}" id="{!comlist.Id}" ><b>Created By:<u>{!comlist.CreatedBy.Name}</u>&nbsp;({!comlist.CreatedDate})</b> </a><br></br>
+
+                            <!--<b>Created By:<u>{!comlist.CreatedBy.Name}</u>&nbsp;({!comlist.CreatedDate})</b><br></br>-->
+                            <ui:inputTextArea value="{!comlist.CommentBody}" disabled="true" rows="1" cols="20" /></td>
+                    
+                    </tr>
+                    
+                    
+                </aura:iteration>
+            </tbody>
+        </table> 
+     </div>
+	
+</aura:component>

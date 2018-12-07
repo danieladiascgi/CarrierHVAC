@@ -1,0 +1,216 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes,lightning:availableForFlowScreens" controller="GetBrandValue" access="global" >
+    
+    <aura:handler name="init" action="{!c.init}" value="{!this}" />
+    <aura:handler event="c:BrandPickEvent" action="{!c.handleApplicationEvent}"/>
+    
+    <aura:attribute name="year" type="Integer" />
+    <aura:attribute name="NotReady" type="boolean" default="true"/>
+    <aura:attribute name="dograph" type="boolean" default="false"/>
+    <aura:attribute name="ShowBrands" type="boolean" default="false"/>
+    <aura:attribute name="NonBrandLeft" type="boolean" default="false" access="global"/>
+    <aura:attribute name="SelectedBrandList" type="List" default="" />
+    <aura:attribute name="BrandList" type="List" access="global"/>
+    <aura:attribute name="DataList" type="List" access="global"/>
+    <aura:attribute name="BrandCollection" type="Dealer_Profile__c" default="{ 'sobjectType': 'Dealer_Profile__c',
+                                                                             'Brand':'', 
+                                                                             'Previous_Year_Percent__c':'',
+                                                                             'Previous_Year__c':'',
+                                                                             'Current_Year_Percent__c':'',
+                                                                             'Current_Year__c':'',
+                                                                             'Future_Year_Percent__c':'',
+                                                                             'Future_Year__c':''
+                                                                             }"/>
+    <aura:attribute name="BrandsSObjectCollection" type="Dealer_Profile__c[]"/>
+    
+    <!--PIE CHART DATA-->
+    <aura:attribute name="rnc" type="integer" />
+    <aura:attribute name="rncMF" type="integer" />
+    <aura:attribute name="aor" type="integer" />
+    <aura:attribute name="com" type="integer" />
+    <aura:attribute name="dls" type="integer" />
+    <aura:attribute name="retail" type="integer" />
+    <aura:attribute name="ot" type="integer" />
+    <!--///////////////////////////////////////-->
+    
+    
+    
+    <div class="slds-text-title_bold slds-p-bottom_large text">
+        Dealer Profile
+    </div>
+    <div class="slds-grid slds-wrap ">
+        <div class="slds-col slds-size_1-of-6">
+            <div class="slds-form-element">
+                <label class="slds-form-element__label" for="text-input-id-1">RNC Single Family</label>
+                <div class="slds-form-element__control">
+                    <input id="text-input-id-1" class="slds-input" onchange="{!c.checkNumber}" type="number" value="{!v.rnc}"/>
+                </div>
+            </div>
+        </div>
+        <div class="slds-col slds-size_1-of-6">
+            <div class="slds-form-element">
+                <label class="slds-form-element__label" for="text-input-id-2">RNC Multi Family</label>
+                <div class="slds-form-element__control">
+                    <input id="text-input-id-2" class="slds-input" onchange="{!c.checkNumber}" type="number" value="{!v.rncMF}" />
+                </div>
+            </div>
+        </div>
+        <div class="slds-col slds-size_1-of-6">
+            <div class="slds-form-element">
+                <label class="slds-form-element__label" for="text-input-id-3">AOR</label>
+                <div class="slds-form-element__control">
+                    <input id="text-input-id-3" class="slds-input" onchange="{!c.checkNumber}" type="number" value="{!v.aor}"/>
+                </div>
+            </div>
+        </div>
+        <div class="slds-col slds-size_1-of-6">
+            <div class="slds-form-element">
+                <label class="slds-form-element__label" for="text-input-id-4">Commercial</label>
+                <div class="slds-form-element__control">
+                    <input id="text-input-id-4" class="slds-input" onchange="{!c.checkNumber}" type="number" value="{!v.com}"/>
+                </div>
+            </div>
+        </div>
+        <div class="slds-col slds-size_1-of-6">
+            <div class="slds-form-element">
+                <label class="slds-form-element__label" for="text-input-id-5">DLS</label>
+                <div class="slds-form-element__control">
+                    <input id="text-input-id-5" class="slds-input" onchange="{!c.checkNumber}" type="number" value="{!v.dls}"/>
+                </div>
+            </div>
+        </div>
+        <div class="slds-col slds-size_1-of-6">
+            <div class="slds-form-element">
+                <label class="slds-form-element__label" for="text-input-id-6">Retail</label>
+                <div class="slds-form-element__control">
+                    <input id="text-input-id-6" class="slds-input" onchange="{!c.checkNumber}" type="number" value="{!v.retail}"/>
+                </div>
+            </div>
+        </div>
+        
+        <div class="slds-col slds-size_1-of-6">
+            <div class="slds-form-element">
+                <label class="slds-form-element__label" for="text-input-id-7">Other</label>
+                <div class="slds-form-element__control">
+                    <input id="text-input-id-7" class="slds-input" onchange="{!c.checkNumber}" type="number" value="{!v.other}"/>
+                </div>
+            </div>
+        </div>
+        <div class="slds-col slds-size_5-of-6">
+            <div class="slds-form-element">
+                <label class="slds-form-element__label" for="text-input-id-8">Comment</label>
+                <div class="slds-form-element__control">
+                    <input id="text-input-id-8" class="slds-input" type="text" />
+                </div>
+            </div>
+        </div>    
+        
+        <div class="slds-grid slds-size_1-of-1">
+            <aura:renderif isTrue="{!v.NotReady}">
+                Please, enter the values in order to the sum of all is 100%
+            </aura:renderif>
+        </div>
+        <br/>
+    </div>
+    <br/>
+    
+    
+    <div class="slds-grid slds-wrap">
+        <div class="slds-col slds-size_1-of-4">
+            <div class="slds-grid slds-wrap">
+                
+                <div class="slds-col slds-size_1-of-4">
+                </div>
+                <div class="slds-col slds-size_1-of-4">
+                    {!v.year-1}
+                </div>
+                <div class="slds-col slds-size_1-of-4">
+                    {!v.year}
+                </div>
+                <div class="slds-col slds-size_1-of-4">
+                    {!v.year+1}
+                </div>
+                <div class="slds-col slds-size_1-of-1">
+                    
+                </div>
+                
+                <div class="slds-col slds-size_1-of-4 ">
+                    Total
+                </div>
+                <div class="slds-col slds-size_1-of-4 ">
+                    <input id="text-input-id-current-1" class="slds-input"  value = "0" type="number"/>
+                    
+                </div>
+                <div class="slds-col slds-size_1-of-4 ">
+                    <input id="text-input-id-current" class="slds-input"  value = "0" type="number" />
+                </div>
+                <div class="slds-col slds-size_1-of-4 ">
+                    <input id="text-input-id-current+1" class="slds-input" value = "0" type="number" />
+                </div>
+                <div class="slds-col slds-size_1-of-1">
+                    
+                </div>
+                
+                <aura:iteration items="{!v.SelectedBrandList}" var="level" indexVar="idx">
+                    
+                    <div class="slds-col slds-size_1-of-4">
+                        {!level}
+                    </div>
+                    <div class="slds-col slds-size_1-of-4 ">
+                        <input id="{!(idx)+'-inputPreviousYear'}" class="slds-input"  type="number" onchange="{!c.showPercentage}"/>
+                    </div>
+                    <div class="slds-col slds-size_1-of-4 ">
+                        <input id="{!(idx)+'-inputCurrentYear'}" class="slds-input"  type="number" onchange="{!c.showPercentage}"/>
+                    </div>
+                    <div class="slds-col slds-size_1-of-4 ">
+                        <input id="{!(idx)+'-inputfutureYear'}" class="slds-input"  type="number" onchange="{!c.showPercentage}"/>
+                    </div>
+                    <div class="slds-col slds-size_1-of-1">
+                        
+                    </div>
+                    
+                    <div class="slds-col slds-size_1-of-4">
+                        <lightning:button name = "{!level}" variant="error"  iconName="utility:delete"  onclick="{! c.RemoveBrand }" />
+                    </div>
+                    <div class="slds-col slds-size_1-of-4">
+                        <input id="{!(idx)+'-previousYear'}" class="slds-input"  type="number" disabled="true"/>
+                    </div>
+                    <div class="slds-col slds-size_1-of-4 ">
+                        <input id="{!(idx)+'-currentYear'}" class="slds-input"  type="number" disabled="true" />
+                    </div>
+                    <div class="slds-col slds-size_1-of-4 ">
+                        <input id="{!(idx)+'-futureYear'}" class="slds-input"  type="number" disabled="true" />
+                    </div>
+                    <div class="slds-col slds-size_1-of-1">
+                        
+                    </div>
+                    
+                </aura:iteration>
+            </div>
+            
+            
+            <aura:renderif isTrue="{! !v.ShowBrands}">
+                <aura:renderif isTrue="{!!v.NonBrandLeft}">
+                    <lightning:button variant="brand" label="Select Brands" title="Brand action" onclick="{! c.showBrands }" />
+                    <lightning:button variant="brand" label="Validate Fields" title="Validate Fields" onclick="{! c.validateFields }" />
+                </aura:renderif>
+            </aura:renderif>
+            
+            
+            
+            <aura:renderif isTrue="{!v.ShowBrands}">
+                <c:BrandPick BrandList="{!v.BrandList}"/>    
+            </aura:renderif>    
+            
+            
+        </div>   
+        <div class="slds-col slds-size_3-of-4">
+            <aura:if isTrue="{!v.dograph}">
+                
+                <c:PieChart  rnc="{!v.rnc}" rncMF="{!v.rncMF}" aor="{!v.aor}" com="{!v.com}" dls="{!v.dls}" retail="{!v.retail}" ot="{!v.ot}"/>
+            </aura:if>
+        </div>
+    </div> 
+    
+    
+    
+</aura:component>

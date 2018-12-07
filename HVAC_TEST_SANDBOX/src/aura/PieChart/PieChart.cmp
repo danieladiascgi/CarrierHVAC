@@ -1,0 +1,24 @@
+<aura:component implements="flexipage:availableForAllPageTypes,force:hasRecordId" access="global" >
+	
+    <ltng:require scripts="{!join(',',
+    				$Resource.ChartJS23)}"
+					afterScriptsLoaded="{!c.scriptsLoaded}" />
+
+    <aura:attribute name="DataList" type="List"/>
+    <aura:attribute name="title" type="String" default="DEALER BREAKDOWN"/>
+    
+    <aura:attribute name="rnc" type="integer" />
+    <aura:attribute name="rncMF" type="integer" />
+    <aura:attribute name="aor" type="integer" />
+    <aura:attribute name="com" type="integer" />
+    <aura:attribute name="dls" type="integer" />
+    <aura:attribute name="retail" type="integer" />
+    <aura:attribute name="ot" type="integer" />
+    
+    
+    <div>
+        <div class="slds-text-heading--medium">{!v.title}</div>
+	    <canvas aura:id="chart" height="280"></canvas>
+    </div>
+    
+</aura:component>

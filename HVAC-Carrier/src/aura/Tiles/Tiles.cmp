@@ -1,0 +1,38 @@
+<aura:component >
+    <ltng:require styles="{!$Resource.SLDS24 + '/assets/styles/salesforce-lightning-design-system.css'}"/>
+    <aura:attribute type="string" name="bgColor" />
+    <aura:attribute type="string" name="fontColor" default="#000"/>
+    <aura:attribute type="string" name="borderColor" default="#000"/>
+    <aura:attribute type="string" name="frontText" />
+    <aura:attribute type="string" name="backText" /> 
+    <aura:attribute type="string" name="imageURL" />
+    <aura:attribute type="boolean" name="isVerticalFlip" default="false" description="By default its Horizontal flip" />
+<!--<div class="{! 'slds flip-container ' + (v.isVerticalFlip == false ? 'horizontal' : 'vertical') }" style="{! 'background-color:'+ v.bgColor+'; color: '+ v.fontColor+';border : 1px solid '+ v.borderColor}">
+<div class="flipper">
+    <div class="front">
+                {!v.frontText}
+            </div>
+<div class="back" style="font-size:20px;">
+                {!v.backText}
+            </div>
+        </div>
+    </div>-->
+ <div class="slds flip-container" style="{! 'background-color:'+ v.bgColor+'; color: '+ v.fontColor+';border : 1px solid '+ v.borderColor+';border-radius : 0px; padding:0px'}">            
+     <span data-aura-rendered-by="279:0" class="uiImage" data-aura-class="uiImage"><img data-aura-rendered-by="277:0" src="{!v.imageURL}" class="tileImg" alt=""></img></span>
+     <div class="tileHelp" data-aura-rendered-by="281:0">
+   <div class="tileTitle" data-aura-rendered-by="282:0">
+      <h2 data-aura-rendered-by="283:0"><span class="text uiOutputText" data-aura-rendered-by="286:0" data-aura-class="uiOutputText" style="font-weight: 700;font-size: 1.2rem;line-height: 1.25;color: #16325C">{!v.frontText}</span></h2>
+   </div>
+   <div class="tileDescription" data-aura-rendered-by="287:0"><span class="text" data-aura-rendered-by="288:0" style="font-weight: 400;font-size: .8125rem;line-height: 1.25;color: #16325C;display:block">{!v.backText}</span></div>
+   
+   <button class="slds-button slds-button--icon-inverse closeButton uiButton" aria-live="off" type="button" title="Remove Email Setup" data-aura-rendered-by="316:0" data-aura-class="uiButton">
+      <!--render facet: 317:0--><span class="assistiveText" data-aura-rendered-by="716:0">Remove Email Setup</span><!--render facet: 319:0-->
+      <span class="slds-icon_container slds-icon-utility-close slds-button__icon slds-button__icon forceIcon" data-aura-rendered-by="310:0" data-aura-class="forceIcon">
+         <span data-aura-rendered-by="313:0"></span><!--render facet: 314:0-->
+      </span>
+   </button>
+   <!--render facet: 321:0-->
+</div>
+        
+ </div>
+</aura:component>

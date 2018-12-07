@@ -1,0 +1,160 @@
+<aura:component controller="MyOpenCasesController" implements="flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes" access="global" >
+    <!--use JQuery Data Table css,Js and jQUERY js file in lightning component by using ltng:require component-->
+    <ltng:require styles="{! $Resource.DatatableLightning + '/DataTables-1.10.16/media/css/jquery.dataTables.min.css'}" 
+                  scripts="{!join(',', 
+                           $Resource.JQueryForDataTablesLightning , 
+                           $Resource.DatatableLightning + '/DataTables-1.10.16/media/js/jquery.dataTables.min.js')
+                           }" afterScriptsLoaded="{!c.scriptsLoaded}"/>
+    
+    <aura:registerEvent name="navigateToCaseDetail" type="c:NavigateToCaseDetail"/>
+    <aura:handler event="c:NavigateToCaseDetail" action="{!c.NavigateToCaseDetail}"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>  
+    
+    <aura:attribute name="lstCases" type="Case[]"/>
+    <aura:attribute name="lstClosedCases" type="Case[]"/>
+    <aura:attribute name="userInfo" type="user"/>
+    <aura:attribute name="clickedCaseRecId" type="String"/>
+    <aura:attribute name="email" type="String"/>
+    <aura:attribute name="lstCasesWrapper" type="MyOpenCasesController.caseWrapper"/>
+    <aura:attribute name="lstClosedCasesWrapper" type="MyOpenCasesController.caseWrapper"/>
+    <aura:attribute name="arrowDirection" type="string" default="arrowup" description="Use for change arrow sign direction on header based on click"/>
+    <aura:attribute name="isAsc" type="boolean" default="true" description="boolean flag for pass sorting condition to apex class"/> 
+    <aura:attribute name="selectedTabsoft" type="string" default="caseNumber" description="Use for show/hide arraow sign on header based on conditions"/>
+    <aura:attribute name="lstExpeditesWrapper" type="MyOpenCasesController.expediteWrapper"/>
+    <aura:attribute name="OnlineButton" type="String" default=""/>
+    
+    <lightning:tabset aura:id="tabSet">
+        <lightning:tab onactive="{!c.handleOpenCases}">
+            <aura:set attribute="label">
+                <b>OPEN CASES</b>                
+            </aura:set>
+        </lightning:tab>
+        <lightning:tab onactive="{! c.handleClosedCases }">
+            <aura:set attribute="label">
+                <b>CLOSED CASES</b>                
+            </aura:set>
+        </lightning:tab>
+        <lightning:tab onactive="{! c.handleOpenExpedites }">
+            <aura:set attribute="label">
+                <b>EXPEDITES</b>                
+            </aura:set>
+        </lightning:tab>
+    </lightning:tabset>
+    <div aura:id="content" class="slds-m-around_medium">
+        <table id="tableId" class="slds-table slds-table_bordered slds-table_cell-buffer" cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                    <th>.</th>
+                    <th >Case Number</th>
+                    <th>Account Name</th>
+                    <th>Subject</th>
+                    <th>Status</th>
+                    <th>Priority</th>
+                    <th>Purpose</th> 
+                    <th>Sub Purpose</th> 
+                    <th>Owner</th> 
+                    <th>Date/Time Opened</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                <aura:iteration items="{!v.lstCasesWrapper}" var="eachCse">
+                    
+                    <tr>
+                        <td>
+                            <lightning:buttonIcon name="{!eachCse.caseNumber+';'+eachCse.purpose+';'+eachCse.subPurpose}" aura:id="{!eachCse.caseNumber}" onclick="{!c.NavigateToChat}" iconName="utility:chat" variant="bare" size="medium" alternativeText="Chat" iconClass="dark"/>
+                        </td>
+                        <td>
+                            
+                            <a href="javascript:void(0)" id="{!eachCse.caseId}" onclick="{!c.redirectToCaseDetail}">{!eachCse.caseNumber}</a>
+                        </td>
+                        <td class="wrapping">{!eachCse.accountName}</td>
+                        <td>{!eachCse.subject}</td>
+                        <td>{!eachCse.status}</td>
+                        <td>{!eachCse.priority}</td>
+                        <td>{!eachCse.purpose}</td>
+                        <td>{!eachCse.subPurpose}</td>
+                        <td>{!eachCse.ownerName}</td>
+                        <td>{!eachCse.dateTimeOpened}</td>
+                    </tr>
+                    
+                </aura:iteration> 
+                
+            </tbody>
+        </table>
+        <table id="closedCasesTableId" class="slds-table slds-table_bordered slds-table_cell-buffer" cellspacing="0" width="100%" style="display:none;">
+            <thead>
+                <tr>
+                    <th>.</th>
+                    <th >Case Number</th>
+                    <th>Account Name</th>
+                    <th>Subject</th>
+                    <th>Status</th>
+                    <th>Priority</th>
+                    <th>Purpose</th> 
+                    <th>Sub Purpose</th> 
+                    <th>Owner</th> 
+                    <th>Date/Time Closed</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                <aura:iteration items="{!v.lstClosedCasesWrapper}" var="eachCse">
+                    
+                    <tr>
+                        <td>
+                            <lightning:buttonIcon name="{!eachCse.caseNumber+';'+eachCse.purpose+';'+eachCse.subPurpose}" aura:id="{!eachCse.caseNumber}" onclick="{!c.NavigateToChat}" iconName="utility:chat" variant="bare" size="medium" alternativeText="Chat" iconClass="dark"/>
+                        </td>
+                        <td>
+                            
+                            <a href="javascript:void(0)" id="{!eachCse.caseId}" onclick="{!c.redirectToCaseDetail}">{!eachCse.caseNumber}</a>
+                            
+                        </td>
+                        <td class="wrapping">{!eachCse.accountName}</td>
+                        <td>{!eachCse.subject}</td>
+                        <td>{!eachCse.status}</td>
+                        <td>{!eachCse.priority}</td>
+                        <td>{!eachCse.purpose}</td>
+                        <td>{!eachCse.subPurpose}</td>
+                        <td>{!eachCse.ownerName}</td>
+                        <td>{!eachCse.dateTimeClosed}</td>
+                    </tr>
+                    
+                </aura:iteration> 
+                
+            </tbody>
+        </table>
+        <table id="openExpeditesTableId" class="slds-table slds-table_bordered slds-table_cell-buffer" cellspacing="0" width="100%" style="display:none;">
+            <thead>
+                <tr>
+                    <th >Expedite Number</th>
+                    <th>Case Number</th>
+                    <th>Expedite Status</th>
+                    <th>Customer PO#</th>
+                    <th>C10 Order#</th>
+					<th>Part #</th>
+					<th>Created Date</th>                    
+                </tr>
+            </thead>
+            <tbody>
+                
+                <aura:iteration items="{!v.lstExpeditesWrapper}" var="eachExp">
+                    
+                    <tr>
+                        <td>{!eachExp.expediteName}</td>
+                        <td>
+                            <a href="javascript:void(0)" id="{!eachExp.caseId}" onclick="{!c.redirectToCaseDetail}">{!eachExp.caseNumber}</a>
+                        </td>
+                        <td>{!eachExp.expediteStatus}</td>
+                        <td>{!eachExp.customerPO}</td>
+                        <td>{!eachExp.c10Order}</td>
+                        <td>{!eachExp.partNumber}</td>
+						<td>{!eachExp.createdDate}</td>                        
+                    </tr>
+                    
+                </aura:iteration> 
+                
+            </tbody>
+        </table>
+    </div>
+</aura:component>

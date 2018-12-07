@@ -1,0 +1,73 @@
+<aura:component controller="CaseFetch" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global">
+   <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+   <aura:handler event="force:refreshView" action="{!c.doInit}" />
+
+    <aura:attribute name="recordId" type="Id" />
+	<aura:attribute name="case" type="Case" default="{ 'sobjectType': 'Case' }"/>
+    <aura:attribute name="objInfo" type="string" default="case" description="store object Info." />
+    <aura:attribute name="depnedentFieldMap" type="map" description="store controller(key)--> dependent(values) picklist value as a map." />
+    <aura:attribute name="isDependentDisable" type="boolean" default="true" description="use for, make disbale depandent field." />
+    <aura:attribute name="Purpose" type="String" description="use for, make disbale depandent field." />
+    <aura:attribute name="SubPurpose" type="String" description="use for, make disbale depandent field." />
+    <aura:attribute name="Brand" type="String" description="use for, make disbale depandent field." />
+    <aura:attribute name="CustomerType" type="String" description="use for, make disbale depandent field." />
+    <aura:attribute name="Source" type="String" description="use for, make disbale depandent field." />
+    <aura:attribute name="today" type="DateTime" />
+       <div aura:id="readonly">
+            <!-- <ui:button label="Edit" press="{!c.toggleEditMode}" /> --> 
+   <!-- <p><ui:outputText value="{!v.case.Flags}" /></p>
+           <p><b>Flags:&nbsp;</b><aura:unescapedHtml value="{!v.case.Flags__c}" /></p>-->
+    <p><b>Case Number:&nbsp;</b> <ui:outputText value="{!v.case.CaseNumber}" /> </p> 
+   <!-- <p><b>Purpose:&nbsp;</b>  <ui:outputText value="{!v.case.CCC_Purpose__c}" /></p>
+	<p><b>Sub-Purpose:&nbsp;</b> <ui:outputText value="{!v.case.CCC_Sub_Purpose__c}" /></p>-->
+    <p><b>Status:&nbsp;</b>  <ui:outputText value="{!v.case.Status}" /></p>   
+    <p><b>Case Type:&nbsp;</b>  <ui:outputText value="{!v.case.RecordType.Name}" /></p>       
+    <p><b>Brand:&nbsp;</b>  <ui:outputText value="{!v.case.CCC_Brand__c}" /></p>
+    <p><b>Customer Type:&nbsp;</b> <ui:outputText value="{!v.case.CCC_Customer_Type__c}"/></p>
+    <p><b>Priority:&nbsp;</b>  <ui:outputText value="{!v.case.Priority}" /></p>       
+    <p><b>Source:&nbsp;</b>  <ui:outputText value="{!v.case.Origin}" /></p>
+    <p><b>Owner:&nbsp;</b>  <ui:outputText value="{!v.case.Owner.Name}" /></p>
+    <p><b>Created By:&nbsp;</b>  <ui:outputText value="{!v.case.CreatedBy.Name}" /></p>
+    <p><b>Date/Time Open:&nbsp;</b>  <ui:outputDate value="{!v.case.CreatedDate}" /></p>
+    <p><b>Modified By:&nbsp;</b>  <ui:outputText value="{!v.case.LastModifiedBy.Name}" /></p>
+    <p><b>Last Modified Date:&nbsp;</b> <ui:outputDate value="{!v.case.LastModifiedDate}"/></p>
+    
+    
+    <!--<p><b>New Msg:&nbsp;</b> <ui:outputCheckbox value="{!v.case.New_Msg__c}"/></p>
+    <p><b>New Comment:&nbsp;</b> <ui:outputCheckbox value="{!v.case.New_Comment__c}"/></p>--> 
+    <p><b>Parent Case:&nbsp;</b> <ui:outputText value="{!v.case.Parent.CaseNumber}"/></p>
+    </div>
+    
+  <!--  <div aura:id="editable">
+        <h3 class="slds-section-title-divider"><b>Case Details</b></h3>
+         <div class="slds-form-stacked slds-p-around-medium slds-m-bottom-x-small">
+           <div class="slds-form-element">
+             <div class="slds-form-element__control">
+      <p><ui:outputText value="{!v.case.Flags}" /></p>
+     
+   <p><b>Case Number:&nbsp;</b> <ui:outputText value="{!v.case.CaseNumber}" /> </p>
+       
+   <p><b>Purpose:&nbsp;</b><ui:inputSelect aura:id="conPurpose" class="slds-select" change="{!c.onControllerFieldChange}" /></p>
+      <p><b>Sub-Purpose:&nbsp;</b> <ui:inputSelect aura:id="conSubPurpose" disabled="{!v.isDependentDisable}" class="slds-select" change="{!c.onDependentFieldChange}" /></p>
+      <p><b>Brand:&nbsp;</b> <ui:inputSelect aura:id="Brand" change="{!c.onBrandChange}"/></p> 
+      <p><b>Customer Type:&nbsp;</b> <ui:inputSelect aura:id="CustomerType" value="{!v.case.CCC_Customer_Type__c}" change="{!c.onCustomerTypeChange}"/></p>
+
+      <p><b>Source:&nbsp;</b> <ui:outputText aura:id="Source" value="{!v.case.Origin}"/></p>
+      <p><b>Priority:&nbsp;</b> <force:inputField aura:id="priority" value="{!v.case.Priority}"/></p>
+      <p><b>Owner:&nbsp;</b> <ui:outputText value="{!v.case.Owner.Name}"/></p> 
+      <p><b>Created By:&nbsp;</b>  <ui:outputText value="{!v.case.CreatedBy.Name}" /></p> 
+      <p><b>Date/Time Open:&nbsp;</b>  <ui:outputText value="{!v.case.CreatedDate}" /></p> 
+      <p><b>Modified By:&nbsp;</b>  <ui:outputText value="{!v.case.LastModifiedBy.Name}" /></p> 
+      <p><b>Last Modified Date:&nbsp;</b> <ui:outputText value="{!v.case.LastModifiedDate}"/></p>
+      <p><b>Case Type:&nbsp;</b> <ui:outputText aura:id="status" value="{!v.case.RecordType.Name}"/></p>
+      
+      <p><b>New Msg:&nbsp;</b> <force:inputField aura:id="status" value="{!v.case.New_Msg__c}"/></p>
+      <p><b>New Comment:&nbsp;</b> <force:inputField aura:id="CaseType" value="{!v.case.New_Comment__c}"/></p> 
+      <p><b>Parent Case:&nbsp;</b> <ui:outputText value="{!v.case.Parent.CaseNumber}"/></p>
+      <ui:button label="Save" press="{!c.saveCase1}" />    <ui:button label="Cancel" press="{!c.toggleEditMode}" />    
+        </div>
+          </div>
+        </div>
+      </div>-->
+
+</aura:component>

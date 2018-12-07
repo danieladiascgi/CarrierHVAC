@@ -1,0 +1,4 @@
+<aura:event type="APPLICATION">
+    <aura:attribute name="SelectedBrands" type="List"/>
+    <aura:attribute name="NonSelectedBrands" type="List"/>
+</aura:event>

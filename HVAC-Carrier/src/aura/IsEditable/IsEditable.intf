@@ -1,0 +1,4 @@
+<aura:interface description="Is Editable">
+	<aura:attribute name="isEdit" type="Boolean" default="false"/>
+    <aura:attribute name="isValid" type="Boolean" default="false"/>
+</aura:interface>

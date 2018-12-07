@@ -1,0 +1,385 @@
+<aura:component controller="AddFindEquipment_Controller" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}" />
+    <aura:attribute name="Brand" type="String[]" default="-None-,Bryant,Carlyle,Carrier,Cor,FAST,ICP,Other,Payne,Totaline"/>
+    <aura:attribute name="showSection" type="boolean" default="false"/>
+    <aura:attribute name="dispayToolTip" type="boolean" default="false"/>
+    <aura:attribute name="dispayToolTipRes" type="boolean" default="false"/>
+    <aura:attribute name="assetAdded" type="boolean" default="false"/>
+    <aura:attribute name="displayNoSerialNo" type="boolean" default="false"/>
+    <aura:attribute name="showFindSection" type="boolean" default="false"/>
+    <aura:attribute name="showException" type="boolean" default="false"/>
+    <aura:attribute name="exception" type="String"/>
+    <aura:attribute name="lstOfDiscreteModelNums" type="List"/>
+    <aura:attribute name="lstAsset" type="List"/>
+    <aura:attribute name="lstRegEq" type="List"/>
+    <aura:attribute name="selectedRecords" type="List"/>
+    <aura:attribute name="selectedFindRecords" type="List"/>
+    <aura:attribute name="srlNum" type="String"/>
+    <aura:attribute name="matNum" type="String"/>
+    <aura:attribute name="descMatNum" type="String"/>
+    <aura:attribute name="phno" type="String"/>
+    <aura:attribute name="regno" type="String"/>
+    <aura:attribute name="zipcd" type="String"/>
+    <aura:attribute name="instadd" type="String"/>
+    <aura:attribute name="lstnm" type="String"/>
+    <aura:attribute name="confno" type="String"/>
+    <aura:attribute name="CaseHide" type="boolean" default="false"/>
+    
+    <aura:attribute name="selOneAsset" type="Boolean" default="false"/>
+    <aura:attribute name="delSuccess" type="Boolean" default="false"/>
+    <aura:attribute name="prime" type="Boolean" default="false"/>
+    
+    
+        <lightning:tabset >
+   <lightning:tab label="Add Equipment">
+       
+    <aura:if isTrue="{!v.selOneAsset}"> 
+      <ui:message title="Error" severity="error" closable="true">
+        Please select at least one Asset.
+      </ui:message>
+    </aura:if>
+       
+    <aura:if isTrue="{!v.delSuccess}"> 
+      <ui:message title="Error" severity="error" closable="true">
+        Record deleted successfully.
+      </ui:message>
+    </aura:if>
+    
+    <aura:if isTrue="{!v.displayNoSerialNo}"> 
+      <ui:message title="Error" severity="error" closable="true">
+        Please enter the Serial Number.
+      </ui:message>
+    </aura:if>
+       
+    <aura:if isTrue="{!v.showException}"> 
+      <ui:message title="Error" severity="error" closable="true">
+        {!v.exception}
+      </ui:message>
+    </aura:if>
+       
+       
+   <div class="slds-list_horizontal">
+       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+       <div class="slds-form-element">
+        <label class="slds-form-element__label" for="input1" style="color:blue"><b>Serial No</b></label>
+           <div class="slds-form-element__control"> 
+             <ui:inputText aura:id="srlNo" value="{!v.srlNum}" /> 
+           </div>
+       </div>
+       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+       <div class="slds-form-element">
+        <label class="slds-form-element__label" for="input1" style="color:blue"><b>Model No</b></label>
+           <div class="slds-form-element__control">    
+             <ui:inputText aura:id="matNo" value="{!v.matNum}" />
+           </div>
+       </div>
+       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+       <div class="slds-form-element">
+        <label class="slds-form-element__label" for="input1" style="color:blue"><b>Desc Model No</b></label>
+           <div class="slds-form-element__control">    
+             <ui:inputText aura:id="descMatNo" value="{!v.descMatNum}" />
+             <!--input id="inputNameSample1" class="slds-input" type="text" /-->
+           </div>
+       </div>
+       <div class="slds-list_horizontal">
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <div class="slds-form-element__control">
+                <label class="slds-form-element__label" for="input1" style="color:blue"><b>Brand</b></label>
+                <ui:inputSelect aura:id="Brand" change="{!c.onSelectChange}">                   
+                    <aura:iteration items="{!v.Brand}" var="Brand"> &nbsp;&nbsp;&nbsp;&nbsp;
+                      <aura:if isTrue="{!Brand == v.searchByBrand}">                        
+                        <ui:inputSelectOption text="{!Brand}" label="{!Brand}" value="true" />
+                        <aura:set attribute="else">
+                            <ui:inputSelectOption text="{!Brand}" label="{!Brand}" value="false"/>
+                        </aura:set>
+                      </aura:if>                                             
+                    </aura:iteration>
+                </ui:inputSelect>
+            </div>
+        </div>
+   </div><br></br>
+        <div align="center">
+        <b><ui:button label="Validate and Save" press="{!c.validate}"/></b>
+        </div><br></br><br></br>
+  <aura:if isTrue="{!v.showSection}">
+   <div>
+     
+       <b><h3 class="slds-section-title--divider"><b>Result</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        </h3></b>
+    <table class="slds-table slds-table--bordered slds-table--cell-buffer slds-no-row-hover" >
+         
+        <tr>
+            <th class="slds-text-heading--label">Select</th>
+             
+            <th class="slds-text-heading--label">Serial #</th>
+            <th class="slds-text-heading--label">Model #</th>
+            <th class="slds-text-heading--label">Brand</th>
+            <th class="slds-text-heading--label">Disc Model No</th>
+            <th class="slds-text-heading--label">TOS Code</th>
+            <th class="slds-text-heading--label">Product Hierarchy</th>
+            <th class="slds-text-heading--label">Validation Status</th>            
+            
+        </tr>
+        <aura:iteration items="{!v.lstOfDiscreteModelNums}" var="obj" >
+            <tr> 
+                
+                <td><ui:inputCheckbox aura:id="checkbox" text="{!obj}" change="{!c.onSelect}">  </ui:inputCheckbox></td>
+                <!--ui:inputRadio aura:id="r0" name="others" change="{!c.onGroup}"/-->
+                <td>{!obj.serial}</td>
+                <td>{!obj.model}</td> 
+                <td>{!obj.brand}</td> 
+                <td>{!obj.discreetNo}</td>
+                <td>{!obj.toscode}</td>
+                <td>{!obj.productHierarchy}</td>
+                <td><ui:inputCheckbox value="{!obj.CCC_Validation_status__c}">  </ui:inputCheckbox></td> 
+                
+                <!--td><ui:button label="Details"></ui:button></td-->
+            </tr>   
+        </aura:iteration>   
+     </table>
+         <b><ui:button label="Cancel" press="{!c.cancelAssets}"/></b>
+         <b><ui:button label="Save" press="{!c.createNewAsset}"/></b>
+    <br></br>
+  </div>
+ </aura:if>
+       
+ <aura:if isTrue="{!v.dispayToolTipRes}"> 
+      
+     <div class="slds-popover slds-popover_tooltip slds-nubbin_top-left" role="tooltip" id="help" style="position: left;left: 10px;width: 1500px;background-color: #ccffcc;">
+     <div class="slds-popover__body"> 
+        <table>      
+            <tr> 
+               <th class="slds-text-heading--label">TOS Code</th>
+               <th class="slds-text-heading--label">Product Hierarchy</th>
+               <th class="slds-text-heading--label">Validation Status</th>
+            </tr> 
+            <aura:iteration items="{!v.lstOfDiscreteModelNums}" var="obj" > 
+               <tr>   
+                 <td class="slds-color__text_gray-12">{!obj.toscode}</td>
+                 <td class="slds-color__text_gray-12">{!obj.productHierarchy}</td>                        
+                 <td class="slds-color__text_gray-12"><ui:inputCheckbox value="{!v.CaseHide}">  </ui:inputCheckbox></td>
+               </tr>    
+            </aura:iteration>      
+        </table>  
+     </div> 
+   </div> 
+      
+ </aura:if> 
+       
+    
+  <div>
+    <b><h3 class="slds-section-title--divider"><b>Asset</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        </h3></b>
+    <table class="slds-table slds-table--bordered slds-table--cell-buffer slds-no-row-hover" >
+         
+        <tr>
+            <th class="slds-text-heading--label"> </th>
+            <th class="slds-text-heading--label">Primary</th>
+             
+            <th class="slds-text-heading--label">Serial #</th>
+            <th class="slds-text-heading--label">Model #</th>
+            <th class="slds-text-heading--label">Brand</th>
+            <th class="slds-text-heading--label">Disc Model No</th> 
+            <th class="slds-text-heading--label">TOS Code</th>
+            <th class="slds-text-heading--label">Product Hierarchy</th>
+            <th class="slds-text-heading--label">Validation Status</th>
+            
+        </tr>
+        <aura:iteration items="{!v.lstAsset}" var="Ast" >
+            <tr> 
+                <td><button data-record="{!Ast.objAsset.Id}" class="slds-button" onclick="{!c.navToDelete}">Delete</button></td>
+                <td><ui:inputRadio aura:id="r0" name="others" value="{!Ast.objAsset.Id}" change="{!c.onSelect}"/></td>
+                <td>{!Ast.objAsset.SerialNumber}</td>
+                <td>{!Ast.objAsset.CCC_Model_Number__c}</td> 
+                <td>{!Ast.objAsset.Brand__c}</td> 
+                <td>{!Ast.objAsset.CCC_Disc_Model_Number__c}</td> 
+                <td>{!Ast.objAsset.Toss_Code__c}</td>
+                <td>{!Ast.objAsset.Product_Hierarchy__c}</td>
+                <td><ui:inputCheckbox value="{!Ast.objAsset.CCC_Validation_status__c}">  </ui:inputCheckbox></td>               
+                
+                <!--td><ui:button label="Details"></ui:button></td-->
+            </tr>   
+        </aura:iteration>   
+    </table>
+  </div>   
+      
+ <aura:if isTrue="{!v.dispayToolTip}"> 
+      
+     <div class="slds-popover slds-popover_tooltip slds-nubbin_top-left" role="tooltip" id="help" style="position: top;left: 10px;background-color: #ccffcc;"> 
+     <div class="slds-popover__body"> 
+        <table>      
+            <tr> 
+                <th class="slds-text-heading--label">TOS Code</th>
+                <th class="slds-text-heading--label">Product Hierarchy</th>
+                <th class="slds-text-heading--label">Validation Status</th>
+            </tr> 
+            <aura:iteration items="{!v.lstAsset}" var="Ast" > 
+               <tr>   
+                <td class="slds-color__text_gray-12">{!Ast.objAsset.Toss_Code__c}</td>
+                <td class="slds-color__text_gray-12">{!Ast.objAsset.Product_Hierarchy__c}</td>
+                <td class="slds-color__text_gray-12"><ui:inputCheckbox value="{!Ast.objAsset.CCC_Validation_status__c}">  </ui:inputCheckbox></td> 
+               </tr>    
+            </aura:iteration>      
+        </table>  
+     </div> 
+   </div> 
+      
+ </aura:if> 
+
+</lightning:tab>
+            
+    <lightning:tab label="Find Registered Equipment">
+         
+    <aura:if isTrue="{!v.selOneAsset}"> 
+      <ui:message title="Error" severity="error" closable="true">
+        Please select at least one Asset.
+      </ui:message>
+    </aura:if>
+       
+    <aura:if isTrue="{!v.delSuccess}"> 
+      <ui:message title="Error" severity="error" closable="true">
+        Record deleted successfully.
+      </ui:message>
+    </aura:if>
+    
+    <aura:if isTrue="{!v.displayNoSerialNo}"> 
+      <ui:message title="Error" severity="error" closable="true">
+        Please enter the Serial Number.
+      </ui:message>
+    </aura:if>
+       
+    <aura:if isTrue="{!v.showException}"> 
+      <ui:message title="Error" severity="error" closable="true">
+        {!v.exception}
+      </ui:message>
+    </aura:if>
+
+         
+        <div class="slds-grid slds-grid_align-space">
+            <div class="slds-col">
+               <div class="slds-form-element">
+                  <label class="slds-form-element__label" for="input1" style="color:blue"><b>Phone Number</b></label>
+                 <div class="slds-form-element__control">    
+                   <ui:inputText aura:id="phnum" value="{!v.phno}" />
+                 </div>
+               </div>
+                <div class="slds-form-element">
+                  <label class="slds-form-element__label" for="input1" style="color:blue"><b>Registration Number</b></label>
+                 <div class="slds-form-element__control">    
+                   <ui:inputText aura:id="regnum" value="{!v.regno}" />
+                 </div>
+               </div>
+                <div class="slds-form-element">
+                  <label class="slds-form-element__label" for="input1" style="color:blue"><b>Zip Code</b></label>
+                 <div class="slds-form-element__control">    
+                   <ui:inputText aura:id="zipnum" value="{!v.zipcd}" />
+                 </div>
+               </div>
+             </div>
+           <div class="slds-col">
+               <div class="slds-form-element">
+                  <label class="slds-form-element__label" for="input1" style="color:blue"><b>Installation Address</b></label>
+                 <div class="slds-form-element__control">    
+                   <ui:inputText aura:id="instaddrs" value="{!v.instadd}" />
+                 </div>
+               </div>
+               <div class="slds-form-element">
+                  <label class="slds-form-element__label" for="input1" style="color:blue"><b>Last Name</b></label>
+                 <div class="slds-form-element__control">    
+                   <ui:inputText aura:id="lstname" value="{!v.lstnm}" />
+                 </div>
+               </div>
+               <div class="slds-form-element">
+                  <label class="slds-form-element__label" for="input1" style="color:blue"><b>Confirmation Number</b></label>
+                 <div class="slds-form-element__control">    
+                   <ui:inputText aura:id="confnum" value="{!v.confno}" />
+                 </div>
+               </div>
+           </div> 
+       </div><br></br><br></br>
+         <div align="center">
+              <b><ui:button label="Search" press="{!c.search}"/></b>
+         </div><br></br><br></br>
+  <aura:if isTrue="{!v.showFindSection}">
+    <b><h3 class="slds-section-title--divider"><b>Result</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+       </h3></b>
+    <table class="slds-table slds-table--bordered slds-table--cell-buffer slds-no-row-hover" >
+         
+        <tr>
+            <th class="slds-text-heading--label">Select</th>             
+            <th class="slds-text-heading--label">Serial #</th>
+            <th class="slds-text-heading--label">Model #</th>
+            <th class="slds-text-heading--label">Confirmation Number#</th>
+            <th class="slds-text-heading--label">Consumer State</th>
+            <th class="slds-text-heading--label">Consumer Phone No.</th>
+            <th class="slds-text-heading--label">Installation Name</th>
+            <th class="slds-text-heading--label">Installation Address</th>
+            <th class="slds-text-heading--label">Installing Dealer</th>
+            
+        </tr>
+        <aura:iteration items="{!v.lstRegEq}" var="art1" >
+            <tr> 
+                <td><ui:inputCheckbox aura:id="checkbox" text="{!art1}" change="{!c.onFindSelect}">  </ui:inputCheckbox></td>
+                <td>{!art1.serial}</td>
+                <td>{!art1.model}</td>
+                <td>{!art1.confirmationNumber}</td>       
+                <td>{!art1.consumer_State}</td>
+                <td>{!art1.consumer_Phone1}</td>
+                <td>{!art1.consumer_Name}</td>
+                <td>{!art1.consumer_Address1}</td>
+                <td>{!art1.dealerName}</td>
+            </tr>   
+        </aura:iteration>   
+    </table>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <b><ui:button label="Save" press="{!c.createNewAssetForSS}"/></b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <b><ui:button label="Cancel" press="{!c.cancelFindAssets}"/></b>
+</aura:if> 
+         
+         <b><h3 class="slds-section-title--divider"><b>Asset</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        </h3></b>
+    <table class="slds-table slds-table--bordered slds-table--cell-buffer slds-no-row-hover" >
+         
+        <tr>
+            <th class="slds-text-heading--label"> </th>
+            <th class="slds-text-heading--label">Primary</th>
+             
+            <th class="slds-text-heading--label">Serial #</th>
+            <th class="slds-text-heading--label">Model #</th>
+            <th class="slds-text-heading--label">Brand</th>
+            <th class="slds-text-heading--label">Disc Model No</th>
+            <th class="slds-text-heading--label">TOS Code</th>
+            <th class="slds-text-heading--label">Product Hierarchy</th>
+            <th class="slds-text-heading--label">Validation Status</th>
+            
+            
+        </tr>
+        <aura:iteration items="{!v.lstAsset}" var="Ast" >
+            <tr> 
+                <td>Delete</td>
+                <td><ui:inputRadio aura:id="r0" name="others" value="{!Ast.objAsset.Id}" change="{!c.getSelectedRadio}"/></td>
+                <td>{!Ast.objAsset.SerialNumber}</td>
+                <td>{!Ast.objAsset.CCC_Model_Number__c}</td> 
+                <td>{!Ast.objAsset.Brand__c}</td> 
+                <td>{!Ast.objAsset.CCC_Disc_Model_Number__c}</td>
+                <td>{!Ast.objAsset.Toss_Code__c}</td>
+                <td>{!Ast.objAsset.Product_Hierarchy__c}</td>
+                <td><ui:inputCheckbox value="{!Ast.objAsset.CCC_Validation_status__c}">  </ui:inputCheckbox></td>
+                
+                <!--td><ui:button label="Details"></ui:button></td-->
+            </tr>   
+        </aura:iteration>   
+    </table>
+            </lightning:tab>
+    </lightning:tabset>
+</aura:component>

@@ -1,0 +1,5 @@
+<design:component>
+    <design:attribute name="distributorId" label="distributor Id" />
+    <design:attribute name="dealerNumber" label="Dealer Number" />
+    <design:attribute name="isFromCalc" label="From Calculator" />
+</design:component>

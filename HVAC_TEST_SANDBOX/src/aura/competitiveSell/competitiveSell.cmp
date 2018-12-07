@@ -1,0 +1,66 @@
+<aura:component controller="GetBrandValue" >
+    <aura:handler name="init" action="{!c.init}" value="{!this}" />
+    <aura:attribute name="ListCenas" type="List" />
+    <aura:attribute name="modelList" type="List"/>
+    <aura:attribute name="modelListSelected" type="List"/>
+    
+    <aura:attribute name="OutputObject" type="Account" default="{ 'sobjectType': 'Competitive_Sell_Request__c',
+                                                                'Your_Model__c':'', 
+                                                                'Request_Sell__c':'',
+                                                                'Competitor_Model__c':'',
+                                                                'Competitor_Sell__c':'',
+                                                                'Buy1__c':'',
+                                                                'DGM1__c':'',
+                                                                'Buy2__c':'',
+                                                                'DGM2__c':''
+                                                                }"/>
+    <aura:attribute name="OutputList" type="Account[]"/>
+    
+    
+    
+    
+    
+    <div class="slds-wrap slds-grid">
+        <aura:iteration items="{!v.ListCenas}" var="level" indexVar="idx">
+            <lightning:select  class="single" name="{!idx}" onchange="{!c.onSingleSelectChange}">
+                <aura:iteration items="{!v.modelList}" var="model" >
+                    <option  text="{!model}" value="{!model.id}"/>
+                </aura:iteration>
+            </lightning:select>
+            
+            
+            <div class="slds-col slds-size_1-of-9">
+                <input id="{!idx+'requestSell'}"  onchange="{!c.redesignThis}"/>
+            </div>
+            <div class="slds-col slds-size_1-of-9">    
+                <input id="{!idx+'compMod'}"  type="String" onchange="{!c.redesignThis}"/>
+            </div>
+            <div class="slds-col slds-size_1-of-9"> 
+                <input id="{!idx+'compSell'}" type="number" onchange="{!c.redesignThis}"/>
+            </div>
+            <div class="slds-col slds-size_1-of-9"> 
+                <input id="{!idx+'buy1'}" type="number" onchange="{!c.redesignThis}"/>
+            </div>  
+            <div class="slds-col slds-size_1-of-9"> 
+                <input id="{!idx+'dgm1'}" type="number" onchange="{!c.redesignThis}"/>
+            </div>       
+            <div class="slds-col slds-size_1-of-9"> 
+                <input id="{!idx+'buy2'}" type="number" onchange="{!c.redesignThis}"/>
+            </div>           
+            <div class="slds-col slds-size_1-of-9"> 
+                <input id="{!idx+'dgm2'}" type="number"  onchange="{!c.redesignThis}"/>
+            </div>
+            
+            <div class="slds-col slds-size_1-of-9"> 
+                <lightning:button  name = "{!idx}" variant="error"  iconName="utility:delete"  onclick="{! c.RemoveBrand }" />
+            </div>
+            <div class="slds-col slds-size_1-of-1"/> 
+        </aura:iteration>
+    </div>
+    
+    
+    
+    
+    
+    <lightning:button onclick="{!c.add}" name="ADD MODEL" label="ADD MODEL" />
+</aura:component>

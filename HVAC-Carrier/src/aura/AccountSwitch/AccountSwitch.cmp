@@ -1,0 +1,61 @@
+<aura:component implements="lightning:isUrlAddressable,forceCommunity:layout,force:appHostable,forceCommunity:availableForAllPageTypes"
+                access="global">
+
+    <aura:attribute name="accounts" type="List"/>
+    <aura:attribute name="accountSelected" type="String"/>
+    <aura:attribute name="accName" type="String" />
+    <aura:attribute name="searchKey" type="String" default=""/>
+    <aura:attribute name="foundAccounts" type="List"/>
+    <aura:attribute name="dropdownVisible" type="Boolean" default="false"/>
+    <!--<aura:attribute name="isDoneRender" type="Boolean" default="false"/> -->
+
+    <aura:registerEvent name="myEvent" type="c:AccountChangeEvent"/>
+
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}" />
+    <!--<aura:handler event="aura:doneRendering" action="{!c.onRender}"/>
+    <aura:handler name="render" value="{!this}" action="{!c.onRender}"/> -->
+
+    <aura:if isTrue="{!v.accounts.length > 10}">
+        <div class="slds-form-element slds-lookup slds-is-close">
+            <div class="slds-form-element__control">
+                <div class="slds-combobox_container">
+                    <div aura:id="searchRes" class="{!'slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click ' + (v.dropdownVisible ? 'slds-is-open' : 'slds-is-close')}" aria-expanded="false" aria-haspopup="listbox" role="combobox">
+                        <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right" role="none">
+                            <lightning:icon class="slds-input__icon input-icon" iconName="utility:search" size="small" alternativeText="search"/>
+                            <ui:inputText value="{!v.searchKey}" click="{!c.onFocus}" updateOn="keyup"  blur="{!c.onBlur}" keyup="{!c.onKeyUp}" label="Select Account:" class="search-height" placeholder="{!v.accountSelected ? v.accName : v.accounts[0].Name}"/>
+                        </div>
+                        <div id="listbox-id-1" class="slds-dropdown slds-dropdown_fluid" role="listbox">
+                            <ul class="slds-listbox slds-listbox_vertical" role="presentation">
+                                <aura:if isTrue="{!not(empty(v.foundAccounts))}">
+                                    <aura:iteration items="{!v.foundAccounts}" var="acc">
+                                        <li role="presentation" class="slds-listbox__item search-result" onclick="{!c.changeAccountCustomInput}" id="{!acc.Id}">
+                                            {!acc.Name}
+                                        </li>
+                                    </aura:iteration>
+                                    <aura:set attribute="else">
+                                        <li role="presentation" class="slds-listbox__item no-results">
+                                            No results
+                                        </li>
+                                    </aura:set>
+                                </aura:if>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <aura:set attribute="else">
+            <ui:inputSelect aura:id="categoryPicklist" value="{!v.accName}" label="Select Account:" change="{!c.changeAccountDefaultInput}">
+                <aura:iteration items="{!v.accounts}" var="item" indexVar="index">
+
+                    <aura:if isTrue="{!v.accountSelected ==item.Id}" >
+                        <option value="{!item.Id}" selected="true">{!item.Name}</option>
+                        <aura:set attribute="else">
+                            <option value="{!item.Id}">{!item.Name}</option>
+                        </aura:set>
+                    </aura:if>
+                </aura:iteration>
+            </ui:inputSelect>
+        </aura:set>
+    </aura:if>
+</aura:component>

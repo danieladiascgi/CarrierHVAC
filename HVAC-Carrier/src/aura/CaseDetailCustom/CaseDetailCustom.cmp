@@ -1,0 +1,468 @@
+<aura:component controller="CaseDetailCustomController" implements="flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes" access="global">
+    <aura:attribute name="caseWrp" type="CaseWrapper" default="{}"/>
+    <aura:attribute name="clickedCaseRecId" type="String"/>
+    <aura:attribute name="clickedEmailRecId" type="String"/>
+    <aura:attribute name="CommentBody" type="String"/>
+    <aura:attribute name="feedBody" type="String"/>
+    <aura:attribute name="IsPublished" type="boolean"/>
+    <aura:attribute name="CmdList" type="List"/>
+    <aura:attribute name="AttachList" type="List"/>
+    <aura:attribute name="feedList" type="List" />
+    <aura:attribute name="emails" type="List" />
+    <aura:attribute name="expedites" type="List" />
+    <aura:attribute name="emailMsg" type="EmailMessage" />
+    <aura:attribute name="showComments" type="boolean" default="true"/>
+    <aura:attribute name="status" type="String"/>
+    
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    <div aura:id="content">
+        <div>
+            <table>
+                <!-- <tr><h4><b>CaseNumber:</b></h4><br></br>{!v.caseWrp.caseNumber}<h4><b>CreatedBy:</b></h4><br></br>{!v.caseWrp.createdDate}</tr>-->
+                <tr><td> <div style="min-height: 92px;padding: 0 15px;overflow: hidden;">
+                    <div style="padding-bottom: 7px;line-height: 1.3em;overflow: hidden;">
+                        <span style="font-size: .9em;color: #4a4a56;font-weight: 700;padding-left: 6px;padding-right: 8px;">Case Number</span>
+                        <span style="display: inline-block;min-width: 60px;padding-right: 15px;"><span title="{!v.caseWrp.caseNumber}">{!v.caseWrp.caseNumber}</span></span>
+                        <span style="left-margin: 5px;"> </span>
+                        <span style="font-size: .9em;color: #4a4a56;font-weight: 700;padding-left: 6px;padding-right: 8px;">Created Date</span>
+                        <span style="display: inline-block;min-width: 60px;padding-right: 15px;"><lightning:formattedDateTime value="{!v.caseWrp.createdDate}" year="numeric" month="numeric" day="numeric"  hour="2-digit" minute="2-digit" timeZoneName="short" /></span>
+                    </div>
+                    <div  style="font-size: 1.8em;font-weight: bold;color: #494b4e;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;-o-text-overflow: ellipsis;-webkit-text-overflow: ellipsis;-ms-text-overflow: ellipsis;-moz-binding: url(/sync/ellipsis.xml#ellipsis);padding-bottom: 7px;"><b><h4>{!v.caseWrp.Subject}</h4></b></div>    
+                    </div>
+                    
+                    </td></tr>            
+            </table>
+            
+        </div>
+        
+        <div class="slds-tabs--default">
+            <ul class="slds-tabs--default__nav" role="tablist">
+                <li  aura:id="detailId" class="slds-tabs--default__item slds-text-title--caps slds-active" title="Detail" role="presentation" ><a class="slds-tabs--default__link" href="javascript:void(0);" onclick="{!c.detailTab}" role="tab" tabindex="0" aria-selected="false" aria-controls="tab-default-1" id="detail_linking" style="font-size: 1.5em;"><b>DETAILS</b></a></li>
+                <li  aura:id="commentId"  class="slds-tabs--default__item slds-text-title--caps " title="Comments" role="presentation"><a class="slds-tabs--default__link" href="javascript:void(0);" onclick="{!c.commentTab}" role="tab" tabindex="-1" aria-selected="true" aria-controls="tab-default-2" id="comment_linking" style="font-size: 1.5em;"><b>COMMENTS</b></a></li>                   
+                <li  aura:id="emailId" class="slds-tabs--default__item slds-text-title--caps" title="Email" role="presentation"><a class="slds-tabs--default__link" href="javascript:void(0);" onclick="{!c.emailTab}" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-default-3" id="email_linking" style="font-size: 1.5em;"><b>EMAILS</b></a></li>
+                <li  aura:id="expediteId" class="slds-tabs--default__item slds-text-title--caps" title="Expedite" role="presentation"><a class="slds-tabs--default__link" href="javascript:void(0);" onclick="{!c.expediteTab}" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-default-5" id="expedite_linking" style="font-size: 1.5em;"><b>EXPEDITES</b></a></li>
+
+            </ul>
+            <div aura:id="detailTabDataId" id="tab-default-1" class="slds-tabs--default__content slds-show" role="tabpanel" aria-labelledby="detail_linking">
+                <div class="slds-page-header" style="cursor: pointer;">      
+                    <section class="slds-clearfix"> 
+                        <div class="slds-float--left ">
+                            <lightning:icon class="slds-show" aura:id="articleOne" iconName="utility:add" size="x-small" alternativeText="Indicates add"/>
+                        </div>
+                        <div class="slds-float--left"><h3 class="slds-section-title--divider">Description</h3></div>                                      
+                    </section>
+                </div>
+                
+                <div class="slds-show slds-p-around--medium" aura:id="articleOne">
+                    <div class="slds-grid " columns= "2">
+                        <div class="slds-col">
+                            <b>Subject</b>
+                            <div class="slds-form-element__control">
+                                <ui:outputText aura:id="subj" value="{!v.caseWrp.Subject}"/>  
+                            </div>  <br></br>
+                            <b>Description</b>
+                            <div class="slds-form-element__control">
+                                <ui:outputText aura:id="desc" value="{!v.caseWrp.description}"/>
+                            </div>  <br></br>         
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="slds-page-header" style="cursor: pointer;" >
+                    <section class="slds-clearfix"> 
+                        <div class="slds-float--left ">
+                            <lightning:icon class="slds-show" aura:id="articleOne" iconName="utility:add" size="x-small" alternativeText="Indicates add"/>
+                        </div>
+                        <div class="slds-m-left--large"><h3 class="slds-section-title--divider">Case Information</h3></div>                                      
+                    </section>
+                </div>
+                <div class="slds-show slds-p-around--medium" aura:id="articleTwo">
+                    <div class="slds-grid " columns = "2">
+                        <div class="slds-col">
+                            
+                            <b>Case Number</b>
+                            <div class="slds-form-element__control">
+                                <ui:outputText aura:id="cseNo" value="{!v.caseWrp.caseNumber}"/>  
+                            </div>  <br></br>
+                            <b>Purpose</b>
+                            <div class="slds-form-element__control">
+                                <ui:outputText aura:id="purp" value="{!v.caseWrp.purpose}"/>  
+                            </div>  <br></br>
+                            <b>Sub Purpose</b>
+                            <div class="slds-form-element__control">
+                                <ui:outputText aura:id="spurp" value="{!v.caseWrp.subPurpose}"/>  
+                            </div>  <br></br>
+                            <b>Contact Name</b>
+                            <div class="slds-form-element__control">
+                                <ui:outputText aura:id="cont" value="{!v.caseWrp.contName}"/> 
+                            </div>  <br></br>
+                            <b>Account Name</b>
+                            <div class="slds-form-element__control">
+                                <ui:outputText aura:id="acc" value="{!v.caseWrp.accName}"/>  
+                            </div> <br></br>
+                            <b>Phone Number</b>
+                            <div class="slds-form-element__control">
+                                <ui:outputText aura:id="phnum" value="{!v.caseWrp.phoneNumber}"/>  
+                            </div>  <br></br>
+                            <!--  <b>Customer Type</b>
+          <div class="slds-form-element__control">
+              <ui:outputText aura:id="cust" value="{!v.caseWrp.customerType}"/>  
+          </div>  <br></br>-->
+                        </div>
+                        <div class = "slds-col">
+                            <b>Priority</b>
+                            <div class="slds-form-element__control">
+                                <ui:outputText aura:id="priority" value="{!v.caseWrp.priority}"/>  
+                            </div>  <br></br>
+                            <b>Source</b>
+                            <div class="slds-form-element__control">
+                                <ui:outputText aura:id="source" value="{!v.caseWrp.source}"/>  
+                            </div>  <br></br>
+                            <b>Status</b>
+                            <div class="slds-form-element__control">
+                                <ui:outputText aura:id="status" value="{!v.caseWrp.status}"/>  
+                            </div>  <br></br>
+                            <b>Brand</b>
+                            <div class="slds-form-element__control">
+                                <ui:outputText aura:id="brand" value="{!v.caseWrp.brand}"/>  
+                            </div><br></br>
+                            <b>Distributor Customer</b>
+                            <div class="slds-form-element__control">
+                                <ui:outputText aura:id="distributor_customer" value="{!v.caseWrp.distributor_customer}"/>  
+                            </div><br></br>
+                            
+                            <!-- <b>ZSM</b>
+          <div class="slds-form-element__control">
+              <ui:outputText aura:id="zsm" value="{!v.caseWrp.zsm}"/>  
+          </div>  <br></br>-->
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-page-header" style="cursor: pointer;" >
+                    <section class="slds-clearfix"> 
+                        <div class="slds-float--left ">
+                            <lightning:icon class="slds-show" aura:id="articleOne" iconName="utility:add" size="x-small" alternativeText="Indicates add"/>
+                        </div>
+                        <div class="slds-float--left"><h3 class="slds-section-title--divider">Part/Order Information</h3></div>                                      
+                    </section>
+                </div>
+                
+                <div class="slds-show slds-p-around--medium" aura:id="articleThree">
+                    <div class="slds-grid ">
+                        <div class="slds-col"> 
+                            <!--  <b>Part</b>
+          <div class="slds-form-element__control">
+              <ui:outputText aura:id="part" value="{!v.caseWrp.part}"/>  
+          </div>  <br></br>-->
+                            <b>Part Number</b>
+                            <div class="slds-form-element__control">
+                                <ui:outputText aura:id="partnum" value="{!v.caseWrp.partNumber}"/>  
+                            </div>  <br></br>
+                            <b>Quantity</b>
+                            <div class="slds-form-element__control">
+                                <ui:outputText aura:id="qty" value="{!v.caseWrp.quantity}"/>  
+                            </div>  <br></br>
+                            <b>Part Description</b>
+                            <div class="slds-form-element__control">
+                                <ui:outputText aura:id="partdes" value="{!v.caseWrp.partDescription}"/>  
+                            </div>  <br></br>
+                            <b>Model#</b>
+                            <div class="slds-form-element__control">
+                                <ui:outputText aura:id="model" value="{!v.caseWrp.model}"/>  
+                            </div><br></br>
+                            
+                            <b>Serial#</b>
+                            <div class="slds-form-element__control">
+                                <ui:outputText aura:id="serial" value="{!v.caseWrp.serial}"/>  
+                            </div>  <br></br>
+                            <!-- <b>Planner</b>
+          <div class="slds-form-element__control">
+              <ui:outputText aura:id="plnr" value="{!v.caseWrp.planner}"/>  
+          </div><br></br>
+         <b>Buyer</b>
+          <div class="slds-form-element__control">
+              <ui:outputText aura:id="buyr" value="{!v.caseWrp.buyer}"/>  
+          </div>  <br></br>
+         <b>Vendor Code</b>
+          <div class="slds-form-element__control">
+              <ui:outputText aura:id="vencode" value="{!v.caseWrp.vendorCode}"/>  
+          </div>  <br></br>
+         <b>Vendor Name</b>
+          <div class="slds-form-element__control">
+              <ui:outputText aura:id="venname" value="{!v.caseWrp.vendorName}"/>  
+          </div>  <br></br>
+          <b>Stocking Type</b>
+          <div class="slds-form-element__control">
+              <ui:outputText aura:id="stktype" value="{!v.caseWrp.stockingType}"/>  
+          </div>  <br></br>-->
+                        </div>
+                        <div class="slds-col">
+                            <b>C10 Order#</b>
+                            <div class="slds-form-element__control">
+                                <ui:outputText aura:id="c10order" value="{!v.caseWrp.C10Order}"/>  
+                            </div>  <br></br>
+                            <b>Customer PO#</b>
+                            <div class="slds-form-element__control">
+                                <ui:outputText aura:id="custpo" value="{!v.caseWrp.customerPO}"/>  
+                            </div><br></br>
+                            
+                            <b>RCD PO#</b>
+                            <div class="slds-form-element__control">
+                                <ui:outputText aura:id="RCDpo" value="{!v.caseWrp.RCD_PO}"/>  
+                            </div>  <br></br>
+                            
+                            <b>RMA Sent</b>
+                            <div class="slds-form-element__control">
+                                <ui:outputText aura:id="rmasent" value="{!v.caseWrp.RMASent}"/>  
+                            </div><br></br>
+                            
+                            <b>Invoice#</b>
+                            <div class="slds-form-element__control">
+                                <ui:outputText aura:id="invoice" value="{!v.caseWrp.invoice}"/>  
+                            </div>  <br></br>                  
+                        </div>          
+                    </div>
+                </div>
+                
+                
+                <div class="slds-page-header" style="cursor: pointer;" >
+                    <section class="slds-clearfix"> 
+                        <div class="slds-float--left ">
+                            <lightning:icon class="slds-show" aura:id="articleOne" iconName="utility:add" size="x-small" alternativeText="Indicates add"/>
+                        </div>
+                        <div class="slds-float--left"><h3 class="slds-section-title--divider">Resolution</h3></div>                                      
+                    </section>
+                </div>
+                <div class="slds-show slds-p-around--medium" aura:id="articleFive">
+                    <div class="slds-grid ">
+                        
+                        <div class="slds-col">
+                            
+                            <b>Days Open</b>
+                            <div class="slds-form-element__control">
+                                <ui:outputText aura:id="daysopen" value="{!v.caseWrp.daysOpen}"/>  
+                            </div><br></br>
+                            <b>Time to Closure</b>
+                            <div class="slds-form-element__control">
+                                <ui:outputText aura:id="timetoclosure" value="{!v.caseWrp.timeToClosure}"/>  
+                            </div>
+                        </div>
+                        <div class="slds-col">
+                            <b>Solution</b>
+                            <div class="slds-form-element__control">
+                                <ui:outputText aura:id="solution" value="{!v.caseWrp.solution}"/>  
+                            </div>  <br></br>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-page-header" style="cursor: pointer;">
+                    <section class="slds-clearfix"> 
+                        <div class="slds-float--left ">
+                            <lightning:icon class="slds-show" aura:id="articleOne" iconName="utility:add" size="x-small" alternativeText="Indicates add"/>
+                        </div>
+                        <div class="slds-float--left"><h3 class="slds-section-title--divider">Attachment</h3></div> 
+                    </section>
+                </div>
+                <div class="slds-show slds-p-around--medium" aura:id="articleSix">
+                    <div class="slds-grid ">
+                        
+                        
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th scope="col" title="File Name">File Name</th>
+                                    <th scope="col" title="Size">Size</th>
+                                    <th scope="col" title="Created By">Created By</th>
+                                    <th scope="col" title="Last Modified">Last Modified</th>
+                                    <!-- <th>Created By</th>-->
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
+                                <aura:iteration items="{!v.AttachList}" var="attlist"> 
+                                    <tr>
+                                        <td>{!attlist.Name}</td>
+                                        <td>{!attlist.BodyLength}</td>
+                                        <td>{!attlist.CreatedDate}</td>
+                                        <td>{!attlist.LastModifiedDate}</td>
+                                    </tr>  <br></br>
+                                </aura:iteration>
+                                
+                            </tbody>            
+                        </table>
+                    </div>
+                </div>
+                
+                
+            </div>
+            
+            <div aura:id="commentTabDataId" id="tab-default-2" class="slds-tabs--default__content slds-hide" role="tabpanel" aria-labelledby="comment_linking">
+                <aura:if isTrue="{!v.showComments}">      
+                    <table class="slds-table slds-table_bordered slds-table_cell-buffer" style="width:80%" >  
+                        <tr class="slds-text-title_caps" >
+                            <td>
+                                <label><b>Comments:</b></label>
+                            </td>
+                            <td>
+                                <ui:inputTextArea aura:id="comments" value="{!v.CommentBody}" />
+                            </td>
+                        </tr> 
+                        <tr class="slds-text-title_caps">
+                            <td></td>
+                            <td><div style="height: 50px;display: flex;align-items: center;justify-content: center;width:80%">
+                                <lightning:button variant="brand" label="Save" onclick="{!c.saveComment}" />  
+                                </div></td>
+                        </tr>
+                    </table>
+                </aura:if>
+                
+                <div class="slds">
+                    <table >
+                        
+                        <thead>
+                            <tr class="slds-text-title_caps">
+                                <th scope="col" title="Comments">
+                                    <div><h6><b>COMMENTS</b></h6></div>
+                                </th>
+                                <!-- <th scope="col"  title="Public">
+              <div><b>PUBLIC</b></div>
+          </th>-->
+                                
+                            </tr>
+                        </thead><br></br>
+                        <tbody>
+                            <aura:iteration items="{!v.CmdList}" var="comlist">     
+                                <tr>
+                                    <td><b>Created By:<u>{!comlist.CreatedBy.Name}</u>&nbsp;({!comlist.CreatedDate})</b><br></br>
+                                        <ui:outputText value="{!comlist.CommentBody}" /></td></tr>
+                                <!-- <td><ui:outputcheckbox value="{!comlist.IsPublished}" /></td>-->
+                                
+                            </aura:iteration>
+                        </tbody>
+                    </table> 
+                </div>
+            </div>
+            <div aura:id="emailTabDataId" id="tab-default-3" class="slds-tabs--default__content slds-hide" role="tabpanel" aria-labelledby="email_linking">
+                <lightning:overlayLibrary aura:id="overlayLib"/>
+                <table id="tableId" class="slds-table slds-table_bordered slds-table_cell-buffer" cellspacing="0" width="100%">
+                    <thead>
+                        <tr class="slds-text-title_caps">
+                            <!--  <th scope="col" class="">
+                                        <div class="slds-truncate" title="Action">Action<br/> </div>                        
+                                    </th> 
+                                    <th scope="col" class="">
+                                        <div class="slds-truncate" title="Status">Status<br/> </div>                        
+                                    </th>-->                                    
+                            <th scope="col" class="">
+                                <div class="slds-truncate" title="Subject">Subject</div>                        
+                            </th>
+                            <th scope="col" class="">
+                                <div class="slds-truncate" title="To Address">To Address</div>                        
+                            </th>  
+                            <th scope="col" class="">
+                                <div class="slds-truncate" title="Message Date">Message Date</div>                        
+                            </th> 
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <aura:iteration items="{!v.emails}" var="email">
+                            <tr> 
+                                
+                                <td data-label="Subject" class="">
+                                    <div class="slds-truncate">
+                                        <ui:outputText class="slds-text-link" value="{!email.Subject}" title="{!email.Id}" click="{!c.handleShowModal}"/>  
+                                    </div>
+                                    <!-- <c:EmailDetailPage clickedEmailRecId="{!v.clickedEmailRecId}" /> -->
+                                </td>
+                                <td scope="row" data-label="Promise Ship Date" class="">
+                                    <div class="slds-truncate">
+                                        <ui:outputText value="{!email.ToAddress}" />  
+                                    </div>
+                                </td>
+                                <td scope="row" data-label="Promise Ship Date" class="">
+                                    <div class="slds-truncate">
+                                        <lightning:formattedDateTime value="{!email.MessageDate}" year="numeric" month="numeric" day="numeric"  hour="2-digit" minute="2-digit" timeZoneName="short" />
+                                        <!-- <ui:outputDateTime value="{!email.MessageDate}" /> --> 
+                                    </div>
+                                </td>
+                            </tr>
+                        </aura:iteration>
+                    </tbody>                      
+                </table> 
+                
+                
+            </div>
+            
+            <div aura:id="expediteTabDataId" id="tab-default-5" class="slds-tabs--default__content slds-hide" role="tabpanel" aria-labelledby="expedite_linking">
+                
+                <table id="tableId" class="slds-table slds-table_bordered slds-table_cell-buffer" cellspacing="0" width="100%">
+                    <thead>
+                        <tr class="slds-text-title_caps">
+                                                                
+                            <th scope="col" class="">
+                                <div class="slds-truncate" title="Subject">Expedite Number</div>                        
+                            </th>
+                            <th scope="col" class="">
+                                <div class="slds-truncate" title="To Address">Expedite Status</div>                        
+                            </th>  
+                            <th scope="col" class="">
+                                <div class="slds-truncate" title="Customer PO#">Customer PO#</div>                        
+                            </th>  
+                            <th scope="col" class="">
+                                <div class="slds-truncate" title="C10 Order#">C10 Order#</div>                        
+                            </th>  
+                            <th scope="col" class="">
+                                <div class="slds-truncate" title="Part #">Part #</div>                        
+                            </th>  
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <aura:iteration items="{!v.expedites}" var="expedite">
+                            <tr> 
+                                
+                                <td data-label="Expedite Number" class="">
+                                    <div class="slds-truncate">
+                                        <ui:outputText value="{!expedite.Name}" />  
+                                    </div>
+                                    <!-- <c:EmailDetailPage clickedEmailRecId="{!v.clickedEmailRecId}" /> -->
+                                </td>
+                                <td scope="row" data-label="Expedite Status" class="">
+                                    <div class="slds-truncate">
+                                        <ui:outputText value="{!expedite.Expedite_Status__c}" />  
+                                    </div>
+                                </td>
+                                <td data-label="Customer PO#" class="">
+                                    <div class="slds-truncate">
+                                        <ui:outputText value="{!expedite.Customer_PO__c}" />  
+                                    </div>
+                                    <!-- <c:EmailDetailPage clickedEmailRecId="{!v.clickedEmailRecId}" /> -->
+                                </td>
+                                <td data-label="C10 Order#" class="">
+                                    <div class="slds-truncate">
+                                        <ui:outputText value="{!expedite.C10_Order__c}" />  
+                                    </div>
+                                    <!-- <c:EmailDetailPage clickedEmailRecId="{!v.clickedEmailRecId}" /> -->
+                                </td>
+                                <td data-label="Part #" class="">
+                                    <div class="slds-truncate">
+                                        <ui:outputText value="{!expedite.Part_Number__c}" />  
+                                    </div>
+                                    <!-- <c:EmailDetailPage clickedEmailRecId="{!v.clickedEmailRecId}" /> -->
+                                </td>
+                            </tr>
+                        </aura:iteration>
+                    </tbody>                      
+                </table> 
+                
+                
+            </div>
+           
+           
+            
+            
+        </div>
+    </div>
+    
+</aura:component>

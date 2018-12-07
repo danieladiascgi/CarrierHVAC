@@ -1,0 +1,4 @@
+<aura:component >
+    <div class="slds-align_absolute-center" style="font-size:20px;color:red;">PRICE AND AVAILABILITY</div><br></br>
+	  <div class="slds-align_absolute-center" style="color:red">UNDER CONSTRUCTION</div>  
+</aura:component>

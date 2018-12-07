@@ -1,0 +1,13 @@
+<aura:component >
+	<aura:attribute name="label" type="String" required="false" access="public" default=""/>
+	<aura:attribute name="className" type="String" default="" required="false" access="public"/>
+
+	<div class="{!v.className}">
+		<div>
+			<label>{!v.label}</label>
+		</div>
+		<div>
+			<span>{!v.body}</span>
+		</div>
+	</div>
+</aura:component>

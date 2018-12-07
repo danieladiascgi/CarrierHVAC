@@ -1,0 +1,57 @@
+<aura:component controller="dynamicRowItemClass">    
+    <!-- Aura Attribute for store single Contact[standard Object] Instance
+         And Store Index of Particular Instance --> 
+    <aura:attribute name="WrapInstance" type="WrapperCls__c"/>
+    <aura:attribute name="rowIndex" type="String"/>
+    <aura:attribute name="partlength" type="Integer" />
+    <aura:attribute name="partNo" type="String"/>
+    <aura:attribute name="quantity" type="Integer"/>
+    <aura:attribute name="description" type="string"/>
+    
+    <!-- Register 2 Lightning Event for handle add or Delete rows on Parent Component  --> 
+    <aura:registerEvent name="DeleteRowEvt" type="c:DeleteRowEvt"/> 
+    <aura:registerEvent name="AddRowEvt" type="c:AddNewRowEvt"/> 
+    
+    <!-- Table Row -->   
+     <tr class="slds-text-title_caps" align="center" style="text-align:center;">
+   <th><center>Part</center></th>
+   <th align="center"><center>Quantity</center></th>
+   <th align="center"><center>Description</center></th>
+   <th align="center"><center>Primary Part</center></th>
+ </tr>
+    <tr class="slds-text-title_caps" align="center" style="text-align:center;">
+        
+          <td style="" align="center">
+            <center><ui:inputText aura:id="part" value="{!v.WrapInstance.prtNo__c}"/></center>
+          </td>  
+        <td align="center">              
+            <center><ui:inputText value="{!v.WrapInstance.Quantity__c}"/></center>
+          </td>
+         <td align="center">              
+            <center><ui:inputText value="{!v.WrapInstance.Description__c}" /></center>
+          </td>
+          <td align="center">              
+            <center><ui:inputCheckbox value="{!v.WrapInstance.failedPrt__c}"/></center>
+          </td>
+         
+        
+          
+        <td>
+            <!-- conditionally Display Add or Delete Icons
+                 if rowIndex is 0 then show Add New Row Icon else show delete Icon
+             --> 
+            <aura:if isTrue="{!v.rowIndex == 0}">
+                <a onclick="{!c.AddNewRow}">                    
+                  <lightning:button variant="brand" label="Add Additional Part" />
+                  <span class="slds-assistive-text">Add Additional Part</span>
+                </a>    
+              <aura:set attribute="else">
+                  <a onclick="{!c.removeRow}">    
+                   <lightning:button variant="brand" label="Remove Part" />
+                   <span class="slds-assistive-text">Remove Part</span>
+                  </a>
+              </aura:set> 
+            </aura:if>
+        </td> 
+    </tr>
+</aura:component>

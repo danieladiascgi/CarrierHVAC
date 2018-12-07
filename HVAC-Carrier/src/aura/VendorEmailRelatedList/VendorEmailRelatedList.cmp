@@ -1,0 +1,118 @@
+<aura:component controller="VendorEmailsRelatedListController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global">
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:registerEvent name="navigateToSendEmail" type="c:NavigateToSendEmail"/>
+    <aura:handler event="c:NavigateToSendEmail" action="{!c.NavigateToSendEmail}"/>
+    <aura:registerEvent name="navigateToOrderStatus" type="c:NavigateToOrderStatus"/>
+    <aura:attribute name="emails" type="List" />
+    <aura:attribute name="emailMsg" type="EmailMessage" />
+    <aura:attribute name="recId" type="Id" />
+    <aura:attribute name="hasAttachment" type="boolean" default="false"/>
+    <aura:handler event="c:NavgToSendEmailReply" action="{!c.NavgToSendEmailReply}"/>
+    <aura:handler event="c:NavgToSendEmailReplyAll" action="{!c.NavgToSendEmailReplyAll}"/>
+    <aura:handler event="c:NavgToSendEmailForward" action="{!c.NavgToSendEmailForward}"/>
+    <aura:attribute name="spinnerShow" type="String" default="false"/>
+    <aura:attribute name="overlayPanel" type="Aura.Component[]" />
+    
+    
+    <div aura:id="content">
+        <aura:if isTrue="{!v.spinnerShow}">
+            <div class="exampleHolder">
+                <lightning:spinner aura:id="mySpinner" />
+            </div>
+        </aura:if>
+        <div >
+            <div class="slds-align_absolute-center">
+                <lightning:buttonIcon iconName="utility:mark_all_as_read" onclick="{!c.updatenewmsg}" alternativeText="Mark emails read"/>
+                <lightning:buttonIcon iconName="utility:refresh" onclick="{!c.doInit}" alternativeText="Refresh"/>
+                <aura:if isTrue="{!$Label.c.Expedite_Show_All_Emails == 'true'}">
+                	<lightning:button label="Show All Vendor Emails" onclick="{!c.getAllVendorEmails}"/>
+                </aura:if> 
+            </div><br/>
+            <lightning:overlayLibrary aura:id="overlayLib"/>
+            <table class="slds-table slds-table_bordered slds-table_cell-buffer" style="">
+                <thead>
+                    <tr class="slds-text-title_caps">
+                        <th scope="col" class="">
+                            <div class="slds-truncate" title="Attachment"><br/> </div>                        
+                        </th>
+                        <th scope="col" class="">
+                            <div class="slds-truncate" title="Action">Action<br/> </div>                        
+                        </th> 
+                        <th scope="col" class="">
+                            <div class="slds-truncate" title="Status">Status<br/> </div>                        
+                        </th>                                    
+                        <th scope="col" class="">
+                            <div class="slds-truncate" title="Subject">Subject</div>                        
+                        </th>
+                        
+                        <!-- <th scope="col" class="">
+                            <div class="slds-truncate" title="Message Date">Message Date</div>                        
+                        </th> 
+                        <th scope="col" class="">
+                            <div class="slds-truncate" title="To Address">To Address</div>                        
+                        </th> 
+                        <th scope="col" class="">
+                            <div class="slds-truncate" title="To Address">From Address</div>                        
+                        </th> -->
+                    </tr>
+                </thead>
+                <tbody>
+                    <aura:iteration items="{!v.emails}" var="email">
+                        <!--<tr> 
+                            
+                            <td scope="row" data-label="Attachment" class="">
+                                
+                                <div class="slds-truncate">
+                                    <aura:if isTrue="{!email.HasAttachment}">
+                                        <lightning:Icon size="xx-small" iconName="utility:attach"  alternativeText="Mark emails read"/><br/>  
+                                    </aura:if>   
+                                </div>
+                            </td>
+                            
+                            <td scope="row" data-label="Action" class="">
+                                <div class="slds-truncate">
+                                    
+                                    <lightning:buttonMenu title="{!email.Id}" iconName="utility:settings" alternativeText="Settings" onselect="{!c.navToSendEmailReply}">
+                                        <lightning:menuItem label="Font" value="font" />
+                                        <lightning:menuItem label="Size" value="size"/>
+                                        <lightning:menuItem label="Format" value="format" />
+                                    </lightning:buttonMenu>
+                                    
+                                </div>
+                            </td>
+                            <td scope="row" data-label="Status" class="">
+                                <div class="slds-truncate">
+                                    <ui:outputText value="{!email.Status}" />  
+                                </div>
+                            </td>                                        
+                            <td data-label="Subject" class="">
+                                <div class="slds-grid" >
+                                    <div class="slds-grid slds-has-flexi-truncate">
+                                        
+                                        <ui:outputText class="slds-text-link slds-wrap" value="{!email.Subject}" title="{!email.Id}" aura:id="{!email.Id}" click="{!c.handleShowModal}" mouseover="{!c.handleShowPopover}" />
+                                    </div>
+                                </div>
+                            </td>
+                            <td scope="row" data-label="Promise Ship Date" class="">
+                                <div class="slds-truncate">
+                                    
+                                    <lightning:formattedDateTime value="{!email.MessageDate}" year="numeric" month="numeric" day="numeric"  hour="2-digit" minute="2-digit" timeZoneName="short" />
+                                </div>
+                            </td>
+                            <td scope="row" data-label="Promise Ship Date" class="">
+                                <div class="slds-grid" >
+                                    <div class="slds-grid slds-has-flexi-truncate">
+                                        
+                                        <ui:outputText class="slds-text" value="{!email.ToAddress}" /> 
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>-->
+                        <c:EachEmailsEmailsList emsg="{!email}" source="VendorEmail"/>
+                    </aura:iteration>
+                </tbody>
+            </table> 
+            
+        </div>
+    </div>
+</aura:component>

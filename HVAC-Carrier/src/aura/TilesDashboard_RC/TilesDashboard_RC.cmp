@@ -1,0 +1,116 @@
+<aura:component controller="TilesDashboard_RCContoller" implements="force:appHostable,flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes" access="global" >
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:registerEvent name="navigate" type="c:NavigateToCCS"/>
+    <aura:handler event="c:NavigateToCCS" action="{!c.NavigateToCCSComp}"/>
+    <aura:registerEvent name="navigateOrder" type="c:NavigateToOrderStatus"/>
+    <aura:handler event="c:NavigateToOrderStatus" action="{!c.NavigateToOrderStatus}"/>
+    <aura:registerEvent name="navigateSearchC10" type="c:NavigateToSearchC10"/>
+    <aura:handler event="c:NavigateToSearchC10" action="{!c.NavigateToSearchC10}"/>
+    <aura:attribute name="value" type="String"/>
+    <aura:attribute name="TilesStatus" type="boolean" default="false"/>
+    <aura:attribute name="TilesErrorStatus" type="boolean" default="false"/>
+    <aura:attribute name="CEChatButtonId" type="String" default="5731C000000PJrp"/>
+    <aura:attribute name="NONCEChatButtonId" type="String" default="5731C000000PJru"/>
+    <aura:attribute name="OnlineButton" type="String" default=""/>
+    
+    <aura:if isTrue="{!v.TilesStatus}">
+        <div aura:id="content">
+            <table style="width:100%">
+                <tr>
+                    
+                    
+                    <td>
+                        <div style="width:350px;height:250px;cursor:pointer;margin: 0 .5rem;" onclick="{!c.contactCustService}">
+                            <c:Tiles borderColor="#16325c" bgColor="#FDFDFD" fontColor="" frontText="Contact Customer Service" backText="Submit a case to Customer Service." imageURL="{!$Resource.TileImages + '/TileImages/ContactCustServiceNew.jpg'}" />
+                        </div>
+                    </td>
+                    <td>
+                        <div style="width:350px;height:250px;cursor:pointer;margin: 0 .5rem;" onclick="{!c.openCases}">
+                            <c:Tiles borderColor="#16325c" bgColor="#FDFDFD" fontColor="" frontText="My Cases &amp; Expedites" backText="View your open/closed cases." imageURL="{!$Resource.TileImages + '/TileImages/CasesNew.jpg'}"  />
+                        </div>
+                    </td>
+                    <td>
+                        <div style="width:350px;height:250px;cursor:pointer;margin: 0 .5rem;" onclick="{!c.SearchC10}">
+                            <c:Tiles borderColor="#16325c" bgColor="#FDFDFD" fontColor="" frontText="Price and Availability" backText="Coming Soon – Query C10." imageURL="{!$Resource.TileImages + '/TileImages/Price_and_Avail_new3.jpg'}" />
+                        </div>
+                    </td>
+                    
+                    <!--<td>
+                <div style="width:350px;height:250px;cursor:pointer;margin: 0 .5rem;" onclick="{!c.OrderStatus}">
+                 <c:Tiles borderColor="#16325c" bgColor="#FDFDFD" fontColor="#FFF" frontText="Check Order Status " backText="Use this option to view a list of your open orders or your company open orders." imageURL="{!$Resource.TileImages + '/TileImages/Order_StatusNew.jpg'}"  />
+             </div>
+    
+            </td>-->
+                    <!--<td>
+                <div style="width:200px;height:150px;cursor:pointer;">
+                <c:Tiles borderColor="#16325c" bgColor="#16325c" fontColor="#FFF" frontText="Reports &amp; Dashboards" backText="Use this to option to view reports and dashboards...." />
+            </div>
+            </td>-->
+                    
+                </tr>
+                <br/>
+                
+                <tr>
+                    
+                    <td>
+                        <div style="width:350px;height:250px;cursor:pointer;margin: 0 .5rem;" onclick="{!c.OrderStatus}">
+                            <c:Tiles borderColor="#16325c" bgColor="#FDFDFD" fontColor="#FFF" frontText="Check Order Status " backText="View a list of open orders for you or your company." imageURL="{!$Resource.TileImages + '/TileImages/Order_StatusNew.jpg'}"  />
+                        </div>
+                        
+                    </td>
+                    
+                    <!--<td>
+                <div style="width:350px;height:250px;cursor:pointer;margin: 0 .5rem;" onclick="{!c.OrderStatus}">
+                 <c:Tiles borderColor="#16325c" bgColor="#FDFDFD" fontColor="#FFF" frontText="Check Order Status " backText="Use this option to view a list of your open orders or your company open orders." imageURL="{!$Resource.TileImages + '/TileImages/Order_Status_new2.jpg'}"  />
+             </div>
+    
+            </td>-->
+                    <td>
+                        <div style="width:350px;height:250px;cursor:pointer;margin: 0 .5rem;" onclick="{!c.NavigateToQuoting}">
+                            <c:Tiles borderColor="#16325c" bgColor="#FDFDFD" fontColor="" frontText="Quoting" backText="Request or check the status of a quote." imageURL="{!$Resource.TileImages + '/TileImages/Quote_Request.jpg'}"  />
+                        </div>
+                    </td>
+                    <td>
+                        <div style="width:350px;height:250px;cursor:pointer;margin: 0 .5rem;" onclick="{!c.NavigateToCR}">
+                            <c:Tiles borderColor="#16325c" bgColor="#FDFDFD" fontColor="" frontText="Credit Requests" backText="Create or check the status of a credit request." imageURL="{!$Resource.TileImages + '/TileImages/CreditRequestsNew.jpg'}" />
+                        </div>
+                    </td>
+                    <!--<td>
+                        <div style="width:350px;height:250px;cursor:pointer;margin: 0 .5rem;" onclick="{!c.NavigateToChat}" >
+                            <c:Tiles borderColor="#16325c"  bgColor="#FDFDFD" fontColor="" frontText="Chat" backText="Use this option to chat with customer service." imageURL="{!$Resource.TileImages + '/TileImages/Price_and_Avail_new2.jpg'}" />
+                        </div>
+                    </td>-->
+                </tr>
+                
+                
+            </table>
+            
+            
+        </div>
+    </aura:if>
+    <!--<button class="slds-button  slds-button_brand" style="height: 50px; 
+                                                                  width: 50px;border-radius: 100%;position: fixed; 
+                                                                  bottom: 5px; 
+                                                                  right: 5px;"></button>-->
+    <div aura:id="onlineBtn" class="chatBttonStyles">
+    	<lightning:button label="CHAT WITH OUR AGENTS" aura:id="onlineBtn" class="slds-button .slds-button_destructive chatBttonStyles" iconName="utility:chat" variant="neutral" onclick="{!c.WindowOpenChat}" />
+    </div> 
+    <div aura:id="offlineBtn" class="chatBttonStyles">
+    	<lightning:button label="AGENTS OFFLINE"  class="slds-button .slds-button_destructive chatBttonStyles" iconName="utility:offline" variant="destructive" onclick="" />
+    </div>    
+    <div aura:id="helpTrainingButton" class="helpButtonStyles ">
+    	<lightning:button label="TRAINING RESOURCE"  class="slds-button .slds-button_destructive chatBttonStyles" iconName="utility:help" variant="neutral" onclick="{!c.openHelpAndTraining}" />
+        <lightning:button label="FAQ"  class="slds-button .slds-button_destructive chatBttonStyles" iconName="utility:help" variant="neutral" onclick="{!c.openFAQ}" />
+    </div>
+    <aura:if isTrue="{!v.TilesErrorStatus}">
+        
+        <div class="slds-align_absolute-center" style="font-size:20px;color:red;">AUTHENTICATION FAILED</div><br></br>
+        
+        <div class="slds-align_absolute-center" style="color:red">Please login from HVAC Partners and try to access this page!!!</div>              
+        
+        
+        
+        
+        
+    </aura:if> 
+</aura:component>

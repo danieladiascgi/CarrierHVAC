@@ -1,0 +1,14 @@
+<aura:component >
+	<aura:attribute name="value" type="String" required="true" access="public"/>
+	<aura:attribute name="label" type="String" required="true" access="public"/>
+	<aura:attribute name="isRequired" type="Boolean" required="false" default="false" access="public"/>
+	<aura:attribute name="pattern" type="String" required="false" default="" access="public"/>
+	<aura:attribute name="className" type="String" default="" required="false" access="public"/>
+	<aura:attribute name="isValid" type="Boolean" default="true" required="false" access="public"/>
+
+	<aura:registerEvent name="CheckInputValidity" type="c:CheckInputValidity"/>
+
+	<div class="{!'form-group ' + v.className}">
+		<ui:inputText aura:id="input" label="{!v.label}" class="form-control" value="{!v.value}" required="{!v.isRequired}" change="{!c.onChange}"/>
+	</div>
+</aura:component>

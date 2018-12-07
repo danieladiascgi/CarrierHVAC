@@ -1,0 +1,6 @@
+({
+    myfunction: function(component, event) {
+        
+    }
+    
+})

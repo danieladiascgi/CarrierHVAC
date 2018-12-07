@@ -20,13 +20,24 @@
             count+=parseInt(inputs[i]);
         }
         
+        component.set("v.DataList",inputs);
+        
         var NotReady =component.get("v.NotReady");
         
         if(count == 100){
             component.set("v.NotReady","false");
+            component.set("v.rnc",document.getElementById("text-input-id-1").value);
+            component.set("v.rncMF",document.getElementById("text-input-id-2").value);
+            component.set("v.aor",document.getElementById("text-input-id-3").value);
+            component.set("v.com",document.getElementById("text-input-id-4").value);
+            component.set("v.dls",document.getElementById("text-input-id-5").value);
+            component.set("v.retail",document.getElementById("text-input-id-6").value);
+            component.set("v.ot",document.getElementById("text-input-id-7").value);
+            component.set("v.dograph","true");
         }
         else if(NotReady=="false") {
             component.set("v.NotReady","true");
+            component.set("v.dograph","false");
         }
     },
     
@@ -56,9 +67,9 @@
         var i;
         if(AddBrandList!=""){
             for(i=0;i<AddBrandList.length;i++){
-            var current = AddBrandList[i];
-            BrandList.push(current);
-        }
+                var current = AddBrandList[i];
+                BrandList.push(current);
+            }
         }
         
         cmp.set("v.SelectedBrandList", BrandList);
@@ -90,7 +101,7 @@
             }
             
         }
-       	selectedList.splice(remove,1);
+        selectedList.splice(remove,1);
         cmp.set("v.SelectedBrandList",selectedList);
         BrandList.push(removedBrand);
         cmp.set("v.BrandList",BrandList);

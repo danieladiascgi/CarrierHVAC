@@ -1,0 +1,18 @@
+{
+    "projectName": "HVAC-Carrier",
+    "username": "bruno.monteiro@cgi.com.devrespric",
+    "id": "c3335ce0-e367-11e8-9050-93617e28b2b7",
+    "namespace": "",
+    "orgType": "developer",
+    "loginUrl": "https://login.salesforce.com/",
+    "instanceUrl": "https://customergateway--DEVRESPRIC.cs65.my.salesforce.com",
+    "workspace": "C:\\Users\\bruno.monteiro\\Documents",
+    "subscription": [
+        "ApexClass",
+        "ApexComponent",
+        "ApexPage",
+        "ApexTrigger",
+        "AuraDefinitionBundle",
+        "StaticResource"
+    ]
+}

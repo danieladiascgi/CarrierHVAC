@@ -1,0 +1,105 @@
+.THIS .text{
+    text-align: center;
+    font-size: 17px;
+    width: 70%;    
+    
+}
+.THIS .textM{
+    text-align: center;
+    font-size: 12px;
+    width: 70%;    
+    
+}
+.THIS .BoxNotM{
+    height:100%;
+    min-height: 150px;
+    border-radius:5%;
+    background-color:white;
+    
+}
+
+.THIS .BoxNotM:hover{
+    height:100%;
+    min-height: 150px;
+    background-color:rgb(102,204,255);
+    opacity:0.4;
+    cursor: pointer;
+}
+
+.THIS .BoxM{
+    height:100%;
+    min-height: 110px;
+    border-radius:5%;
+    background-color:white;
+    
+}
+
+.THIS .BoxM:hover{
+    height:100%;
+    min-height: 110px;
+    background-color:rgb(102,204,255);
+    opacity:0.4;
+    cursor: pointer;
+}
+
+
+.THIS .dollar_sign_icon{
+    font-size: 30px;
+    font-weight: 700;
+    background-color: #ebf1df;
+    color: #99ba60;
+    border-radius:50%;
+    width:45px;
+    height:45px; 
+}
+
+.THIS .dollar_sign_iconM{
+    font-size: 15px;
+    font-weight: 700;
+    background-color: #ebf1df;
+    color: #99ba60;
+    border-radius:50%;
+    width:30px;
+    height:30px; 
+}
+
+.THIS .dollar_sign_icon1{
+    font-size: 30px;    
+    font-weight: 700;
+    background-color: #d9e1ec;
+    color: #4168a2;
+    border-radius:50%;
+    width:45px;
+    height:45px;
+    
+}
+.THIS .dollar_sign_icon1M{
+    font-size: 15px;    
+    font-weight: 700;
+    background-color: #d9e1ec;
+    color: #4168a2;
+    border-radius:50%;
+    width:30px;
+    height:30px;
+    
+}
+.THIS .dollar_sign_icon2{
+    font-size: 30px;
+    font-weight: 700;
+    background-color: #e3d6e7;
+    color: #77388c;
+    border-radius:50%;
+    width:45px;
+    height:45px;
+    
+}
+.THIS .dollar_sign_icon2M{
+    font-size: 15px;
+    font-weight: 700;
+    background-color: #e3d6e7;
+    color: #77388c;
+    border-radius:50%;
+    width:30px;
+    height:30px;
+    
+}

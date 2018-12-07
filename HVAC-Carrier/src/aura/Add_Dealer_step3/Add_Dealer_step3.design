@@ -1,0 +1,4 @@
+<design:component>
+    <design:attribute name="sumRequest" label="summary Request"/>
+    <design:attribute name="issues" label="issues" />
+</design:component>

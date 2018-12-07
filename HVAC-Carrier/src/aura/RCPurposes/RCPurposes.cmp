@@ -1,0 +1,12 @@
+<aura:component controller="RCPurposesController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global">
+	<aura:attribute name="CaseId" type="Id"/>
+    <aura:attribute name="case" type="Case" default="{ 'sobjectType': 'Case' }"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <lightning:recordEditForm recordId="{!v.case.Id}" recordTypeId="{!v.case.RecordTypeId}" objectApiName="Case" onsuccess="{!c.successSave}">
+        <lightning:messages />
+        <lightning:inputField fieldName="CCC_Purpose__c" />
+        <lightning:inputField fieldName="CCC_Sub_Purpose__c" />
+        <lightning:button class="slds-m-top_small" variant="brand" type="submit" name="update" label="Update" />
+    </lightning:recordEditForm>
+
+</aura:component>

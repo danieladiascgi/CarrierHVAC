@@ -1,0 +1,110 @@
+<aura:component controller="ResolutionFetchExpedite" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global">
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+     <aura:handler event="force:refreshView" action="{!c.refreshViewHandler}" />
+    <aura:attribute name="message" type="String"/>
+    <aura:attribute name="spinnerShow" type="String"/>
+    <aura:attribute name="selVal" type="String"/>
+    <aura:attribute name="selValTB" type="String"/>
+    <aura:attribute name="selValStatus" type="String"/>
+    <aura:attribute name="PickReason" type="String"/>
+    <aura:attribute name="PickStatus" type="String"/>
+    <aura:attribute name="PickTB" type="String"/>
+    <aura:attribute name="Reasons" type="List"/> 
+    <aura:attribute name="Status" type="List"/> 
+    <aura:attribute name="objInfo" type="string" default="case" description="store object Info." />
+    <aura:attribute name="displayTurnback" type="Boolean" default="false"/>
+    <aura:attribute name="RecordType" type="String"/>
+    <aura:attribute name="ContactVal" type="Boolean" default="false"/>
+    <aura:attribute name="Solution" type="Case" default="{ 'sobjectType': 'Case' }"/>
+    <aura:attribute name="displayPSS" type="Boolean" default="false"/>	
+    <aura:attribute name="displayNoPSS" type="Boolean" default="false"/>
+    <aura:attribute name="displaySolution" type="Boolean" default="false"/>
+    <aura:attribute name="displayResolution" type="Boolean" default="false"/>
+    <aura:attribute name="displayContact" type="Boolean" default="false"/>
+    <aura:attribute name="expstatus" type="List"/>
+    <aura:attribute name="recordId" type="Id" />
+    <aura:attribute name="Expedite" type="Expedite__c" default="{ 'sobjectType': 'Expedite__c' }"/>
+    <aura:attribute name="Turnback" type="Turnback__c" default="{ 'sobjectType': 'Turnback__c' }"/>
+    <aura:attribute name="rcode" type="Expedite__c" default="{ 'sobjectType': 'Expedite__c' }"/>
+     <lightning:overlayLibrary aura:id="overlayLib"/>
+    <div>
+        ResultMessage:<ui:outputText value="{!v.message}"/>
+    </div>
+    <aura:if isTrue="{!v.displayContact}"> 
+        <ui:message title="Error" severity="error" closable="true">
+            Please enter a contact.
+        </ui:message>
+    </aura:if>
+    
+    <aura:if isTrue="{!v.displayTurnback}"> 
+        <ui:message title="Error" severity="error" closable="true">
+            Please select a Turnback.
+        </ui:message>
+    </aura:if>
+    
+    <aura:if isTrue="{!v.displayResolution}"> 
+        <ui:message title="Error" severity="error" closable="true">
+            Please select a Resolution.
+        </ui:message>
+    </aura:if>
+    <p><b>Resolution Code:&nbsp;</b>
+        
+        <ui:inputselect aura:id="rcode" value="{!v.PickReason}" change="{!c.onSelectChange}"> 
+            <aura:iteration items="{!v.Reasons}" var="rs">
+                <aura:if isTrue="{!rs == v.PickReason}">                        
+                    <ui:inputSelectOption text="{!rs}" label="{!rs}" value="true"/>
+                    <aura:set attribute="else">
+                        <ui:inputSelectOption text="{!rs}" label="{!rs}" value="false"/>
+                    </aura:set>
+                </aura:if>
+            </aura:iteration>
+        </ui:inputselect>
+        
+    </p>
+    
+    <p><b>Expedite Status:&nbsp;</b>
+        
+        <ui:inputselect aura:id="expstatus" value="{!v.PickStatus}" change="{!c.onStatusChange}"> 
+            <aura:iteration items="{!v.expstatus}" var="s">
+                
+                <aura:if isTrue="{!s == v.PickStatus}">                        
+                    <ui:inputSelectOption text="{!s}" label="{!s}" value="true"/>
+                    <aura:set attribute="else">
+                        <ui:inputSelectOption text="{!s}" label="{!s}" value="false"/>
+                    </aura:set>
+                </aura:if>
+            </aura:iteration>
+        </ui:inputselect>
+    </p>
+    
+    <p><b>Commit Time:&nbsp;</b> 
+        <ui:inputDateTime aura:id="committime" value="{!v.Expedite.Commit_Time__c}" displayDatePicker="true" /> </p> 
+    <p><b>Vendor Ship Date:&nbsp;</b> 
+        <ui:inputDate aura:id="shipdate"  value="{!v.Expedite.Vendor_Ship_Date__c}" displayDatePicker="true" /></p>
+    <p><b>Vendor Tracking#:&nbsp;</b>
+        <ui:inputText aura:id="vendortracking" value="{!v.Expedite.Vendor_Tracking__c}" /></p>
+    
+    <p><b>Turnback:&nbsp;</b> 
+        
+        <ui:inputselect aura:id="Turnback" value="{!v.PickTB}" change="{!c.onTBChange}" disabled="{!v.turnbackDefault}"> 
+            <aura:iteration items="{!v.Turnback}" var="level">
+                <aura:if isTrue="{!level.Title__c == v.PickTB}"> 
+                    
+                    <ui:inputSelectOption text="{!level.Title__c}" label="{!level.Title__c}" value="true"/>
+                    <aura:set attribute="else">
+                        
+                        <ui:inputSelectOption text="{!level.Title__c}" label="{!level.Title__c}" value="false"/>
+                    </aura:set>
+                </aura:if>
+            </aura:iteration>
+        </ui:inputselect>
+    </p>
+    <ui:button label="Save and Close" press="{!c.saveCaseAndClose}"/>
+    <aura:if isTrue="{!v.spinnerShow}">
+        <div class="exampleHolder">
+            <lightning:spinner aura:id="mySpinner" />
+        </div>
+    </aura:if>
+    <ui:button label="Save" press="{!c.saveOnlyCase}"/>
+    
+</aura:component>

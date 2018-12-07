@@ -1,0 +1,88 @@
+<aura:component controller="EmailDetailPageController" implements="flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes" access="global">
+    <aura:attribute name="emails" type="List" />
+    <aura:attribute name="emsg" type="EmailMessage" />
+    <aura:attribute name="status" type="EmailMessage" />
+    <aura:attribute name="clickedEmailRecId" type="Id" />   
+    <aura:attribute name="attachmentsList" type="List"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="spinnerShow" type="String" default="false" />
+    
+    <lightning:overlayLibrary aura:id="overlayLib"/>
+    <aura:registerEvent name="NavgToSendEmailReply" type="c:NavgToSendEmailReply"/>
+    <aura:registerEvent name="NavgToSendEmailReplyAll" type="c:NavgToSendEmailReplyAll"/>
+    <aura:registerEvent name="NavgToSendEmailForward" type="c:NavgToSendEmailForward"/>
+    
+    
+    <aura:registerEvent name="navigateToSendEmail" type="c:NavigateToSendEmail"/>
+    <aura:handler event="c:NavigateToSendEmail" action="{!c.NavigateToSendEmail}"/>
+    <aura:attribute name="source" type="String"/>
+    
+    <div>
+        <aura:if isTrue="{!v.spinnerShow}">
+            <div class="exampleHolder">
+                <lightning:spinner aura:id="mySpinner" />
+            </div>
+        </aura:if>
+        <section class="slds-clearfix">
+            
+            <div class="slds-m-left--large" ><h3 class="slds-section-title--divider"><b>Email Information</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;             
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <lightning:button  label="Reply" variant="brand" onclick="{!c.NavgToSendEmailReply}"></lightning:button>&nbsp;&nbsp;
+                <lightning:button label="Reply All" variant="brand" onclick="{!c.NavgToSendEmailReplyAll}"></lightning:button>&nbsp;&nbsp;
+                <lightning:button label="Forward" variant="brand" onclick="{!c.NavgToSendEmailForward}"></lightning:button>
+                
+                </h3>
+            </div>
+        </section>
+        
+        
+        
+        
+        
+        <div class="slds-show slds-p-around--medium" aura:id="articleOne">
+            <div class="slds-grid ">
+                <div class="slds-col--padded slds-size--1-of-1 slds-medium-size--1-of-2">
+                    
+                    <b>From</b>
+                    <div class="slds-form-element__control">
+                        <ui:outputText aura:id="subj" value="{!v.emsg.FromName}"/>(<ui:outputText aura:id="subj" value="{!v.emsg.FromAddress}" />&nbsp;<lightning:formattedDateTime value="{!v.emsg.MessageDate}" year="numeric" month="numeric" day="numeric"  hour="2-digit" minute="2-digit" timeZoneName="short" />)  
+                    </div>  <br></br>                     
+                    <b>To Address</b>
+                    <div class="slds-form-element__control">
+                        <ui:outputText aura:id="desc" value="{!v.emsg.ToAddress}"/>
+                    </div>  <br></br>  
+                    <b>CC Address</b>
+                    <div class="slds-form-element__control">
+                        <ui:outputText aura:id="desc" value="{!v.emsg.CcAddress}"/>
+                    </div>  <br></br> 
+                    
+                    <b>Subject</b>
+                    <div class="slds-form-element__control">
+                        <ui:outputText aura:id="desc" value="{!v.emsg.Subject}"/>
+                    </div>  <br></br> 
+                    <div class="slds-form-element">
+                        <table>
+                            <thead>
+                                <tr><th>Attachment Name</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <aura:iteration items="{!v.attachmentsList}" var="item">
+                                    <tr>
+                                        <!--<td><ui:inputCheckbox class="myCheckbox" aura:id="checkboxLeads" text="{!item.attachmentId}" change="{!c.onSelect}" value="{!item.selected}"/></td>-->
+                                        <td><ui:outputText value="{!item.attachmentName}" /></td>           
+                                    </tr>       
+                                </aura:iteration>
+                                
+                            </tbody>
+                        </table>
+                    </div> <br></br> 
+                    <b>Text Body</b>
+                    <div class="slds-form-element__control">
+                        <ui:outputText aura:id="desc" value="{!v.emsg.TextBody}"/>
+                    </div>  <br></br> 
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</aura:component>

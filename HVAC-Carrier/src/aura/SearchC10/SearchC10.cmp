@@ -1,0 +1,188 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes" access="global">
+    <aura:handler event="c:NavigateToSearchC10" action="{!c.NavigateToSearchC10}"/> 
+    <aura:attribute name="recordId" type="Id" />
+    <aura:attribute name="myText" type="string" />
+    
+    
+    <div class= "slds-border_left slds-border_right slds-border_bottom" style="width : 110%;border-width: 4px;">
+    <div class="slds-media__body slds-box slds-theme_info">
+      <h1 class="slds-page-header__title slds-align_absolute-center">Price And Availability</h1>
+    </div>
+    <div class="slds-grid ">
+        <div class="slds-col--padded slds-size--1-of-2 slds-small-size--1-of-2">
+           C10 Child Code# : <ui:inputText class="myText" value=""/>
+        </div>
+        <div class="slds-col--padded slds-size--1-of-2 slds-large-size--1-of-2">
+        </div>
+        <div class="slds-col--padded slds-size--1-of-2 slds-large-size--1-of-2">
+           Part# :
+           <ui:inputText class="myText" value=""/>  
+        </div>
+    </div> <br></br><br></br>
+ 
+        <div>
+       <table class="slds-table slds-table--bordered slds-size_large slds-table_cell-buffer slds-table_col-bordered slds-border_left slds-border_right" style="border-width: 2px;">
+                <thead>
+                <tr class="slds-text-title_caps">
+                    <th scope="col" class="">
+                        <div class="slds-truncate" title="Part #">Part<br/> #</div>                        
+                    </th>
+                    <th scope="col" class="">
+                        <div class="slds-truncate" title="Material Description">MTRL<br/>Desc</div>                        
+                    </th>
+                    <th scope="col" class="">
+                        <div class="slds-truncate" title="Master List Price">Master<br/>List<br/>Price</div>                        
+                    </th>
+                    <th scope="col" class="">
+                        <div class="slds-truncate" title="US Area Price(Net Price)">US<br/>Area<br/>Price<br/>(Net <br/>Price)</div>                        
+                    </th>
+                     <th scope="col" class="">
+                        <div class="slds-truncate" title="Discount Multiplier">Discount<br/> Multiplier</div>                        
+                    </th>
+                    <th scope="col" class="">
+                        <div class="slds-truncate" title="Availability">Avail</div>                        
+                    </th>
+                    <th scope="col" class="" style="word-wrap: break-word;">
+                        <div class="slds-truncate" title="Superseding part">Superseding<br/>part</div>                        
+                    </th>
+                    <th scope="col" class="">
+                        <div class="slds-truncate" title="Flash Message">Flash<br/>Message</div>                        
+                    </th>
+                    
+                    <th scope="col" class="">
+                        <div class="slds-truncate" title="Quantity in receipt">Quantity<br/>in<br/>receipt</div>                        
+                    </th>
+                    <th scope="col" class="">
+                        <div class="slds-truncate" title="Promise Date">Promise<br/>Date</div>                        
+                    </th>
+                    <th scope="col" class="">
+                        <div class="slds-truncate" title="Stocking Type">Stocking<br/>Type</div>                        
+                    </th>
+                    <th scope="col" class="">
+                        <div class="slds-truncate" title="Unity Weight">Unity<br/>Weight</div>                        
+                    </th>
+                    <th scope="col" class="">
+                        <div class="slds-truncate" title="Gross Depth">Gross<br/>Depth</div>                        
+                    </th>
+                    <th scope="col" class="">
+                        <div class="slds-truncate" title="Gross Width">Gross<br/>Width</div>                        
+                    </th>
+                    <th scope="col" class="">
+                        <div class="slds-truncate" title="Gross Height">Gross<br/>Height</div>                        
+                    </th>
+                    <th scope="col" class="">
+                        <div class="slds-truncate" title="Std Pack">Std<br/>Pack</div>                        
+                    </th>
+                    <th scope="col" class="">
+                        <div class="slds-truncate" title="Price rule">Price<br/>rule</div>                        
+                    </th>
+                     <th scope="col" class="">
+                        <div class="slds-truncate" title="Warehouse Location">Ware<br/>House<br/>Location</div>                        
+                    </th>
+                </tr>
+              </thead>
+            <tbody>
+    <tr>
+      <td scope="row" data-label="Part #" class="">
+        <div class="slds-truncate">
+        <ui:outputText value="" />  
+        </div>
+      </td>
+      <td data-label="Container Id" class="">
+        <div class="slds-truncate">
+        <ui:outputText value="" />  
+        </div>
+      </td>
+         <td data-label="Discount Multiplier" class="">
+        <div class="slds-truncate">
+        <ui:outputText value="" />  
+        </div>
+      </td>
+        <td data-label="Warehouse Location" class="">
+        <div class="slds-truncate">
+        <ui:outputText value="" />  
+        </div>
+      </td>
+      <td data-label="Transaction Date" class="">
+        <div class="slds-truncate">
+        <ui:outputText value="" />  
+        </div>
+      </td>
+        <td data-label="Qty Of Item" class="">
+          <div class="slds-truncate">
+        <ui:outputText value="" />  
+         </div>
+        </td>
+        <td scope="row" data-label="Material Id" class="">
+        <div class="slds-truncate">
+        <ui:outputText value="" />  
+        </div>
+      </td>
+      <td data-label="Container Id" class="">
+        <div class="slds-truncate">
+        <ui:outputText value="" />  
+        </div>
+      </td>
+      <td data-label="Transaction Date" class= "aa" style="-ms-word-break: break-all;word-break: break-all;word-break: break-word;-webkit-hyphens: auto;-moz-hyphens: auto;hyphens: auto;word-wrap: break-word"> 
+       
+      <!--  <p style="width: 10em;overflow-wrap: break-word;background: lime">this is a test message.We are
+           trying to explore wrap this is a test message.We are trying to explore wrap this is a test message.
+           We are trying to explore wrap</p> -->
+          
+        <ui:outputText value="" />        
+      </td>
+        <td data-label="Qty Of Item" class="">
+          <div class="slds-truncate">
+        <ui:outputText value="" />  
+         </div>
+        </td>
+        <td scope="row" data-label="Material Id" class="">
+        <div class="slds-truncate">
+        <ui:outputText value="" />  
+        </div>
+      </td>
+      <td data-label="Container Id" class="">
+        <div class="slds-truncate">
+        <ui:outputText value="" />  
+        </div>
+      </td>
+      <td data-label="Transaction Date" class="">
+        <div class="slds-truncate">
+        <ui:outputText value="" />  
+        </div>
+      </td>
+        <td data-label="Qty Of Item" class="">
+          <div class="slds-truncate">
+        <ui:outputText value="" />  
+         </div>
+        </td>
+        <td scope="row" data-label="Material Id" class="">
+        <div class="slds-truncate">
+        <ui:outputText value="" />  
+        </div>
+      </td>
+      <td data-label="Container Id" class="">
+        <div class="slds-truncate">
+        <ui:outputText value="" />  
+        </div>
+      </td>
+      <td data-label="Transaction Date" class="">
+        <div class="slds-truncate">
+        <ui:outputText value="" />  
+        </div>
+      </td>
+        <td data-label="Qty Of Item" class="">
+          <div class="slds-truncate">
+        <ui:outputText value="" />  
+         </div>
+        </td>
+    </tr>
+      </tbody>
+        </table> 
+
+        </div><br></br><br></br>
+        <div class="slds-align--absolute-center">
+           <ui:button label="Search" class="btnSubmit"/> 
+        </div>
+    </div>
+</aura:component>

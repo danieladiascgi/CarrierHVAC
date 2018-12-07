@@ -1,0 +1,268 @@
+<aura:component controller="RC_CCSController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global">
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:handler event="force:refreshView" action="{!c.handleOnLoad}" />
+    <aura:handler name="DeleteRowEvt" event="c:DeleteRowEvt" action="{!c.removeDeletedRow}"/>
+    <aura:handler name="AddRowEvt" event="c:AddNewRowEvt" action="{!c.addNewRow}"/>
+    <aura:handler name="DeleteRowEvt1" event="c:DeleteRowEvt1" action="{!c.removeDeletedRow1}"/>
+    <aura:handler name="AddRowEvt1" event="c:AddNewRowEvt1" action="{!c.addNewRow1}"/>
+    <aura:attribute name="Spinner" type="boolean" default="false"/>
+    <aura:attribute name="recordId" type="Id" default="" />
+    <aura:attribute name="case" type="Case" default="{ 'sobjectType': 'Case' }"/>
+    <aura:attribute name="objInfo" type="string" default="case" description="store object Info." />
+    <aura:attribute name="depnedentFieldMap" type="map" description="store controller(key)--> dependent(values) picklist value as a map." />
+    <aura:attribute name="isDependentDisable" type="boolean" default="true" description="use for, make disbale depandent field." />
+    <aura:attribute name="purpose" type="String" description="use for, make disbale depandent field." />
+    <aura:attribute name="SubPurpose" type="String" description="use for, make disbale depandent field." />
+    <aura:attribute name="mailStatus" type="boolean" default="false"/>
+    <aura:attribute name="modelNum" type="String" />
+    <aura:attribute name="serialNum" type="String" />
+    <aura:attribute name="recIdCreated" type="Id" />
+    <aura:attribute name="PartNumbersWrapper" type="String" />
+    <aura:attribute name="WrapPartList" type="WrapperCls__c[]"/>
+    <aura:attribute name="custPO" type="WrapperCls__c[]"/>
+    <aura:attribute name="partNO" type="WrapperCls__c[]"/>
+    <aura:attribute name="value" type="string"/>
+    <aura:attribute name="contlst" type="List"/>
+    <aura:attribute name="purposes" type="String[]" default=""/>
+    <aura:attribute name="subPurposes" type="String[]" default=""/>
+    <aura:attribute name="ods" type="String" />
+    <!-- <aura:attribute name="purposeVal" type="String" default=""/>
+    <aura:attribute name="subPurposeVal" type="String" default=""/>
+    <aura:attribute name="fromOtherComp" type="String" default="false"/>-->
+    <aura:attribute name="showLoadingSpinner" type="boolean" default="false" />
+    <aura:attribute name="fileName" type="String" default="No File Selected.." />
+    <aura:attribute name="fileNameArr" type="List"/>
+    
+    <aura:attribute name="displayseriesfields" type="boolean" default="false" />
+    <aura:attribute name="displaysubjectfield" type="boolean" default="true" />
+    <aura:attribute name="storeRadioValue" type="string" default=""/>
+    <aura:attribute name="totalParts" type="string" default=""/>
+    
+    <aura:attribute name="options" type="List" default="[
+                                                        {'label': 'Before Nov 2004', 'value': 'Before Nov 2004'},
+                                                        {'label': 'After Nov 2004', 'value': 'After Nov 2004'}
+                                                        ]"/>
+    
+    <div aura:id="content">
+        <div class="slds-media__body">
+            <h1 class="slds-page-header__title slds-align-middle">Customer Care Service</h1>
+        </div>
+        <div>
+            <ui:spinner aura:id="spinner" isVisible="False" />
+        </div>
+        <div class="slds-grid ">
+            <div class="slds-col--padded slds-size--1-of-1 slds-medium-size--1-of-2" style="max-width: 90%;">
+                <div class="slds-col--padded">
+                    <table class="slds-table slds-table--bordered slds-table--striped slds-table--cell-buffer ">  
+                        <tr>
+                            <!--<p><b>Purpose:&nbsp;</b><ui:inputSelect aura:id="conPurpose" class="slds-select" change="{!c.onControllerFieldChange}" /></p>-->
+                            <td>
+                                <label><b>Purpose:</b><b>&nbsp;&nbsp;*</b></label>
+                            </td>
+                            <td  style="padding-left:5px;">
+                                <ui:inputSelect aura:id="conPurpose" class="slds-select" change="{!c.onControllerFieldChange}">
+                                    <aura:iteration items="{!v.purposes}" var="purpose">
+                                        <ui:inputSelectOption text="{!purpose}" label="{!purpose}" />
+                                    </aura:iteration>
+                                </ui:inputSelect>
+                                
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label><b>Sub Purpose:</b><b>&nbsp;&nbsp;*</b></label>
+                            </td>
+                            <td  style="padding-left:5px;">
+                                <ui:inputSelect aura:id="conSubPurpose" required="true" disabled="{!v.isDependentDisable}" class="slds-select" change="{!c.onDependentFieldChange}">
+                                    <aura:iteration items="{!v.subPurposes}" var="subPurpose">
+                                        <ui:inputSelectOption text="{!subPurpose}" label="{!subPurpose}" />
+                                    </aura:iteration>
+                                </ui:inputSelect>
+                            </td>
+                        </tr>
+                        
+                        <aura:if isTrue="{!v.displayseriesfields}">
+                            <tr>
+                                <td>
+                                    <label><b>Build Date:</b></label>
+                                </td>
+                                <td  style="padding-left:5px;">
+                                    <lightning:radioGroup name="radioGroup" aura:id="buildDate" 
+                                                          
+                                                          options="{! v.options }"
+                                                          value="{! v.storeRadioValue }"
+                                                          type="radio"/>
+                                </td>
+                            </tr>
+                            
+                            <tr>
+                                <td>
+                                    <label><b>ODS #:</b></label>
+                                </td>
+                                <td  style="padding-left:5px;">
+                                    <ui:inputText aura:id="ods" value="{!v.case.ODS__c}" />
+                                </td>
+                                
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label><b>SAP #:</b></label>
+                                </td>
+                                <td  style="padding-left:5px;">
+                                    <ui:inputText aura:id="sap" value="{!v.case.CCC_SAP_Invoice__c}" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label><b>Jobsite:</b></label>
+                                </td>
+                                <td  style="padding-left:5px;">
+                                    <ui:inputText aura:id="jobsite" value="{!v.case.CCC_Job_Name__c}" />
+                                </td>
+                            </tr>
+                            
+                        </aura:if>
+                        
+                        
+                        <aura:if isTrue="{!v.displaysubjectfield}">
+                            <tr>
+                                <td>
+                                    <label><b>Subject:</b><b>&nbsp;&nbsp;*</b></label>
+                                </td>
+                                <td  style="padding-left:5px;">
+                                    <div class="slds-form-element slds-is-required">
+                                        <ui:inputText aura:id="subject" value="{!v.case.Subject}" />
+                                    </div>
+                                </td>
+                            </tr>
+                        </aura:if>
+                        <tr>
+                            <td>
+                                <label><b>Description:</b></label>
+                            </td>
+                            <td  style="padding-left:5px;">
+                                <ui:inputTextArea aura:id="description" value="{!v.case.Description__c}" />
+                            </td>
+                        </tr>
+                         
+                        <tr>
+                            <td>
+                                <label><b>Distributor Customer:</b></label>
+                            </td>
+                            <td  style="padding-left:5px;">
+                                <ui:inputText aura:id="distributor_customer" value="{!v.case.Distributor_Customer__c}" />
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                         
+                            <td>
+                                <label><b>Part#:</b></label>
+                            </td>          
+                            
+                            <td>
+                                
+                                <aura:iteration items="{!v.WrapPartList}" var="item" indexVar="index">
+                                    <c:dynamicRowItem  WrapInstance="{!item}" rowIndex="{!index}" aura:id="parts" partlength="{!v.WrapInstance.prtNo__c}" />
+                                </aura:iteration>
+                                
+                            </td>
+                            
+                        </tr>
+                        
+                        <tr>
+                            <td>
+                                <label><b>Customer PO#:</b></label>
+                            </td>
+                            <td>
+                                <ui:inputText aura:id="custPO" value="{!v.case.Customer_PO__c}"/>
+                                <!-- <aura:iteration items="{!v.custPO}" var="item" indexVar="index">
+                                    <c:dynamicRowItemCustomerPO Wrap="{!item}" rowIndex1="{!index}" />
+                                </aura:iteration>-->
+                            </td>  
+                            <!--      <td  style="padding-left:5px;">
+            <ui:inputText aura:id="po" value="{!v.case.CCC_Customer_PO__c}"/>
+        </td> -->
+                        </tr>
+                        <tr>
+                            <td>
+                                <label><b>Model#:</b></label>
+                            </td>
+                            <td  style="padding-left:5px;">
+                                <ui:inputText aura:id="model" value="{!v.case.CCC_Model_Number__c}"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label><b>Serial#:</b></label>
+                            </td>
+                            <td  style="padding-left:5px;">
+                                <ui:inputText aura:id="serial" value="{!v.case.CCC_Serial_Number__c}"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label><b> Attachment:</b></label></td>
+                            <td>
+                                <lightning:input aura:id="fileId"  type="file" label="Attachments" name="file"  multiple="true" accept="image/png, .zip, .pdf, .doc, .docx, .xls, .xlsx" onchange="{!c.handleFilesChange}"/>
+                                <div class="slds-text-body_small slds-text-color_error">{!v.fileName} </div>
+                                
+                                
+                                <aura:if isTrue="{!v.showLoadingSpinner}">
+                                    <div class="slds-text-body_small slds-text-color_error">Uploading... 
+                                        <img src="/auraFW/resources/aura/images/spinner.gif" class="spinner-img" alt="Loading"/>'
+                                    </div>
+                                </aura:if>
+                                
+                                
+                                
+                                <!-- <button class="slds-button slds-button_brand" onclick="{!c.doSave}">Upload Attachment</button>-->
+                                
+                            </td>
+                        </tr>
+                        
+                    </table>
+                </div>   
+            </div>
+        </div>
+        <div style="height: 50px;display: flex;align-items: center;justify-content: center;">
+            <lightning:button variant="brand" label="Create Case" onclick="{!c.saveCase1}" /> 
+            
+            
+        </div> 
+    </div>
+    <aura:if isTrue="{!v.mailStatus}">
+        <div role="alertdialog" tabindex="-1" aria-labelledby="prompt-heading-id" aria-describedby="prompt-message-wrapper" class="slds-modal slds-fade-in-open slds-modal--prompt">
+            <div class="slds-modal__container">
+                <div class="slds-modal__header slds-theme--error slds-theme--alert-texture">
+                    <h2 class="slds-text-heading--medium" id="prompt-heading-id">Case Creation</h2>
+                </div>
+                <div class="slds-modal__content slds-p-around--medium">
+                    
+                    <div>
+                        <p >Case created successfully-<b>{!v.recIdCreated.CaseNumber}</b>
+                            </p>
+                        
+                    </div>
+                </div>
+                <div class="slds-modal__footer slds-theme--default">
+                    <button class="slds-button slds-button--brand" onclick="{!c.redirectToCaseDetail}">Close</button>
+                </div>
+            </div>
+        </div>
+        <div class="slds-backdrop slds-backdrop--open"></div>
+    </aura:if>
+    <!--loading spinner start... style=Brand Medium (blue dots)-->
+    <aura:if isTrue="{!v.Spinner}">
+        <div aura:id="spinnerId" class="slds-spinner_container">
+            <div class="slds-spinner--brand  slds-spinner slds-spinner--large slds-is-relative" role="alert">
+                <span class="slds-assistive-text">Loading</span>
+                <div class="slds-spinner__dot-a"></div>
+                <div class="slds-spinner__dot-b"></div>
+            </div>
+        </div>
+    </aura:if>
+    <!-- Loading spinner end--> 
+    
+    
+</aura:component>

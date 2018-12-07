@@ -1,0 +1,16 @@
+.THIS {
+}
+
+.THIS.horizontal-list {
+    display: block;
+    padding: 10px 0;
+}
+
+.THIS label {
+    font-weight: 600 !important;
+}
+
+.THIS span {
+    font-size: .9em !important;
+    font-weight: 300 !important;
+}

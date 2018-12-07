@@ -1,0 +1,37 @@
+.THIS {
+}
+
+.THIS .label {
+    font-size: 100% !important;
+}
+
+.THIS .request-header {
+    padding: 0px !important;
+    margin: 0 !important;
+}
+.THIS .modal-header {
+    padding: 20px 20px 0 20px;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.THIS.modal-is-open {
+	display: block;
+	z-index: 9009;
+}
+
+.THIS .uiInput--radio input[type=radio] {
+    margin: 5px 5px 0 0;
+    float: left;
+}
+
+.THIS .request-type-header {
+    font-size: 1em !important;
+}
+
+.THIS .select {
+    height: 35px !important;
+}
+
+.THIS .request-options {
+    padding-bottom: 30px;
+}

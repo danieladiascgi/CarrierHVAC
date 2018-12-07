@@ -1,0 +1,135 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global">
+    
+<aura:attribute name="Bryant" type="String" default="http://www.bryant.com/bryant/en/us/"/>
+<aura:attribute name="BusinessIntelligence" type="String" default="http://bilp.carrier.utc.com/BOE/BI"/>
+<aura:attribute name="BusinessObject" type="String" default="http://sp.ccs.utc.com/sites/BITeam/CoolBIOperations/SitePages/Home.aspx"/>
+<aura:attribute name="C10" type="String" default="http://www.new.hvacpartners.com/partnerportal/Administration/C10AccessHome.html"/>    
+<aura:attribute name="Carrier" type="String" default="http://www.carrier.com/carrier/en/us/"/>
+<aura:attribute name="CarrierCommercialLookup" type="String" default="http://www.carrier.com/commercial/en/us/find-an-expert/" />
+<aura:attribute name="CFSCreditCard" type="String" default="https://sp.ccs.utc.com/sites/cfservices/pages/vg_ccpublic/ccpaymentform.aspx"/>
+<aura:attribute name="CoreLogicSerialReview" type="String" default="http://cusiia13/Reports/Pages/Report.aspx?ItemPath=%2fProductHistory%2fCoreLogic%2fCoreLogic+Serial+Info+Report"/>
+<aura:attribute name="CMXPortal" type="String" default="http://cmxportal.carrier.utc.com"/>
+<aura:attribute name="DashboardLink" type="String" default="http://sp.ccs.utc.com/sites/Amer_HVAC_Customer_Service/CCC/SitePages/Metrics.aspx"/>
+<aura:attribute name="DealerLocatorBryant" type="String" default="http://www.bryant.com/bryant/en/us/find-a-dealer/"/>
+<aura:attribute name="DistributorDirectory" type="String" default="http://sp.ccs.utc.com/sites/Amer_HVAC_Customer_Service/CCC/SiteAssets/Distributor_Dir/CCC%20Reference%20Tool/state_listing.htm"/>
+<aura:attribute name="DealerLocatorCarrier" type="String" default="http://www.carrier.com/residential/en/us/find-a-dealer/"/>
+<aura:attribute name="EPIC" type="String" default="http://www.new.hvacpartners.com/partnerportal/ExternalLogins/GetLogins.aspx?exAppName=NEWEPIC&amp;Server=production"/>
+<aura:attribute name="EPMS" type="String" default="http://icp.hvacpartners.com/_layouts/SeamlessSignOn.aspx?AppId=PowerLinksApplication"/>
+<aura:attribute name="Freight_Carrier_Contact_List" type="String" default="https://customergateway--CCCUAT.cs17.my.salesforce.com/sfc/p/g0000006Hmih/a/g000000004F2/ypV2ctvas6FLbpFkPIMTz.I.X4F.J4uNqi5Aje_KQVA"/>
+<aura:attribute name="Freightcompanywebsites" type="String" default="http://www.track-trace.com/"/>
+<aura:attribute name="HVACPartners" type="String" default="https://www.hvacpartners.com"/>
+<aura:attribute name="ICPArcoaire" type="String" default="http://www.arcoaire.com/en/us/find-a-dealer/"/>
+<aura:attribute name="ICPComfortMaker" type="String" default="http://www.comfortmaker.com/en/us/find-a-dealer/"/>
+<aura:attribute name="ICPDayandNight" type="String" default="http://www.dayandnightcomfort.com/en/us/find-a-dealer/"/>
+<aura:attribute name="ICPExcellence" type="String" default="http://www.icpexcellence.com"/>
+<aura:attribute name="ICPHeil" type="String" default="http://www.heil-hvac.com/en/us/find-a-dealer/"/>
+<aura:attribute name="ICPKeepRite" type="String" default="http://www.keeprite.com/en/us/find-a-dealer/"/>
+<aura:attribute name="ICPTempStar" type="String" default="http://www.tempstar.com/en/us/find-a-dealer/"/>
+<aura:attribute name="ICP" type="String" default="http://www.icpusa.com"/>
+<aura:attribute name="ICPTSAListing" type="String" default="http://sp.ccs.utc.com/sites/Amer_HVAC_Customer_Service/CCC/_layouts/15/WopiFrame.aspx?sourcedoc=/sites/Amer_HVAC_Customer_Service/CCC/CCC%20Documents/ICP%20Tier2%20TSA%20Listing/Copy%20of%20Copy%20of%20TSA%20Full%20Master%20Roster%20Complete%2007-26-2017.xlsx&amp;action=default"/>
+<aura:attribute name="Lauditor" type="String" default="http://linknotprovided/"/>
+<aura:attribute name="NewAccountTermLetterTemplate" type="String" default="/servlet/servlet.FileDownload?file=01515000004nADf"/>
+<aura:attribute name="Payne" type="String" default="http://www.payne.com/en/us/"/>
+<aura:attribute name="PHDBCloning" type="String" default="http://phdb/Data%20Maintenance/PHDB/AddShippedUnits.aspx"/>
+<aura:attribute name="PlantCompressorLookUpsCollierville" type="String" default="http://cusclw0a/byserial/main.aspx"/>
+<aura:attribute name="PlantCompressorLookUpsMexico" type="String" default="http://cmxplisweb.carrier.utc.com/"/>
+<aura:attribute name="PlantCompressorLookUpsTyler" type="String" default="http://etp/"/>
+<aura:attribute name="ProductRegistrationCarrier" type="String" default="https://productregistration.carrier.com/Public/RegistrationForm?brand=carrier"/>
+<aura:attribute name="ProductRegistrationBryant" type="String" default="https://productregistration.bryant.com/Public/RegistrationForm?brand=bryant"/>
+<aura:attribute name="ProductRegistrationPayne" type="String" default="https://productregistration.payne.com/Public/RegistrationForm?brand=payne"/>
+<aura:attribute name="ProductRegistrationICP" type="String" default="https://productregistration2.icpusa.com/Public/RegistrationForm?brand=icp"/>
+<aura:attribute name="QuoteSystem" type="String" default="http://qnps/"/>
+<aura:attribute name="RCCustomerCodeAddChgForm" type="String" default="http://sp.ccs.utc.com/sites/CFServices/Lists/Customer%20Code%20AddChange%20Request%20FormRC/Custom_New.aspx?Source=/sites/CFServices/Pages/Form-Submission-Confirmation.aspx"/>
+<aura:attribute name="RCDChillerdata" type="String" default="http://linknotprovided/"/>
+<aura:attribute name="RepairandReturnpaperworkTemplate" type="String" default="/servlet/servlet.FileDownload?file=01515000004nADg"/>
+
+<aura:attribute name="SerialNumberFolderLink" type="String" default="http://sp.ccs.utc.com/sites/BITeam/CoolBIOperations/SitePages/Home.aspx"/>
+<aura:attribute name="Servicebench" type="String" default="https://www.servicebench.com/site/welcome.php"/>
+<aura:attribute name="TotalinecomCommercial" type="String" default="http://www.totaline.com/commercial"/>
+<aura:attribute name="TotalinePartsCatalog" type="String" default="http://www.new.hvacpartners.com/PartnerPortal/Home.aspx"/>
+<aura:attribute name="TotalineWarranty" type="String" default="https://www.rcdchannel.com/"/>
+<aura:attribute name="Windchill" type="String" default="http://windchill.carrier.utc.com/Windchill/app/#ptc1/homepage"/>
+    
+    <dl class="slds-dl--horizontal">
+    <dt class="slds-dl--horizontal__label"><ui:outputURL value="{!v.Bryant}" label="Bryant" target="_blank"/></dt>
+    <dt class="slds-dl--horizontal__label"><ui:outputURL value="{!v.BusinessIntelligence}" label="Business Intelligence" target="_blank"/></dt>
+    <dt class="slds-dl--horizontal__label"><ui:outputURL value="{!v.BusinessObject}" label="Business Object" target="_blank"/></dt>
+    </dl><br/>
+    <dl class="slds-dl--horizontal">
+    <dt class="slds-dl--horizontal__label"><ui:outputURL value="{!v.C10}" label="C10" target="_blank"/></dt> 
+    <dt class="slds-dl--horizontal__label"><ui:outputURL value="{!v.Carrier}" label="Carrier" target="_blank"/></dt>
+    <dt class="slds-dl--horizontal__label"><ui:outputURL value="{!v.CarrierCommercialLookup}" label="Carrier Commercial Lookup" target="_blank"/></dt>
+    </dl><br/>
+    <dl class="slds-dl--horizontal">
+    <dt class="slds-dl--horizontal__label"><ui:outputURL value="{!v.CFSCreditCard}" label="CFS Credit Card" target="_blank"/></dt>
+    <dt class="slds-dl--horizontal__label"><ui:outputURL value="{!v.CoreLogicSerialReview}" label="Core Logic Serial Review" target="_blank"/></dt>
+    <dt class="slds-dl--horizontal__label"><ui:outputURL value="{!v.CMXPortal}" label="CMX Portal" target="_blank"/></dt>
+    </dl><br/>
+    <dl class="slds-dl--horizontal">
+    <dt class="slds-dl--horizontal__label"><ui:outputURL value="{!v.DashboardLink}" label="Dashboard Link" target="_blank"/></dt>
+    <dt class="slds-dl--horizontal__label"><ui:outputURL value="{!v.DealerLocatorBryant}" label="Dealer Locator - Bryant" target="_blank"/></dt>
+    <dt class="slds-dl--horizontal__label"><ui:outputURL value="{!v.DealerLocatorCarrier}" label="Dealer Locator - Carrier" target="_blank"/></dt>
+    </dl><br/>
+    <dl class="slds-dl--horizontal">
+    <dt class="slds-dl--horizontal__label"><ui:outputURL value="{!v.DistributorDirectory}" label="Distributor Directory" target="_blank"/></dt>
+    <dt class="slds-dl--horizontal__label"><ui:outputURL value="{!v.EPIC}" label="EPIC" target="_blank"/></dt>
+    <dt class="slds-dl--horizontal__label"><ui:outputURL value="{!v.EPMS}" label="EPMS" target="_blank"/></dt>
+    </dl><br/>
+    <dl class="slds-dl--horizontal">
+    <dt class="slds-dl--horizontal__label"><ui:outputURL value="{!v.Freightcompanywebsites}" label="Freight company websites" target="_blank"/></dt>
+        <dt class="slds-dl--horizontal__label"><ui:outputURL value="{!v.Freight_Carrier_Contact_List}" label="Freight Carrier Contact List" target="_blank"/></dt>
+    <dt class="slds-dl--horizontal__label"><ui:outputURL value="{!v.HVACPartners}" label="HVAC Partners" target="_blank"/></dt>
+    <dt class="slds-dl--horizontal__label"><ui:outputURL value="{!v.ICPArcoaire}" label="ICP – Arcoaire" target="_blank"/></dt>
+    </dl><br/>
+    <dl class="slds-dl--horizontal">
+    <dt class="slds-dl--horizontal__label"><ui:outputURL value="{!v.ICPComfortMaker}" label="ICP - ComfortMaker" target="_blank"/></dt>
+    <dt class="slds-dl--horizontal__label"><ui:outputURL value="{!v.ICPDayandNight}" label="ICP - Day and Night" target="_blank"/></dt>
+    <dt class="slds-dl--horizontal__label"><ui:outputURL value="{!v.ICPExcellence}" label="ICP - Excellence" target="_blank"/></dt>
+    </dl><br/>
+    <dl class="slds-dl--horizontal">
+    <dt class="slds-dl--horizontal__label"><ui:outputURL value="{!v.ICPHeil}" label="ICP – Heil" target="_blank"/></dt>
+    <dt class="slds-dl--horizontal__label"><ui:outputURL value="{!v.ICPKeepRite}" label="ICP – KeepRite" target="_blank"/></dt>
+    <dt class="slds-dl--horizontal__label"><ui:outputURL value="{!v.ICPTempStar}" label="ICP - TempStar" target="_blank"/></dt>
+    </dl><br/>
+    <dl class="slds-dl--horizontal">
+    <dt class="slds-dl--horizontal__label"><ui:outputURL value="{!v.ICP}" label="ICP" target="_blank"/></dt>
+    <dt class="slds-dl--horizontal__label"><ui:outputURL value="{!v.ICPTSAListing}" label="ICP TSA Listing" target="_blank"/></dt>
+    <dt class="slds-dl--horizontal__label"><ui:outputURL value="{!v.Lauditor}" label="Lauditor" target="_blank"/></dt>
+    </dl><br/>
+    <dl class="slds-dl--horizontal">
+    <dt class="slds-dl--horizontal__label"><ui:outputURL value="{!v.MKDenialsite}" label="M-K Denial site" target="_blank"/></dt>
+    <dt class="slds-dl--horizontal__label"><ui:outputURL value="{!v.NewAccountTermLetterTemplate}" label="New Account Term Letter Template" target="_blank"/></dt>
+    <dt class="slds-dl--horizontal__label"><ui:outputURL value="{!v.Payne}" label="Payne" target="_blank"/></dt>
+    </dl><br/>
+    <dl class="slds-dl--horizontal">
+    <dt class="slds-dl--horizontal__label"><ui:outputURL value="{!v.PHDBCloning}" label="PHDB Cloning" target="_blank"/></dt>
+    <dt class="slds-dl--horizontal__label"><ui:outputURL value="{!v.PlantCompressorLookUpsCollierville}" label="Plant Compressor LookUps -- Collierville" target="_blank"/></dt>
+    <dt class="slds-dl--horizontal__label"><ui:outputURL value="{!v.PlantCompressorLookUpsMexico}" label="Plant Compressor LookUps -- Mexico" target="_blank"/></dt>
+    </dl><br/>
+    <dl class="slds-dl--horizontal">
+    <dt class="slds-dl--horizontal__label"><ui:outputURL value="{!v.PlantCompressorLookUpsTyler}" label="Plant Compressor LookUps -- Tyler" target="_blank"/></dt>
+    <dt class="slds-dl--horizontal__label"><ui:outputURL value="{!v.ProductRegistrationCarrier}" label="Product Registration - Carrier" target="_blank"/></dt>
+    <dt class="slds-dl--horizontal__label"><ui:outputURL value="{!v.ProductRegistrationBryant}" label="Product Registration - Bryant" target="_blank"/></dt>
+    </dl><br/>
+    <dl class="slds-dl--horizontal">
+    <dt class="slds-dl--horizontal__label"><ui:outputURL value="{!v.ProductRegistrationPayne}" label="Product Registration - Payne" target="_blank"/></dt>
+    <dt class="slds-dl--horizontal__label"><ui:outputURL value="{!v.ProductRegistrationICP}" label="Product Registration - ICP" target="_blank"/></dt>
+    <dt class="slds-dl--horizontal__label"><ui:outputURL value="{!v.QuoteSystem}" label="Quote System" target="_blank"/></dt>
+    </dl><br/>
+    <dl class="slds-dl--horizontal">
+    <dt class="slds-dl--horizontal__label"><ui:outputURL value="{!v.RCCustomerCodeAddChgForm}" label="RC Customer Code Add/Chg Form" target="_blank"/></dt>
+    <dt class="slds-dl--horizontal__label"><ui:outputURL value="{!v.RCDChillerdata}" label="RCD Chiller data" target="_blank"/></dt>
+    <dt class="slds-dl--horizontal__label"><ui:outputURL value="{!v.RepairandReturnpaperworkTemplate}" label="Repair and Return paper work Template" target="_blank"/></dt>
+    </dl><br/>
+    <dl class="slds-dl--horizontal">
+    
+    <dt class="slds-dl--horizontal__label"><ui:outputURL value="{!v.SerialNumberFolderLink}" label="Serial Number Folder Link" target="_blank"/></dt>
+    <dt class="slds-dl--horizontal__label"><ui:outputURL value="{!v.Servicebench}" label="Service bench" target="_blank"/></dt>
+    <dt class="slds-dl--horizontal__label"><ui:outputURL value="{!v.TotalinecomCommercial}" label="Totaline.com/Commercial" target="_blank"/></dt>
+    </dl><br/>
+    <dl class="slds-dl--horizontal">
+    <dt class="slds-dl--horizontal__label"><ui:outputURL value="{!v.TotalinePartsCatalog}" label="Totaline Parts Catalog" target="_blank"/></dt>
+    <dt class="slds-dl--horizontal__label"><ui:outputURL value="{!v.TotalineWarranty}" label="Totaline Warranty" target="_blank"/></dt>
+    <dt class="slds-dl--horizontal__label"><ui:outputURL value="{!v.Windchill}" label="Windchill" target="_blank"/></dt>
+    </dl><br/> 
+</aura:component>
