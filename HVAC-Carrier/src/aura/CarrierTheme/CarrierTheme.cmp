@@ -1,290 +1,259 @@
 <aura:component implements="forceCommunity:themeLayout" description="Custom PRM Theme" access="global">
-	<ltng:require scripts="{!join(',', $Resource.jquery,
-                           			   $Resource.bootstrapJS,
-                           			   $Resource.datatableJS,
-									   $Resource.chartBundleJS,
-                           			   $Resource.chartJS,
-									   $Resource.wowJS,
-									   $Resource.twitterWidget,
-									   $Resource.feednami
-                           			   )}"
-		afterScriptsLoaded="{!c.afterScriptsLoaded}"/>
-	<ltng:require styles="{!$Resource.carrierTheme}"/>
-	<ltng:require styles="{!$Resource.animateCSS}"/>
-	<ltng:require styles="{!$Resource.datatableCSS}"/>
-
-	<!-- Predefined Salesforce component references -->
-	<aura:attribute name="navBar" type="Aura.Component[]"/>
-	<aura:attribute name="profileMenu" type="Aura.Component[]"/>
-	<aura:attribute name="search" type="Aura.Component[]"/>
-	<aura:attribute name="logoPath" type="String" required="false" default="{!$Resource.CarrierLogo}"/>
-	<aura:attribute name="accounts" type="List"/>
+    <ltng:require scripts="{!join(',', $Resource.jquery,
+                           $Resource.bootstrapJS,
+                           $Resource.datatableJS,
+                           $Resource.chartBundleJS,
+                           $Resource.chartJS,
+                           $Resource.wowJS,
+                           $Resource.twitterWidget,
+                           $Resource.feednami
+                           )}"
+                  afterScriptsLoaded="{!c.afterScriptsLoaded}"/>
+    <ltng:require styles="{!$Resource.carrierTheme}"/>
+    <ltng:require styles="{!$Resource.animateCSS}"/>
+    <ltng:require styles="{!$Resource.datatableCSS}"/>
+    
+    <!-- Predefined Salesforce component references -->
+    <aura:attribute name="navBar" type="Aura.Component[]"/>
+    <aura:attribute name="profileMenu" type="Aura.Component[]"/>
+    <aura:attribute name="search" type="Aura.Component[]"/>
+    <aura:attribute name="logoPath" type="String" required="false" default="{!$Resource.CarrierLogo}"/>
+    <aura:attribute name="accounts" type="List"/>
     <aura:handler name="init" action="{!c.doInit}" value="{!this}"/>
     <aura:handler event="c:AccountChangeEvent" action="{!c.AccSelectChange}"   includeFacets="true"/>
     <aura:handler event="c:TabLoadEvnt" action="{!c.TabLoad}" />
     
-	<div class="carrier">
-		<div class="bg-default">
-			<div class="container">
+    <div class="carrier">
+        <div class="bg-default">
+            <div class="container">
                 <!-- Theme Header -->
                 <div class="row">
                     <div class="col-xs-8 col-sm-6 col-md-6">
                         <img src="{!v.logoPath}" class="partner-logo"/>
                     </div>
-                    <div class="col-xs-4 col-sm-3 col-md-3">
+                    <div class="col-xs-6 col-sm-5 col-md-3">
                         <div class="profile-container">
                             {!v.profileMenu}
                         </div>
                     </div>
-                    <div class="col-sm-3 col-md-3">
-                        <div class="request-container-desktop">
-                            <c:ModalButton />
-                        </div>
+                </div>
+                <div class="row">
+                    
+                </div>
+                <div class="row slds-m-top_small">
+                    <div class="col-xs-6 col-sm-5 col-md-3">
+                        {!v.search}
+                    </div>
+                    <div class="col-sm-2 col-md-6"></div>
+                </div>
+            </div>
+        </div>
+        <div class="bg-default">.</div>
+        <div class="bg-primary">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12 col-md-12">
+                        {!v.navBar}
                     </div>
                 </div>
-                <!--  <div class="row">
-                    <lightning:layout horizontalAlign="spread">
-                        <lightning:layoutItem flexibility="auto" padding="around-small">
-                             {!v.search}
-                        </lightning:layoutItem>
-                    </lightning:layout>
-                </div> -->
-				<div class="row slds-m-top_small">
-					<div class="col-xs-6 col-sm-5 col-md-3">
-                        {!v.search}
-					</div>
-					<div class="col-sm-2 col-md-6"></div>
-					<aura:if isTrue="{!v.accounts.length>1}">
-						<div class="col-xs-6 col-sm-5 col-md-3">
-							<c:AccountSwitch accounts="{!v.accounts}"/>
-						</div>
-					</aura:if>
-				</div>
-			</div>
-		</div>
-        <div class="bg-default">.</div>
-		<div class="bg-primary">
-			<div class="container">
-				<div class="row">
-					<div class="col-xs-12 col-md-12">
-						{!v.navBar}
-					</div>
-				</div>
-			</div>
-		</div>
-		<section class="module parallax parallax-1">
-	        <div class="container">
-				<div class="row">
-					<div class=" col-xs-12 col-md-12">
-						<div class="hero-headline">
-			  			  <h1 class="heading-alt white">Welcome to smarter service in the age of connectivity</h1>
-					  	</div>
-		  		  	</div>
-				</div>
-	        </div>
-      	</section>
-	  	<div class="container request-container-mobile">
-			<div class="row">
-				<div class="col-xs-12">
-					<c:ModalButton />
-				</div>
-			</div>
-		</div>
-		<div class="container">
-			{!v.body}
-		</div>
-		<footer class="footer bg-default callout text-left">
-			<div class="container">
-				<div class="row">
+            </div>
+        </div>
+        <div class="container">
+            {!v.body}
+        </div>
+        
+        <footer class="footer bg-default callout text-left">
+            <div class="container">
+                <div class="row">
+                    
+                    <div class="col-sm-2">
+                        <a class="utc-logo" href="http://www.ccs.utc.com/" title="UTC Climate, Controls &amp; Security Logo" target="_blank"><img
+                                                                                                                                                  xlink:href=""
+                                                                                                                                                  title="UTC Climate, Controls &amp; Security"
+                                                                                                                                                  alt="UTC Climate, Controls &amp; Security"
+                                                                                                                                                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                                                                                                                                                  xlink:title="Footer logo - 172x75"
+                                                                                                                                                  src="//files.carrier.com/carrier/en/contentimages/utc-climate-controls-security-logo-172x75.png"
+                                                                                                                                                  xmlns:tridion="http://www.tridion.com/ContentManager/5.0"/></a>
+                        
+                    </div>
+                    <div class="col-sm-10">
+                        
+                        <div class="row">
+                            
+                            <div class="col-sm-4 col-xs-12">
+                                
+                                <h2 class="dropdown-header">Products &amp; Services</h2>
+                                <ul>
+                                    <li>
+                                        <a title="Products and Services" target="_blank" href="http://www.carrier.com/carrier/en/us/products-and-services/">Overview</a>
+                                        <ul>
+                                            <li>
+                                                <a href="http://www.carrier.com/residential/en/us/" title="Residential Systems" target="_blank">Residential Systems</a>
+                                                <!-- <ul>
+             <li>
+              <a href="http://www.carrier.com/residential/en/us/find-a-dealer/" title="Find a residential HVAC dealer" target="_blank">Find a dealer</a>
+             </li>
+             <li>
+              <a href="https://productregistration.carrier.com/Public/RegistrationForm?brand=carrier" title="Register your residential product" target="_blank">Product registration</a>
+             </li>
+             <li>
+              <a href="https://www.carrier.com/residential/en/us/access-your-thermostat/" title="Homeowner login to configure your thermostat" target="_blank">Homeowner login</a>
+             </li>
+             <li>
+              <a href="http://www.hvacpartners.com/" target="_blank">Dealer login</a>
+             </li>
+            </ul> -->
+                                            </li>
+                                            <li>
+                                                <a href="http://www.carrier.com/commercial/en/us/" target="_blank" title="Commercial Systems">Commercial Systems</a>
+                                            </li>
+                                            <li>
+                                                <a title="Transport Refrigeration" target="_blank" href="http://www.carrier.com/carrier/en/us/products-and-services/transport-refrigeration/">Transport Refrigeration</a>
+                                            </li>
+                                            <li>
+                                                <a title="Commercial Refrigeration" target="_blank" href="http://www.carrier.com/carrier/en/us/products-and-services/commercial-refrigeration/">Commercial Refrigeration</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                                
+                                <ul></ul>
+                                
+                            </div>
+                            
+                            <div class="col-sm-4 col-xs-12">
+                                
+                                <h2 class="dropdown-header">Information For</h2>
+                                <ul>
+                                    <li>
+                                        <ul>
+                                            <li>
+                                                <a title="News" target="_blank" href="http://www.carrier.com/carrier/en/us/news/">The media</a>
+                                            </li>
+                                            <li>
+                                                <a title="Careers" target="_blank" href="http://www.carrier.com/carrier/en/us/careers/">Job seekers</a>
+                                            </li>
+                                            <li>
+                                                <a title="Investors" target="_blank" href="http://www.carrier.com/carrier/en/us/investors/">Investors</a>
+                                            </li>
+                                            <li>
+                                                <a title="Suppliers" target="_blank" href="http://www.carrier.com/carrier/en/us/suppliers/">Suppliers</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                                
+                                <ul></ul>
+                                
+                            </div>
+                            
+                            <div class="col-sm-4 col-xs-12">
+                                
+                                <h2 class="dropdown-header">Sustainability</h2>
+                                <ul>
+                                    <li>
+                                        <ul>
+                                            <li>
+                                                <a target="_blank" title="Sustainability" href="http://www.carrier.com/carrier/en/us/sustainability/">Sustainability at Carrier</a>
+                                            </li>
+                                            <li>
+                                                <a href="http://www.naturalleader.com" target="_blank">Natural Leadership at United Technologies Corp.</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                                
+                                <ul></ul>
+                                
+                            </div>
+                            
+                        </div>
+                        <!-- end of row -->
+                        
+                        <div class="row">
+                            
+                            <div class="col-sm-4 col-xs-12">
+                                
+                                <h2 class="dropdown-header">History</h2>
+                                <ul>
+                                    <li>
+                                        <ul>
+                                            <li>
+                                                <a target="_blank" title="Willis Carrier" href="http://www.carrier.com/carrier/en/us/about-carrier/willis-carrier/">Willis Carrier</a>
+                                            </li>
+                                            <li>
+                                                <a target="_blank" title="Carrier History" href="http://www.carrier.com/carrier/en/us/about-carrier/history/">Carrier history</a>
+                                            </li>
+                                            <li>
+                                                <a href="http://www.williscarrier.com" target="_blank" title="Willis Carrier website">Willis Carrier website</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                                
+                                <ul></ul>
+                                
+                            </div>
+                            
+                            <div class="col-sm-4 col-xs-12">
+                                
+                                <h2 class="dropdown-header">Connect</h2>
+                                <ul>
+                                    <li>
+                                        <ul>
+                                            <li>
+                                                <a title="Contact us" target="_blank" href="http://www.carrier.com/commercial/en/us/service/request-information/">Contact us</a>
+                                            </li>
+                                            <!-- <li>
+            <a title="Press contacts" target="_blank" href="http://www.carrier.com/carrier/en/us/news/press-contacts/">Press contacts</a>
+           </li> -->
+                                        </ul>
+                                    </li>
+                                </ul>
+                                
+                                <ul></ul>
+                                
+                            </div>
+                            
+                            <div class="col-sm-4 col-xs-12">
+                                
+                                
+                                
+                                
+                            </div>
+                        </div>
+                        <!-- end of row -->
+                    </div>
+                </div>
+                <!-- end of row -->
+                
+                <div class="row">
+                    <hr/>
+                    
+                    <p class="text-center text-muted">
+                        
+                        <a href="http://www.carrier.com/carrier/en/us/privacy-notice/" target="_blank" title="Privacy Notice">Privacy Notice</a>
+                        
+                        &nbsp;|&nbsp;
+                        
+                        <a href="http://www.carrier.com/carrier/en/us/terms-of-use/" target="_blank" title="Terms Of Use">Terms Of Use</a>
+                        
+                        <!-- &nbsp;|&nbsp;
 
-					<div class="col-sm-2">
-						<a class="utc-logo" href="http://www.ccs.utc.com/" title="UTC Climate, Controls &amp; Security Logo" target="_blank"><img
-							xlink:href=""
-							title="UTC Climate, Controls &amp; Security"
-							alt="UTC Climate, Controls &amp; Security"
-							xmlns:xlink="http://www.w3.org/1999/xlink"
-							xlink:title="Footer logo - 172x75"
-							src="//files.carrier.com/carrier/en/contentimages/utc-climate-controls-security-logo-172x75.png"
-							xmlns:tridion="http://www.tridion.com/ContentManager/5.0"/></a>
-
-					</div>
-					<div class="col-sm-10">
-
-						<div class="row">
-
-							<div class="col-sm-4 col-xs-12">
-
-								<h2 class="dropdown-header">Products &amp; Services</h2>
-								<ul>
-									<li>
-										<a title="Products and Services" target="_blank" href="http://www.carrier.com/carrier/en/us/products-and-services/">Overview</a>
-										<ul>
-											<li>
-												<a href="http://www.carrier.com/residential/en/us/" title="Residential Systems" target="_blank">Residential Systems</a>
-												<!-- <ul>
-													<li>
-														<a href="http://www.carrier.com/residential/en/us/find-a-dealer/" title="Find a residential HVAC dealer" target="_blank">Find a dealer</a>
-													</li>
-													<li>
-														<a href="https://productregistration.carrier.com/Public/RegistrationForm?brand=carrier" title="Register your residential product" target="_blank">Product registration</a>
-													</li>
-													<li>
-														<a href="https://www.carrier.com/residential/en/us/access-your-thermostat/" title="Homeowner login to configure your thermostat" target="_blank">Homeowner login</a>
-													</li>
-													<li>
-														<a href="http://www.hvacpartners.com/" target="_blank">Dealer login</a>
-													</li>
-												</ul> -->
-											</li>
-											<li>
-												<a href="http://www.carrier.com/commercial/en/us/" target="_blank" title="Commercial Systems">Commercial Systems</a>
-											</li>
-											<li>
-												<a title="Transport Refrigeration" target="_blank" href="http://www.carrier.com/carrier/en/us/products-and-services/transport-refrigeration/">Transport Refrigeration</a>
-											</li>
-											<li>
-												<a title="Commercial Refrigeration" target="_blank" href="http://www.carrier.com/carrier/en/us/products-and-services/commercial-refrigeration/">Commercial Refrigeration</a>
-											</li>
-										</ul>
-									</li>
-								</ul>
-
-								<ul></ul>
-
-							</div>
-
-							<div class="col-sm-4 col-xs-12">
-
-								<h2 class="dropdown-header">Information For</h2>
-								<ul>
-									<li>
-										<ul>
-											<li>
-												<a title="News" target="_blank" href="http://www.carrier.com/carrier/en/us/news/">The media</a>
-											</li>
-											<li>
-												<a title="Careers" target="_blank" href="http://www.carrier.com/carrier/en/us/careers/">Job seekers</a>
-											</li>
-											<li>
-												<a title="Investors" target="_blank" href="http://www.carrier.com/carrier/en/us/investors/">Investors</a>
-											</li>
-											<li>
-												<a title="Suppliers" target="_blank" href="http://www.carrier.com/carrier/en/us/suppliers/">Suppliers</a>
-											</li>
-										</ul>
-									</li>
-								</ul>
-
-								<ul></ul>
-
-							</div>
-
-							<div class="col-sm-4 col-xs-12">
-
-								<h2 class="dropdown-header">Sustainability</h2>
-								<ul>
-									<li>
-										<ul>
-											<li>
-												<a target="_blank" title="Sustainability" href="http://www.carrier.com/carrier/en/us/sustainability/">Sustainability at Carrier</a>
-											</li>
-											<li>
-												<a href="http://www.naturalleader.com" target="_blank">Natural Leadership at United Technologies Corp.</a>
-											</li>
-										</ul>
-									</li>
-								</ul>
-
-								<ul></ul>
-
-							</div>
-
-						</div>
-						<!-- end of row -->
-
-						<div class="row">
-
-							<div class="col-sm-4 col-xs-12">
-
-								<h2 class="dropdown-header">History</h2>
-								<ul>
-									<li>
-										<ul>
-											<li>
-												<a target="_blank" title="Willis Carrier" href="http://www.carrier.com/carrier/en/us/about-carrier/willis-carrier/">Willis Carrier</a>
-											</li>
-											<li>
-												<a target="_blank" title="Carrier History" href="http://www.carrier.com/carrier/en/us/about-carrier/history/">Carrier history</a>
-											</li>
-											<li>
-												<a href="http://www.williscarrier.com" target="_blank" title="Willis Carrier website">Willis Carrier website</a>
-											</li>
-										</ul>
-									</li>
-								</ul>
-
-								<ul></ul>
-
-							</div>
-
-							<div class="col-sm-4 col-xs-12">
-
-								<h2 class="dropdown-header">Connect</h2>
-								<ul>
-									<li>
-										<ul>
-											<li>
-												<a title="Contact us" target="_blank" href="http://www.carrier.com/commercial/en/us/service/request-information/">Contact us</a>
-											</li>
-											<!-- <li>
-												<a title="Press contacts" target="_blank" href="http://www.carrier.com/carrier/en/us/news/press-contacts/">Press contacts</a>
-											</li> -->
-										</ul>
-									</li>
-								</ul>
-
-								<ul></ul>
-
-							</div>
-
-							<div class="col-sm-4 col-xs-12">
-
-
-
-
-								</div>
-							</div>
-							<!-- end of row -->
-						</div>
-					</div>
-					<!-- end of row -->
-
-					<div class="row">
-						<hr/>
-
-							<p class="text-center text-muted">
-
-								<a href="http://www.carrier.com/carrier/en/us/privacy-notice/" target="_blank" title="Privacy Notice">Privacy Notice</a>
-
-								&nbsp;|&nbsp;
-
-								<a href="http://www.carrier.com/carrier/en/us/terms-of-use/" target="_blank" title="Terms Of Use">Terms Of Use</a>
-
-								<!-- &nbsp;|&nbsp;
-
-								<a href="http://www.carrier.com/carrier/en/us/sitemap/" target="_blank" title="Sitemap">Sitemap</a> -->
-
-							</p>
-
-							<p class="text-center text-muted">Carrier is part of
-								<a href="http://www.ccs.utc.com/" title="Carrier is part of UTC Climate, Controls &amp; Security" target="_blank">UTC Climate, Controls &amp; Security</a>, a unit of
-								<a href="http://www.utc.com" title="United Technologies Corporation" target="_blank">United&nbsp;Technologies&nbsp;Corp.</a>
-								<br/>
-									© Carrier Corporation 2017</p>
-
-							</div>
-						</div>
-						<!-- end of container -->
-					</footer>
-				</div>
-			</aura:component>
+        <a href="http://www.carrier.com/carrier/en/us/sitemap/" target="_blank" title="Sitemap">Sitemap</a> -->
+                        
+                    </p>
+                    
+                    <p class="text-center text-muted">Carrier is part of
+                        <a href="http://www.ccs.utc.com/" title="Carrier is part of UTC Climate, Controls &amp; Security" target="_blank">UTC Climate, Controls &amp; Security</a>, a unit of
+                        <a href="http://www.utc.com" title="United Technologies Corporation" target="_blank">United&nbsp;Technologies&nbsp;Corp.</a>
+                        <br/>
+                        © Carrier Corporation 2017</p>
+                    
+                </div>
+            </div>
+            <!-- end of container -->
+        </footer>
+    </div>
+</aura:component>

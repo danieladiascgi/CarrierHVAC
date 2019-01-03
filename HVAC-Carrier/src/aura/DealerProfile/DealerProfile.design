@@ -1,3 +1,14 @@
 <design:component>
-	<design:attribute name="BrandsSObjectCollection" label="BrandsSObjectCollection" />
+    <design:attribute name="BrandsSObjectCollection" label="BrandsSObjectCollection" />
+    <design:attribute name="rnc" label="rnc" />
+    <design:attribute name="rncMF"  label="rncMF" />
+    <design:attribute name="aor"  label="aor" />
+    <design:attribute name="com"  label="com" />
+    <design:attribute name="dls" label="dls" />
+    <design:attribute name="retail"  label="retail" />
+    <design:attribute name="ot"  label="ot"/>
+    <design:attribute name="Comment"  label="Comment"/>
+    <design:attribute name="Percent" label="Percent" />
+    <design:attribute name="Amount" label="Amount" />
+    <design:attribute name="GainedBusinessBool" label="GainedBusinessBool" />
 </design:component>

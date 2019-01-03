@@ -1,0 +1,17 @@
+.THIS .text {
+    color:#2574a9;
+    font-size: 24px;
+}
+.THIS label.slds-form-element__label {
+    display: none;
+}
+.THIS .slds-progress__item.slds-is-active .slds-progress__marker{
+    border-color: rgba(146, 182, 84, 1) !important;
+    background: rgba(146, 182, 84, 1) !important;
+    box-shadow: rgba(146, 182, 84, 1) 0 0 0 4px !important;
+}
+.THIS .slds-progress__item.slds-is-completed .slds-progress__marker{
+    border-color: rgb(37, 116, 169) !important;
+    color: rgb(37, 116, 169) !important;
+    background: rgb(37, 116, 169) !important;
+}

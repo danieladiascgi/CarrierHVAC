@@ -1,0 +1,64 @@
+<aura:component >
+    <aura:attribute name="dealerNumber" type="Integer" access="global"/>
+    <aura:attribute name="hvpNumber" type="Integer" access="global"/>
+    <aura:attribute name="dealerName" type="String" access="global"/>
+    <aura:attribute name="pricingDealer" type="String" access="global"/>
+    <aura:attribute name="dealerAddress" type="String" access="global"/>
+    <aura:attribute name="city" type="String" access="global"/>
+    <aura:attribute name="state" type="String" access="global"/>
+    <aura:attribute name="zip" type="String" access="global"/>
+    
+    <div class="slds-m-around--medium">  
+        <div class="slds-text-title_bold slds-p-bottom_large text">Distributor Info: Step 2</div>
+        <div class="slds-grid slds-wrap">
+            <div class="slds-col slds-size_1-of-6 text2">
+                <span>Dealer Number</span>
+            </div>
+            <div class="slds-col slds-size_1-of-6 ">{!v.dealerNumber}</div>
+            <div class="slds-col slds-size_4-of-6 "></div>
+            
+            <div class="slds-col slds-size_1-of-6 text2">
+                <span>HVP Number</span>
+            </div>
+            <div class="slds-col slds-size_1-of-6 ">{!v.hvpNumber}</div>
+            <div class="slds-col slds-size_4-of-6 "></div>
+            
+            <div class="slds-col slds-size_1-of-6 text2">
+                <span>Dealer Name</span>
+            </div>
+            <div class="slds-col slds-size_1-of-6 ">{!v.dealerName}</div>
+            <div class="slds-col slds-size_4-of-6 "></div>
+            
+            <div class="slds-col slds-size_1-of-6 text2">
+                <span>Pricing Dealer</span>
+            </div>
+            <div class="slds-col slds-size_1-of-6 ">{!v.pricingDealer}</div>
+            <div class="slds-col slds-size_4-of-6 "></div>
+            
+            <div class="slds-col slds-size_1-of-6 text2">
+                <span>Dealer Address</span>
+            </div>
+            <div class="slds-col slds-size_1-of-6 ">{!v.dealerAddress}</div>
+            <div class="slds-col slds-size_4-of-6 "></div>
+            
+            <div class="slds-col slds-size_1-of-6 text2">
+                <span>City</span>
+            </div>
+            <div class="slds-col slds-size_1-of-6 ">{!v.city}</div>
+            <div class="slds-col slds-size_4-of-6 "></div>
+            
+            <div class="slds-col slds-size_1-of-6 text2">
+                <span>State</span>
+            </div>
+            <div class="slds-col slds-size_1-of-6 ">{!v.state}</div>
+            <div class="slds-col slds-size_4-of-6 "></div>
+            
+            <div class="slds-col slds-size_1-of-6 text2">
+                <span>Zip</span>
+            </div>
+            <div class="slds-col slds-size_1-of-6 ">{!v.zip}</div>
+            <div class="slds-col slds-size_4-of-6 "></div>
+            
+        </div>
+    </div>
+</aura:component>

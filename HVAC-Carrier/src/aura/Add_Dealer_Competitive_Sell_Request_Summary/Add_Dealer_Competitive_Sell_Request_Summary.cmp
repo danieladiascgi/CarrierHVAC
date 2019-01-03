@@ -1,0 +1,76 @@
+<aura:component  implements="forceCommunity:availableForAllPageTypes,lightning:availableForFlowScreens" access="global">
+    
+    <aura:attribute name="inputList" type="Competitive_Sell__c[]"/>
+    <div>
+        <br/>
+    </div>
+    <div class="slds-wrap slds-grid">
+        <div class="slds-size_1-of-1">
+            <div class="slds-text-title_bold slds-p-bottom_large slds-p-left_small text">
+                Competitive Sell Request
+            </div>
+        </div>
+        <div class="slds-size_1-of-1">
+            <table class="slds-table slds-table_bordered slds-no-row-hover slds-table_cell-buffer table">
+                <thead>
+                    <tr class="slds-text-title_caps text3">
+                        <th scope="col">
+                            <div class="slds-truncate">Your Model</div>
+                        </th>
+                        <th scope="col">
+                            <div class="slds-truncate">Requested Sell</div>
+                        </th>
+                        <th scope="col">
+                            <div class="slds-truncate">Competitive Model</div>
+                        </th>
+                        <th scope="col">
+                            <div class="slds-truncate">Competitive Sell</div>
+                        </th>
+                        <th scope="col">
+                            <div class="slds-truncate">Buy 1</div>
+                        </th>
+                        <th scope="col">
+                            <div class="slds-truncate">DGM 1</div>
+                        </th>
+                        <th scope="col">
+                            <div class="slds-truncate">Buy 2</div>
+                        </th>
+                        <th scope="col">
+                            <div class="slds-truncate">DGM 2</div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>     
+                    <aura:iteration items="{!v.inputList}" var="Comp_List" indexVar="i">
+                        <tr class="slds-hint-parent L_tr G_fontColor" id="{!idx}">
+                            <td scope="row" data-label="Your Model">
+                                <span class="slds-cell-wrap" >{!Comp_List.Your_Model__c}</span>
+                            </td>
+                            <td scope="row" data-label="Requested Sell">
+                                <span class="slds-cell-wrap" >{!Comp_List.Requested_Sell__c}</span>
+                            </td>
+                            <td scope="row" data-label="Competitive Model">
+                                <span class="slds-cell-wrap" >{!Comp_List.Competitors_Model__c}</span>
+                            </td>
+                            <td scope="row" data-label="Competitive Sell" >
+                                <span class="slds-cell-wrap" >{!Comp_List.Competitors_Sell__c}</span>
+                            </td>
+                            <td scope="row" data-label="Buy 1">
+                                <span class="slds-cell-wrap" >{!Comp_List.Buy_1__c}</span>
+                            </td>
+                            <td scope="row" data-label="DGM 1">
+                                <span class="slds-cell-wrap" >{!Comp_List.DGM_1__c}</span>
+                            </td>
+                            <td scope="row" data-label="Buy 2">
+                                <span class="slds-cell-wrap" >{!Comp_List.Buy_2__c}</span>
+                            </td>
+                            <td scope="row" data-label="DGM 2">
+                                <span class="slds-cell-wrap" >{!Comp_List.DGM_2__c}</span>
+                            </td>
+                        </tr>
+                    </aura:iteration>
+                </tbody>
+            </table>
+        </div>   
+    </div>
+</aura:component>

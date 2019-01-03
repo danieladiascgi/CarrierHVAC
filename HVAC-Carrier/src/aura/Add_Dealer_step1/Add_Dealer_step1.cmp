@@ -1,38 +1,67 @@
 <aura:component implements="forceCommunity:availableForAllPageTypes,lightning:availableForFlowScreens" controller="GetUserAccountsDistributerType" access="global" >
     
     <aura:handler name="init" value="{!this}" action="{!c.init}"/>
-    <aura:attribute name="AccountNameList" type="Account" access="global"/>
+    <aura:attribute name="AccountNameList" type="AccountContactRelation" access="global"/>
     <aura:attribute name="distributorId" type="String" access="global"/>
+    <aura:attribute name="dealerName" type="String" access="global"/>
     <aura:attribute name="dealerNumber" type="Integer" access="global"/>
     <aura:attribute name="isFromCalc" type="Boolean" default="false" access="global"/>
+    <aura:attribute name="DealerNameList" type="CCC_Partner__c" access="global"/>
     
+    <div>
+        <br/>
+    </div>
+    <!--Progress Bar-->
+    <div class="slds-p-top_large">
+        <lightning:progressIndicator currentStep="1" type="path" variant="base">
+            <lightning:progressStep label="Distributor Info" value="1" onclick="" />
+            <lightning:progressStep label="Dealer Profile" value="2"  onclick="" />
+            <lightning:progressStep label="Competitive Sell Request" value="3"  onclick="" />
+            <lightning:progressStep label="Summary" value="4"  onclick="" />
+        </lightning:progressIndicator> 
+
+    </div>   
+    
+ 
     <div class="slds-p-top_small slds-p-left_small  slds-p-right_small">
-        <div class="slds-text-title_bold slds-p-bottom_large text">Distributor Info: Step 1</div>
-        <div class="slds-grid slds-wrap ">
-            <div class="slds-col slds-size_2-of-6">
-                <span><span style="color: red">*</span>Distributor Name</span>
+        <div class="slds-m-around--medium"> 
+            <div class="slds-tabs--scoped">
+                   <!--Progress from Distributer info-->
+                <ul class="slds-tabs--scoped__nav " role="tablist">
+                    <li  aura:id="step1Id" class="slds-tabs--scoped__item slds-text-title--caps slds-active"  title="Step One" role="presentation"><a class="slds-tabs--scoped__link" href="javascript:void(0);" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-1" id="tab-scoped-1__item">Step 1</a></li>
+                    <li  aura:id="step2Id" class="slds-tabs--scoped__item slds-text-title--caps" title="Step Two" role="presentation"><a class="slds-tabs--scoped__link" href="javascript:void(0);" role="tab" tabindex="0" aria-selected="true" aria-controls="tab-scoped-2" id="tab-scoped-2__item">Step 2</a></li>
+                    <li  aura:id="step3Id" class="slds-tabs--scoped__item slds-text-title--caps" title="Step Three" role="presentation"><a class="slds-tabs--scoped__link" href="javascript:void(0);" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3" id="tab-scoped-3__item">Step 3</a></li>
+                    <li  aura:id="step4Id" class="slds-tabs--scoped__item slds-text-title--caps" title="Step Four" role="presentation"><a class="slds-tabs--scoped__link" href="javascript:void(0);" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3" id="tab-scoped-3__item">Step 4</a></li>
+                </ul>   
+                <div aura:id="stepOneDataId" id="tab-scoped-1" class="slds-tabs--scoped__content slds-show" role="tabpanel" aria-labelledby="tab-scoped-1__item">
+                    <div class="slds-text-title_bold slds-p-bottom_large text">Distributor Info: Step 1</div>
+                    <div class="slds-grid slds-gutters">
+                        <div class="slds-col fix1">
+                        	<label class="slds-form-element__label" for="select-01"><span style="color: red">*</span>Distributor Name</label>
+                            <div class="slds-select_container">
+                                <select class="slds-select" id="select-01" required="true" value="{!v.distributorId}" onchange="{!c.StoreValue}" >
+                                    <aura:iteration items="{!v.AccountNameList}" var="Acc" >
+                                        <option value="{!Acc.Account.Id}" text="{!Acc.Account.Name}"></option>
+                                    </aura:iteration>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="slds-col fix1" >
+                            <lightning:input id="dealernumber" label="Dealer Number" value="{!v.dealerNumber}" required="true"/>
+                        </div>
+                        <div class="slds-col fix1">
+                        	<label class="slds-form-element__label" for="select-02"><a style="color: rgb(194, 57, 52);">* </a>Dealer Name</label>
+                             <input class="slds-input" id="select-02" type="String" list="DealerNameList" value="{!v.dealerName}" onchange="{!c.DealerNumber}"/>
+                             <datalist id="DealerNameList">
+                                 <aura:iteration items="{!v.DealerNameList}" var="dealer" >
+                                     <option value="{!dealer.CCC_Dealer__r.CIN__c }" text="{!dealer.CCC_Dealer__r.Name}"></option>
+                                 </aura:iteration>
+                             </datalist>
+                        </div>
+                    </div>
+                </div> 
             </div>
-            <div class="slds-col slds-size_1-of-6 "></div>
-            <div class="slds-col slds-size_2-of-6">
-                <span>Dealer Number</span>
-            </div>
-            <div class="slds-col slds-size_1-of-6 "></div>
-            <div class="slds-col slds-size_2-of-6 slds-p-top_large" >
-                <div class="slds-select_container">
-                    <select class="slds-select" id="select-01" required="true" value="{!v.distributorId}" onchange="{!c.StoreValue}">
-                        <aura:iteration items="{!v.AccountNameList}" var="Acc">
-                            <option value="{!Acc.Id}" text="{!Acc.Name}"></option>
-                        </aura:iteration>
-                    </select>
-                </div>
-            </div>
-            <div class="slds-col slds-size_1-of-6 "></div>
-            <div class="slds-col slds-size_2-of-6">
-                <lightning:input value="{!v.dealerNumber}"/>
-            </div>
-            <div class="slds-col slds-size_1-of-6 "></div>
-            <div class="slds-col slds-size_1-of-1"></div>
         </div>
-    </div>  
+    </div>
     
 </aura:component>

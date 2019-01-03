@@ -1,0 +1,209 @@
+<aura:component >
+    <aura:handler name="init" action="{!c.init}" value="{!this}" />
+    <aura:registerEvent name="BarChartData" type="c:BarChartData"/>
+    
+    <aura:attribute name="year" type="Integer" />
+    <!--aura:attribute name="SelectedBrandList" type="List" default="" /-->
+    <!--aura:attribute name="DataList" type="List" access="global"/-->
+    <aura:attribute name="Comment" type="String" />
+    <aura:attribute name="Percent" type="String" />
+    <aura:attribute name="Amount" 	type="String" />
+    <aura:attribute name="BrandCollection" type="Dealer_Profile__c" default="{ 'sobjectType': 'Dealer_Profile__c',
+                                                                             'Brand__c':'', 
+                                                                             'Previous_Year_Percent__c':'',
+                                                                             'Previous_Year__c':'',
+                                                                             'Current_Year_Percent__c':'',
+                                                                             'Current_Year__c':'',
+                                                                             'Future_Year_Percent__c':'',
+                                                                             'Future_Year__c':''
+                                                                             }"/>
+    <aura:attribute name="BrandsSObjectCollection" type="Dealer_Profile__c[]" />
+    <!--PIE CHART DATA-->
+    <aura:attribute name="rnc" type="integer" default="0"/>
+    <aura:attribute name="rncMF" type="integer" default="0"/>
+    <aura:attribute name="aor" type="integer" default="0"/>
+    <aura:attribute name="com" type="integer" default="0"/>
+    <aura:attribute name="dls" type="integer" default="0" />
+    <aura:attribute name="retail" type="integer" default="0"/>
+    <aura:attribute name="ot" type="integer" default="100"/>
+    
+    <!--///////////////////////////////////////-->
+    
+    <div class="slds-m-around--medium">  
+        <div class="slds-text-title_bold slds-p-bottom_large text">Dealer Profile</div>
+    </div>
+    
+    <div class="slds-grid slds-wrap ">
+        <div class="slds-col slds-size_1-of-6">
+            <div class="slds-grid slds-wrap ">
+                <div class="slds-col slds-size_1-of-2">
+                    <div class="slds-form-element">
+                        <label class="slds-form-element__label" for="text-input-id-1">RNC Single Family</label>
+                        <div class="slds-form-element__control">
+                            <input id="text-input-id-1" class="slds-input" disabled="true" type="number" value="{!v.rnc}"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                    <div class="slds-form-element">
+                        <label class="slds-form-element__label"  disabled="true" for="text-input-id-2">RNC Multi Family</label>
+                        <div class="slds-form-element__control">
+                            <input id="text-input-id-2" class="slds-input"  disabled="true" type="number" value="{!v.rncMF}"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                    <div class="slds-form-element">
+                        <label class="slds-form-element__label" for="text-input-id-3">AOR</label>
+                        <div class="slds-form-element__control">
+                            <input id="text-input-id-3" class="slds-input"  disabled="true" type="number" value="{!v.aor}"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                    <div class="slds-form-element">
+                        <label class="slds-form-element__label" for="text-input-id-4">Commercial</label>
+                        <div class="slds-form-element__control">
+                            <input id="text-input-id-4" class="slds-input"  disabled="true" type="number" value="{!v.com}"/>
+                        </div> 
+                    </div>
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                    <div class="slds-form-element">
+                        <label class="slds-form-element__label" for="text-input-id-5">DLS</label>
+                        <div class="slds-form-element__control">
+                            <input id="text-input-id-5" class="slds-input"  disabled="true" type="number" value="{!v.dls}"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                    <div class="slds-form-element">
+                        <label class="slds-form-element__label" for="text-input-id-6">Retail</label>
+                        <div class="slds-form-element__control">
+                            <input id="text-input-id-6" class="slds-input"   disabled="true" type="number" value="{!v.retail}"/>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="slds-col slds-size_1-of-2">
+                    <div class="slds-form-element">
+                        <label class="slds-form-element__label" for="text-input-id-7">Other</label>
+                        <div class="slds-form-element__control">
+                            <input id="text-input-id-7" class="slds-input"   disabled="true" type="number" value="{!v.ot}"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                </div>
+                <div class="slds-col slds-size_1-of-1">
+                    <div class="slds-form-element">
+                        <label class="slds-form-element__label" for="text-input-id-8">Comment</label>
+                        <div class="slds-form-element__control">
+                            <input id="text-input-id-8" class="slds-input"  disabled="true" type="text" value="{!v.Comment}"/>
+                        </div>
+                    </div>
+                </div>    
+                
+                <br/>
+            </div>
+        </div>
+        <div class="slds-col slds-size_5-of-6">
+            <c:PieChart  rnc="{!v.rnc}" rncMF="{!v.rncMF}" aor="{!v.aor}" com="{!v.com}" dls="{!v.dls}" retail="{!v.retail}" ot="{!v.ot}"/>
+        </div>       
+    </div>
+    
+    <div class="slds-grid slds-wrap ">
+        <div class="slds-col slds-size_1-of-6">
+            <div class="slds-grid slds-wrap">
+                
+                <div class="slds-col slds-size_1-of-4">
+                </div>
+                <div class="slds-col slds-size_1-of-4">
+                    {!v.year-1}
+                </div>
+                <div class="slds-col slds-size_1-of-4">
+                    {!v.year}
+                </div>
+                <div class="slds-col slds-size_1-of-4">
+                    {!v.year+1}
+                </div>
+                <div class="slds-col slds-size_1-of-1">
+                    
+                </div>
+                
+                <div class="slds-col slds-size_1-of-4 ">
+                    Total
+                </div>
+                <div class="slds-col slds-size_1-of-4 ">
+                    <input id="text-input-id-current-1" class="slds-input"  disabled="true" value = "0" type="number" />
+                    
+                </div>
+                <div class="slds-col slds-size_1-of-4 ">
+                    <input id="text-input-id-current" class="slds-input"  disabled="true" value = "0" type="number" />
+                </div>
+                <div class="slds-col slds-size_1-of-4 ">
+                    <input id="text-input-id-current+1" class="slds-input" disabled="true" value = "0" type="number" />
+                </div>
+                <div class="slds-col slds-size_1-of-1">
+                    
+                </div>
+                
+                <aura:iteration items="{!v.BrandsSObjectCollection}" var="level" indexVar="idx">
+                    
+                    <div class="slds-col slds-size_1-of-4">
+                        {!level.Brand__c}
+                    </div>
+                    <div class="slds-col slds-size_1-of-4 ">
+                        <input id="{!(idx)+'-inputPreviousYear'}" class="slds-input"  type="number" disabled="true" value="{!level.Previous_Year__c}"/>
+                    </div>
+                    <div class="slds-col slds-size_1-of-4 ">
+                        <input id="{!(idx)+'-inputCurrentYear'}" class="slds-input"  type="number" disabled="true" value="{!level.Current_Year__c}"/>
+                    </div>
+                    <div class="slds-col slds-size_1-of-4 ">
+                        <input id="{!(idx)+'-inputfutureYear'}" class="slds-input"  type="number" disabled="true" value="{!level.Future_Year__c}"/>
+                    </div>
+                    <div class="slds-col slds-size_1-of-1">
+                        
+                    </div>
+                    
+                    <div class="slds-col slds-size_1-of-4">
+                    </div>
+                    <div class="slds-col slds-size_1-of-4">
+                        <input id="{!(idx)+'-previousYear'}" class="slds-input"  type="number" disabled="true" value="{!level.Previous_Year_Percent__c}"/>
+                    </div>
+                    <div class="slds-col slds-size_1-of-4 ">
+                        <input id="{!(idx)+'-currentYear'}" class="slds-input"  type="number" disabled="true" value="{!level.Current_Year_Percent__c}"/>
+                    </div>
+                    <div class="slds-col slds-size_1-of-4 ">
+                        <input id="{!(idx)+'-futureYear'}" class="slds-input"  type="number" disabled="true" value="{!level.Future_Year_Percent__c}"/>
+                    </div>
+                    <div class="slds-col slds-size_1-of-1">
+                        
+                    </div>
+                    
+                </aura:iteration>
+            </div>
+        </div>
+        <div class="slds-col slds-size_1-of-6">
+        </div>
+        <div class="slds-col slds-size_3-of-6">
+            <c:BarChart FromSummary="true"  BrandsSObjectCollection="{!v.BrandsSObjectCollection}"/>
+        </div>
+        <div class="slds-col slds-size_1-of-6">
+        </div>
+        <div class="slds-form-element">
+            <label class="slds-form-element__label" for="text-input-id-8">Percent</label>
+            <div class="slds-form-element__control">
+                <input id="Percent" class="slds-input"  disabled="true" type="text" value="{!v.Percent}"/>
+            </div>
+        </div>
+        <div class="slds-form-element">
+            <label class="slds-form-element__label" for="text-input-id-8">Amount</label>
+            <div class="slds-form-element__control">
+                <input id="Percent" class="slds-input"  disabled="true" type="text" value="{!v.Amount}"/>
+            </div>
+        </div>
+    </div>
+    
+    
+</aura:component>

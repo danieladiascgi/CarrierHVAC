@@ -1,0 +1,68 @@
+<aura:component implements="lightning:availableForFlowScreens" controller="GetUserAccountsDistributerType" access="global">
+    <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+    
+    <aura:attribute name="AccountNameList" 	type="AccountContactRelation" access="global"/>
+    <aura:attribute name="Date" 			type="String" access="global"/>
+    <aura:attribute name="Distributor" 		type="String" access="global"/>
+    <aura:attribute name="ContactName" 		type="String" access="global"/>
+    <aura:attribute name="PricingAnalyst" 	type="String" access="global"/>
+    <aura:attribute name="SalesManager" 	type="String" access="global"/>
+    
+    
+    <div>
+        <br/>
+    </div>
+    <div class="slds-p-top_large">
+        <!--Progress Bar-->
+        <lightning:progressIndicator currentStep="1" type="path" variant="base">
+            <lightning:progressStep label="Distributor Info" value="1" onclick="" />
+            <lightning:progressStep label="Requested Action" value="2"  onclick="" />
+            <lightning:progressStep label="Competitive Detail" value="3"  onclick="" />
+            <lightning:progressStep label="Summary" value="4"  onclick="" />
+        </lightning:progressIndicator> 
+    </div>  
+    
+    <div class="slds-p-top_small slds-p-left_small  slds-p-right_small">
+        <div class="slds-tabs--scoped">
+            <div class="slds-text-title_bold slds-p-bottom_large text">Distributor Info</div>
+            <!--Date-->
+            <div class="slds-grid slds-wrap ">
+                <div class="slds-col slds-size_1-of-6">
+                    <label for="date">Date</label>
+                    <input type="text" class="slds-input" name="date" value="{!v.Date}" disabled="true" id="date"/>
+                </div>
+            </div>
+            <!--Distributor ad Contact Name-->
+            <div class="slds-grid slds-wrap ">
+                <div class="slds-col slds-size_1-of-6">
+                    <label for="Distributor">Distributor</label>
+                    <select class="slds-input" name="Distributor" id="Distributor" value="{!v.Distributor}">
+                        <aura:iteration items="{!v.AccountNameList}" var="Acc" >
+                            <option value="{!Acc.Account.Id}" text="{!Acc.Account.Name}"></option>
+                        </aura:iteration>
+                    </select>
+                </div>
+                <div class="slds-col slds-size_1-of-6">
+                    <label for="ContactName">Distributor Contact Name</label>
+                    <input type="text" class="slds-input" name="ContactName" disabled="true" id="ContactName" value="{!v.ContactName}"/>
+                </div>
+                
+            </div>
+            <!--Pricing Analyst and Sales Manager-->
+            <div class="slds-grid slds-wrap ">
+                <div class="slds-col slds-size_1-of-6">
+                    <label for="Analyst">Pricing Analyst</label>
+                    <input type="text" class="slds-input" name="Analyst" disabled="true" id="Analyst" value="{!v.PricingAnalyst}"/>
+                </div>
+                <div class="slds-col slds-size_1-of-6">
+                    <label for="SalesManager">Regional Sales Manager</label>
+                    <input type="text" class="slds-input" name="SalesManager" disabled="true" value="{!v.SalesManager}" id="SalesManager"/>
+                </div>
+                
+            </div>
+            
+        </div>
+    </div>
+    
+    
+</aura:component>

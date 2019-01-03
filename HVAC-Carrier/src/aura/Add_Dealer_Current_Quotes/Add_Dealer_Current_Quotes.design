@@ -1,0 +1,3 @@
+<design:component>
+	<design:attribute name="InputList" label="K_quotes list to show"/>
+</design:component>

@@ -1,18 +1,22 @@
-<aura:component implements="forceCommunity:availableForAllPageTypes,lightning:availableForFlowScreens" controller="GetBrandValue" access="global" >
+<aura:component implements="lightning:availableForFlowScreens" controller="GetBrandValue" access="global" >
     
     <aura:handler name="init" action="{!c.init}" value="{!this}" />
     <aura:handler event="c:BrandPickEvent" action="{!c.handleApplicationEvent}"/>
+    <aura:registerEvent name="BarChartData" type="c:BarChartData"/>
     
-    <aura:attribute name="year" type="Integer" />
-    <aura:attribute name="NotReady" type="boolean" default="true"/>
-    <aura:attribute name="dograph" type="boolean" default="false"/>
-    <aura:attribute name="ShowBrands" type="boolean" default="false"/>
-    <aura:attribute name="NonBrandLeft" type="boolean" default="false" access="global"/>
-    <aura:attribute name="SelectedBrandList" type="List" default="" />
-    <aura:attribute name="BrandList" type="List" access="global"/>
-    <aura:attribute name="DataList" type="List" access="global"/>
-    <aura:attribute name="BrandCollection" type="Dealer_Profile__c" default="{ 'sobjectType': 'Dealer_Profile__c',
-                                                                             'Brand':'', 
+    <aura:attribute name="year" 				type="Integer" />
+    <aura:attribute name="NotReady" 			type="boolean" default="true"/>
+    <aura:attribute name="GainedBusinessBool" 	type="boolean" default="false"/>
+    <aura:attribute name="dograph" 				type="boolean" default="false"/>
+    <aura:attribute name="ShowBarChart" 		type="boolean" default="false"/>
+    <aura:attribute name="ShowBrands" 			type="boolean" default="false"/>
+    <aura:attribute name="isMobile" 			type="boolean" default="false"/>
+    <aura:attribute name="NonBrandLeft" 		type="boolean" default="false" access="global"/>
+    <aura:attribute name="SelectedBrandList" 	type="List" default="" />
+    <aura:attribute name="BrandList" 			type="List" access="global"/>
+    <aura:attribute name="DataList" 			type="List" access="global"/>
+    <aura:attribute name="BrandCollection" 		type="Dealer_Profile__c" default="{ 'sobjectType': 'Dealer_Profile__c',
+                                                                             'Brand__c':'', 
                                                                              'Previous_Year_Percent__c':'',
                                                                              'Previous_Year__c':'',
                                                                              'Current_Year_Percent__c':'',
@@ -21,196 +25,167 @@
                                                                              'Future_Year__c':''
                                                                              }"/>
     <aura:attribute name="BrandsSObjectCollection" type="Dealer_Profile__c[]"/>
+    <aura:attribute name="Comment" 				type="String" default="Comment"/>
+    <aura:attribute name="Percent" 				type="Integer" default="0"/>
+    <aura:attribute name="Amount" 				type="Integer" default="0"/>
     
     <!--PIE CHART DATA-->
-    <aura:attribute name="rnc" type="integer" />
-    <aura:attribute name="rncMF" type="integer" />
-    <aura:attribute name="aor" type="integer" />
-    <aura:attribute name="com" type="integer" />
-    <aura:attribute name="dls" type="integer" />
-    <aura:attribute name="retail" type="integer" />
-    <aura:attribute name="ot" type="integer" />
+    <aura:attribute name="rnc" 		type="integer" default="0"/>
+    <aura:attribute name="rncMF" 	type="integer"  default="0"/>
+    <aura:attribute name="aor" 		type="integer"  default="0"/>
+    <aura:attribute name="com" 		type="integer"  default="0"/>
+    <aura:attribute name="dls" 		type="integer"  default="0"/>
+    <aura:attribute name="retail" 	type="integer"  default="0"/>
+    <aura:attribute name="ot" 		type="integer"  default="0"/>
     <!--///////////////////////////////////////-->
     
-    
-    
-    <div class="slds-text-title_bold slds-p-bottom_large text">
-        Dealer Profile
-    </div>
-    <div class="slds-grid slds-wrap ">
-        <div class="slds-col slds-size_1-of-6">
-            <div class="slds-form-element">
-                <label class="slds-form-element__label" for="text-input-id-1">RNC Single Family</label>
-                <div class="slds-form-element__control">
-                    <input id="text-input-id-1" class="slds-input" onchange="{!c.checkNumber}" type="number" value="{!v.rnc}"/>
-                </div>
-            </div>
-        </div>
-        <div class="slds-col slds-size_1-of-6">
-            <div class="slds-form-element">
-                <label class="slds-form-element__label" for="text-input-id-2">RNC Multi Family</label>
-                <div class="slds-form-element__control">
-                    <input id="text-input-id-2" class="slds-input" onchange="{!c.checkNumber}" type="number" value="{!v.rncMF}" />
-                </div>
-            </div>
-        </div>
-        <div class="slds-col slds-size_1-of-6">
-            <div class="slds-form-element">
-                <label class="slds-form-element__label" for="text-input-id-3">AOR</label>
-                <div class="slds-form-element__control">
-                    <input id="text-input-id-3" class="slds-input" onchange="{!c.checkNumber}" type="number" value="{!v.aor}"/>
-                </div>
-            </div>
-        </div>
-        <div class="slds-col slds-size_1-of-6">
-            <div class="slds-form-element">
-                <label class="slds-form-element__label" for="text-input-id-4">Commercial</label>
-                <div class="slds-form-element__control">
-                    <input id="text-input-id-4" class="slds-input" onchange="{!c.checkNumber}" type="number" value="{!v.com}"/>
-                </div>
-            </div>
-        </div>
-        <div class="slds-col slds-size_1-of-6">
-            <div class="slds-form-element">
-                <label class="slds-form-element__label" for="text-input-id-5">DLS</label>
-                <div class="slds-form-element__control">
-                    <input id="text-input-id-5" class="slds-input" onchange="{!c.checkNumber}" type="number" value="{!v.dls}"/>
-                </div>
-            </div>
-        </div>
-        <div class="slds-col slds-size_1-of-6">
-            <div class="slds-form-element">
-                <label class="slds-form-element__label" for="text-input-id-6">Retail</label>
-                <div class="slds-form-element__control">
-                    <input id="text-input-id-6" class="slds-input" onchange="{!c.checkNumber}" type="number" value="{!v.retail}"/>
-                </div>
-            </div>
-        </div>
-        
-        <div class="slds-col slds-size_1-of-6">
-            <div class="slds-form-element">
-                <label class="slds-form-element__label" for="text-input-id-7">Other</label>
-                <div class="slds-form-element__control">
-                    <input id="text-input-id-7" class="slds-input" onchange="{!c.checkNumber}" type="number" value="{!v.other}"/>
-                </div>
-            </div>
-        </div>
-        <div class="slds-col slds-size_5-of-6">
-            <div class="slds-form-element">
-                <label class="slds-form-element__label" for="text-input-id-8">Comment</label>
-                <div class="slds-form-element__control">
-                    <input id="text-input-id-8" class="slds-input" type="text" />
-                </div>
-            </div>
-        </div>    
-        
-        <div class="slds-grid slds-size_1-of-1">
-            <aura:renderif isTrue="{!v.NotReady}">
-                Please, enter the values in order to the sum of all is 100%
-            </aura:renderif>
-        </div>
+    <div>
         <br/>
     </div>
-    <br/>
+    <div class="slds-p-top_large">
+        <lightning:progressIndicator currentStep="2" type="path" hasError="false" variant="base">
+            <lightning:progressStep label="Distributor Info" value="1"/>
+            <lightning:progressStep label="Dealer Profile" value="2"/>
+            <lightning:progressStep label="Competitive Sell Request" value="3"/>
+            <lightning:progressStep label="Summary" value="4"/>
+        </lightning:progressIndicator>
+    </div>
     
-    
-    <div class="slds-grid slds-wrap">
-        <div class="slds-col slds-size_1-of-4">
-            <div class="slds-grid slds-wrap">
-                
-                <div class="slds-col slds-size_1-of-4">
-                </div>
-                <div class="slds-col slds-size_1-of-4">
-                    {!v.year-1}
-                </div>
-                <div class="slds-col slds-size_1-of-4">
-                    {!v.year}
-                </div>
-                <div class="slds-col slds-size_1-of-4">
-                    {!v.year+1}
-                </div>
-                <div class="slds-col slds-size_1-of-1">
-                    
-                </div>
-                
-                <div class="slds-col slds-size_1-of-4 ">
-                    Total
-                </div>
-                <div class="slds-col slds-size_1-of-4 ">
-                    <input id="text-input-id-current-1" class="slds-input"  value = "0" type="number"/>
-                    
-                </div>
-                <div class="slds-col slds-size_1-of-4 ">
-                    <input id="text-input-id-current" class="slds-input"  value = "0" type="number" />
-                </div>
-                <div class="slds-col slds-size_1-of-4 ">
-                    <input id="text-input-id-current+1" class="slds-input" value = "0" type="number" />
-                </div>
-                <div class="slds-col slds-size_1-of-1">
-                    
-                </div>
-                
-                <aura:iteration items="{!v.SelectedBrandList}" var="level" indexVar="idx">
-                    
-                    <div class="slds-col slds-size_1-of-4">
-                        {!level}
-                    </div>
-                    <div class="slds-col slds-size_1-of-4 ">
-                        <input id="{!(idx)+'-inputPreviousYear'}" class="slds-input"  type="number" onchange="{!c.showPercentage}"/>
-                    </div>
-                    <div class="slds-col slds-size_1-of-4 ">
-                        <input id="{!(idx)+'-inputCurrentYear'}" class="slds-input"  type="number" onchange="{!c.showPercentage}"/>
-                    </div>
-                    <div class="slds-col slds-size_1-of-4 ">
-                        <input id="{!(idx)+'-inputfutureYear'}" class="slds-input"  type="number" onchange="{!c.showPercentage}"/>
-                    </div>
-                    <div class="slds-col slds-size_1-of-1">
-                        
-                    </div>
-                    
-                    <div class="slds-col slds-size_1-of-4">
-                        <lightning:button name = "{!level}" variant="error"  iconName="utility:delete"  onclick="{! c.RemoveBrand }" />
-                    </div>
-                    <div class="slds-col slds-size_1-of-4">
-                        <input id="{!(idx)+'-previousYear'}" class="slds-input"  type="number" disabled="true"/>
-                    </div>
-                    <div class="slds-col slds-size_1-of-4 ">
-                        <input id="{!(idx)+'-currentYear'}" class="slds-input"  type="number" disabled="true" />
-                    </div>
-                    <div class="slds-col slds-size_1-of-4 ">
-                        <input id="{!(idx)+'-futureYear'}" class="slds-input"  type="number" disabled="true" />
-                    </div>
-                    <div class="slds-col slds-size_1-of-1">
-                        
-                    </div>
-                    
-                </aura:iteration>
+    <!--Non mobile version-->
+    <aura:if isTrue="{! !v.isMobile}">
+    	<div class="slds-grid slds-wrap slds-gutters slds-border_bottom slds-m-bottom_medium">
+    		<div class="slds-col slds-size_1-of-1">
+                <div class="slds-text-title_bold slds-p-bottom_large text1">Dealer Profile</div>
+            </div>
+            <div class="slds-col slds-size_1-of-2">
+            	<div class="slds-grid slds-wrap slds-gutters">
+		            <div class="slds-col slds-size_1-of-2">
+		            	<lightning:input label="RNC Single Family" aura:id="text-input-id-1" type="number" formatter="percent-fixed" value="{!v.rnc}" step="1" onchange="{!c.checkNumber}"/> 
+		            </div>
+		            <div class="slds-col slds-size_1-of-2">
+		            	 <lightning:input label="RNC Multi Family" aura:id="text-input-id-2" type="number" formatter="percent-fixed" value="{!v.rncMF}"   step="1" onchange="{!c.checkNumber}"/>
+		            </div>
+		            <div class="slds-col slds-size_1-of-2">
+		            	<lightning:input label="AOR" aura:id="text-input-id-3" type="number" formatter="percent-fixed" value="{!v.aor}" step="1" onchange="{!c.checkNumber}"/>
+		            </div>
+		            <div class="slds-col slds-size_1-of-2">
+		            	<lightning:input label="Commercial" aura:id="text-input-id-4" type="number" formatter="percent-fixed" value="{!v.com}" step="1" onchange="{!c.checkNumber}"/>
+		            </div>
+		            <div class="slds-col slds-size_1-of-2">
+		            	<lightning:input label="DLS" aura:id="text-input-id-5" type="number" formatter="percent-fixed" value="{!v.dls}" step="1" onchange="{!c.checkNumber}"/>
+		            </div>
+		            <div class="slds-col slds-size_1-of-2">
+		            	<lightning:input label="Retail" aura:id="text-input-id-6" type="number" formatter="percent-fixed" value="{!v.retail}" step="1" onchange="{!c.checkNumber}"/>
+		            </div>
+		            <div class="slds-col slds-size_1-of-2">
+		            	<lightning:input label="Other" aura:id="text-input-id-7" type="number" formatter="percent-fixed" value="{!v.ot}" step="1" onchange="{!c.checkNumber}"/>
+		            </div>
+		            <div class="slds-col slds-size_1-of-1">
+		            	<lightning:input label="Comment" aura:id="text-input-id-8" type="text" value="{!v.Comment}" onchange="{!c.checkNumber}"/>
+		            </div>    
+		            <div class="slds-grid slds-size_1-of-1 slds-p-left_medium slds-p-top_medium">
+		                <aura:renderif isTrue="{!v.NotReady}">
+		                    <span style="color: red">Please, enter the values in order to the sum of all is 100%</span>
+		                </aura:renderif>
+		            </div>
+		            <br/>
+		        </div>
+            </div>
+            <div class="slds-col slds-size_1-of-2">
+            	<aura:if isTrue="{!v.dograph}">
+                    <c:PieChart  rnc="{!v.rnc}" rncMF="{!v.rncMF}" aor="{!v.aor}" com="{!v.com}" dls="{!v.dls}" retail="{!v.retail}" ot="{!v.ot}"/>
+                </aura:if>
             </div>
             
-            
-            <aura:renderif isTrue="{! !v.ShowBrands}">
-                <aura:renderif isTrue="{!!v.NonBrandLeft}">
-                    <lightning:button variant="brand" label="Select Brands" title="Brand action" onclick="{! c.showBrands }" />
-                    <lightning:button variant="brand" label="Validate Fields" title="Validate Fields" onclick="{! c.validateFields }" />
+            <div class="slds-col slds-size_1-of-1">
+            	<div class="slds-grid slds-grid_vertical-align-center">
+            		<div class="slds-col slds-size_1-of-2">
+            			<span class="slds-float_right">How much business will be converted or gained with this request?</span>
+            		</div>
+            		<div class="slds-col slds-size_1-of-2">
+            			<div class="slds-grid">
+            				<div class="slds-col slds-size_1-of-2">
+            					<lightning:input aura:id="text-input-percent" type="number" label="Enter a percentage " formatter="percent-fixed" value="{!v.Percent}" step="1" onchange="{!c.validateGainedBusiness}"/> 
+            				</div>
+            				<div class="slds-col slds-size_1-of-2">
+            					<lightning:input aura:id="text-input-dolarAmount" label="Enter an amount " value = "{!v.Amount}" type="number" formatter="currency" step="1" onchange="{!c.validateGainedBusiness}"/>
+            				</div>
+            			</div>
+            		</div>
+            	</div>
+            </div>
+    	</div>
+    	
+        <div class="slds-grid slds-wrap slds-gutters">
+            <div class="slds-col slds-size_2-of-5">
+                <div class="slds-grid slds-wrap slds-gutters">
+                    <div class="slds-col slds-size_1-of-4 slds-p-bottom_medium">
+                    </div>
+                    <div class="slds-col slds-size_1-of-4 slds-p-bottom_medium">
+                        {!v.year-1}
+                    </div>
+                    <div class="slds-col slds-size_1-of-4 slds-p-bottom_medium">
+                        {!v.year}
+                    </div>
+                    <div class="slds-col slds-size_1-of-4 slds-p-bottom_medium">
+                        {!v.year+1}
+                    </div>
+                    <div class="slds-col slds-size_1-of-4 slds-p-bottom_medium">
+                        Total
+                    </div>
+                    <div class="slds-col slds-size_1-of-4 slds-p-bottom_medium input-group">
+                        <lightning:input aura:id="text-input-id-current-1" value="0" type="number" formatter="currency" step="1" disabled="true" />
+                    </div>
+                    <div class="slds-col slds-size_1-of-4 slds-p-bottom_medium input-group">
+                        <lightning:input aura:id="text-input-id-current" value="0" type="number" formatter="currency" step="1" disabled="true" />
+                    </div>
+                    <div class="slds-col slds-size_1-of-4 slds-p-bottom_medium input-group">
+                        <lightning:input aura:id="text-input-id-current+1" value="0" type="number" formatter="currency" step="1" disabled="true" />
+                    </div>
+                    
+                    <aura:iteration items="{!v.SelectedBrandList}" var="level" indexVar="idx">
+                        <div class="slds-col slds-size_1-of-4 slds-p-bottom_medium">
+                            {!level}
+                        </div>
+                        <div class="slds-col slds-size_1-of-4 slds-p-bottom_medium input-group">
+                            <input id="{!(idx)+'-inputPreviousYear'}" class="inputRight slds-input"   type="number" onchange="{!c.showPercentage}"/>
+                            <!-- <lightning:input aura:id="{!(idx)+'-inputPreviousYear'}"  type="number" formatter="currency" step="1" onchange="{!c.showPercentage}" />-->
+                        </div>
+                        <div class="slds-col slds-size_1-of-4 slds-p-bottom_medium input-group">
+                            <input id="{!(idx)+'-inputCurrentYear'}" class="inputRight slds-input"  type="number" onchange="{!c.showPercentage}"/>
+                        </div>
+                        <div class="slds-col slds-size_1-of-4 slds-p-bottom_medium input-group">
+                            <input id="{!(idx)+'-inputfutureYear'}" class="inputRight slds-input"  type="number" onchange="{!c.showPercentage}"/>
+                        </div>
+                        <div class="slds-col slds-size_1-of-4 slds-p-bottom_medium">
+                            <lightning:button name = "{!level}" variant="error"  iconName="utility:delete"  onclick="{!c.RemoveBrand}" />
+                        </div>
+                        <div class="slds-col slds-size_1-of-4 slds-p-bottom_medium">
+                            <input id="{!(idx)+'-previousYear'}" class="slds-input"  type="String" disabled="true"/>
+                        </div>
+                        <div class="slds-col slds-size_1-of-4 slds-p-bottom_medium">
+                            <input id="{!(idx)+'-currentYear'}" class="slds-input"  type="String" disabled="true" />
+                        </div>
+                        <div class="slds-col slds-size_1-of-4 slds-p-bottom_medium">
+                            <input id="{!(idx)+'-futureYear'}" class="slds-input"  type="String" disabled="true" />
+                        </div>
+                    </aura:iteration>
+                </div>
+                <aura:renderif isTrue="{! !v.ShowBrands}">
+                    <aura:renderif isTrue="{!!v.NonBrandLeft}">
+                        <lightning:button variant="brand" label="Select Brands" title="Brand action" onclick="{!c.showBrands}" />
+                        <!--lightning:button variant="brand" label="Validate Fields" title="Validate Fields" onclick="{! c.validateFields }" /-->
+                    </aura:renderif>
                 </aura:renderif>
-            </aura:renderif>
-            
-            
-            
-            <aura:renderif isTrue="{!v.ShowBrands}">
-                <c:BrandPick BrandList="{!v.BrandList}"/>    
-            </aura:renderif>    
-            
-            
-        </div>   
-        <div class="slds-col slds-size_3-of-4">
-            <aura:if isTrue="{!v.dograph}">
-                
-                <c:PieChart  rnc="{!v.rnc}" rncMF="{!v.rncMF}" aor="{!v.aor}" com="{!v.com}" dls="{!v.dls}" retail="{!v.retail}" ot="{!v.ot}"/>
-            </aura:if>
-        </div>
-    </div> 
-    
-    
+                <aura:renderif isTrue="{!v.ShowBrands}">
+                    <c:BrandPick BrandList="{!v.BrandList}"/>    
+                </aura:renderif>    
+            </div>   
+            <div class="slds-col slds-size_3-of-5">
+                <c:BarChart />
+            </div>
+        </div> 
+    </aura:if>
+   
     
 </aura:component>

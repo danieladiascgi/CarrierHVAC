@@ -1,0 +1,80 @@
+<aura:component >
+    <aura:attribute name="groupList" type="List"/> 
+    <aura:attribute name="isOpen" type="Boolean" default="false"/>
+    <aura:attribute name="groupName" type="String"/>
+    <div>
+        <br/>
+    </div>
+    <div class="slds-p-top_large">
+        <!--Progress Bar-->
+        <lightning:progressIndicator currentStep="3" type="path" variant="base">
+            <lightning:progressStep label="Distributor Info" value="1" onclick="" />
+            <lightning:progressStep label="Requested Action" value="2"  onclick="" />
+            <lightning:progressStep label="Competitive Detail" value="3"  onclick="" />
+            <lightning:progressStep label="Summary" value="4"  onclick="" />
+        </lightning:progressIndicator> 
+    </div>  
+    
+    <div class="slds-p-top_small slds-p-left_small  slds-p-right_small">
+        <div class="slds-tabs--scoped">
+            <!--Distributor Info progress bar-->
+            <ul class="slds-tabs--scoped__nav " role="tablist">
+                <li  aura:id="step1Id" class="slds-tabs--scoped__item slds-text-title--caps"  title="Step One" role="presentation"><a class="slds-tabs--scoped__link" href="javascript:void(0);" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-1" id="tab-scoped-1__item">Step 1</a></li>
+                <li  aura:id="step2Id" class="slds-tabs--scoped__item slds-text-title--caps slds-active" title="Step Two" role="presentation"><a class="slds-tabs--scoped__link" href="javascript:void(0);" role="tab" tabindex="0" aria-selected="true" aria-controls="tab-scoped-2" id="tab-scoped-2__item">Step 2</a></li>
+            </ul>   
+            <div aura:id="stepTwoDataId" id="tab-scoped-2" class="slds-tabs--scoped__content slds-show" role="tabpanel" aria-labelledby="tab-scoped-2__item">
+                <div class="slds-text-title_bold slds-p-bottom_large text">Competitive Analysis: Step 2</div>
+                <div class="slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-1">
+                        <lightning:accordion >
+                            <aura:iteration items="{!v.groupList}" var="gr" indexVar="idx">
+                                
+                                <lightning:accordionSection name="{!gr.name}" label="{!gr.name}">
+                                    <aura:set attribute="body">
+                                        <div class="slds-col slds-size_3-of-4">
+                                            <aura:if isTrue="{!not(empty(!gr.K_Quote__c))}">
+                                                <aura:iteration items="{!gr.K_Quote__c}" var="quot">
+                                                    <!--put table here-->
+                                                    <p>Carrier Model: {!quot.carrierModel}</p>
+                                                </aura:iteration>
+                                            </aura:if>
+                                        </div>
+                                        <div class="slds-col slds-size_3-of-4">
+                                            <lightning:button name="{!idx}" label="Add Model" onclick="{!c.addmodel}" />
+                                        </div>
+                                    </aura:set>
+                                </lightning:accordionSection>
+                                
+                            </aura:iteration>
+                        </lightning:accordion>
+                    </div>
+                    <div class="slds-col slds-size_1-of-1">
+                        <lightning:button onclick="{!c.addgroup}" label="+ Group"></lightning:button>
+                    </div>
+                    <div class="slds-m-around_xx-large">        
+                        <aura:if isTrue="{!v.isOpen}">
+                            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                                <div class="slds-modal__container">
+                                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                                        <lightning:layout>
+                                            <lightning:layoutItem size="5" padding="around-small">
+                                                <lightning:input value="{!v.groupName}" required="true" aura:id="groupName" label="Group Name"/>
+                                            </lightning:layoutItem>            
+                                            <lightning:layoutItem size="3" padding="around-small">
+                                                <div><br></br><lightning:button onclick="{!c.submit}" variant="brand" label="Submit"/></div>
+                                            </lightning:layoutItem>             
+                                        </lightning:layout>
+                                    </div>
+                                    <footer class="slds-modal__footer">
+                                        <lightning:button variant="neutral" label="Close" title="Close" onclick="{! c.closeModel }"/>
+                                    </footer>
+                                </div>
+                            </section>
+                            <div class="slds-backdrop slds-backdrop_open"></div>
+                        </aura:if>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</aura:component>

@@ -1,4 +1,8 @@
 <design:component>
     <design:attribute name="sumRequest" label="summary Request"/>
     <design:attribute name="issues" label="issues" />
+    <design:attribute name="Output_kquote" label="quotes to display in current dealer quotes"/>
+    <design:attribute name="IsSummaryFilled" label="issues" />
+    <design:attribute name="CaseId" label="CaseId"/>
+
 </design:component>

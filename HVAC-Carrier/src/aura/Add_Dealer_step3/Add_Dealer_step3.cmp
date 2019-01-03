@@ -1,20 +1,53 @@
-<aura:component implements="forceCommunity:availableForAllPageTypes,lightning:availableForFlowScreens" access="global" >
-    <aura:attribute name="sumRequest" type="String" access="global" />
-    <aura:attribute name="issues" type="String" access="global" />
+<aura:component implements="lightning:availableForFlowScreens" access="global" >
+    
+    <aura:attribute name="sumRequest" type="String" access="global"/>
+    <aura:attribute name="issues" type="String" access="global"/>
+    <aura:attribute name="CaseId" type="String" access="global"/>
+    <aura:attribute name="IsSummaryFilled" type="boolean" access="global" default="false"/>
+
+    <aura:attribute name="Output_kquote" type="K_Quote__c[]"/>
+    <div>
+        <br/>
+    </div>
+    <!--Progress Bar-->
+    <div class="slds-p-top_large">
+        <lightning:progressIndicator currentStep="1" type="path" hasError="false" variant="base">
+            <lightning:progressStep label="Distributor Info" value="1"/>
+            <lightning:progressStep label="Dealer Profile" value="2"/>
+            <lightning:progressStep label="Competitive Sell Request" value="3"/>
+            <lightning:progressStep label="Summary" value="4"/>
+        </lightning:progressIndicator>
+    </div>
     
     <div class="slds-p-top_small slds-p-left_small  slds-p-right_small">
-        <div class="slds-text-title_bold slds-p-bottom_large text">Distributor Info: Step 3</div>
-        <div class="slds-grid slds-wrap">
-            <div class="slds-col slds-size_1-of-1 slds-p-left_small slds-p-top_small">
-                <span>Please provide a summary of your request:</span>
-                <lightning:textarea class="txtarea" name="sumary" placeholder="Summary of Request" value="{!v.sumRequest}"/>
-            </div>
-            <div class="slds-col slds-size_1-of-1 slds-p-left_small slds-p-top_small">
-                <span>Please indicate any additional issues that need to be made aware of:</span>
-                <lightning:textarea class="txtarea" name="issues" placeholder="Issues to be aware of" value="{!v.issues}"/>
-            </div>
-            <div class="slds-col slds-size_1-of-1" ></div>
+        <div class="slds-tabs--scoped">
+            <!--Progress Bar Distributor Info-->
+            <ul class="slds-tabs--scoped__nav " role="tablist">
+                <li  aura:id="step1Id" class="slds-tabs--scoped__item slds-text-title--caps"  title="Step One" role="presentation"><a class="slds-tabs--scoped__link" href="javascript:void(0);" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-1" id="tab-scoped-1__item">Step 1</a></li>
+                <li  aura:id="step2Id" class="slds-tabs--scoped__item slds-text-title--caps" title="Step Two" role="presentation"><a class="slds-tabs--scoped__link" href="javascript:void(0);" role="tab" tabindex="0" aria-selected="true" aria-controls="tab-scoped-2" id="tab-scoped-2__item">Step 2</a></li>
+                <li  aura:id="step3Id" class="slds-tabs--scoped__item slds-text-title--caps slds-active" title="Step Three" role="presentation"><a class="slds-tabs--scoped__link" href="javascript:void(0);" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3" id="tab-scoped-3__item">Step 3</a></li>
+                <li  aura:id="step4Id" class="slds-tabs--scoped__item slds-text-title--caps" title="Step Four" role="presentation"><a class="slds-tabs--scoped__link" href="javascript:void(0);" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3" id="tab-scoped-3__item">Step 4</a></li>
+            </ul>
             
+            <div aura:id="stepThreeDataId" id="tab-scoped-3" class="slds-tabs--scoped__content slds-show" role="tabpanel" aria-labelledby="tab-scoped-3__item"> 
+                <div class="slds-text-title_bold slds-p-bottom_large text">Distributor Info: Step 3</div>
+                <div class="slds-grid slds-wrap">
+                    <div class="slds-col slds-size_3-of-4">
+                        <div class="slds-col slds-size_1-of-1 slds-p-left_small slds-p-top_small">
+                            <lightning:textarea label="Please provide a summary of your request:" class="txtarea" aura:id="summary" placeholder="Summary of Request" value="{!v.sumRequest}" required="true" onchange="{!c.updateFields}"/>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1 slds-p-left_small slds-p-top_small">
+                            <lightning:textarea label="Please indicate any additional issues that need to be made aware of:" class="txtarea" aura:id="issues" value="{!v.issues}" onchange="{!c.updateFields}"/>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1" ></div>
+                    </div>
+                    
+                    <!--Dealer current quotes -->
+                    <div class="slds-col slds-size_1-of-4 slds-p-left_small">
+                        <c:Add_Dealer_Current_Quotes  InputList = "{!v.Output_kquote}" />
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </aura:component>

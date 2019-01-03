@@ -1,0 +1,28 @@
+<aura:component implements="lightning:availableForFlowScreens" access="global" >
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+    <aura:attribute name="InputList" type="K_Quote__c[]"/>
+    <aura:attribute name="DisplayList" type="K_Quote__c[]"/>
+    <div class="slds-grid slds-wrap">
+        <div class="slds-col slds-size_1-of-1 ">
+            <div class="text">
+                Dealer's Current Quotes
+            </div>
+        </div>
+        <aura:iteration items="{!v.DisplayList}" var="K_Quotes_List" indexVar="i">
+            
+            <div class="slds-col slds-size_1-of-1">
+                <span class="slds-cell-wrap text1 " >{!K_Quotes_List.Quote_number}</span>
+            </div>
+            <div class="slds-col slds-size_1-of-1">
+                <span class="slds-cell-wrap" >{!K_Quotes_List.Quote_Description}</span>
+            </div>
+            <div class="slds-col slds-size_1-of-1">
+                <br/>
+            </div>
+        </aura:iteration>
+        <div class="slds-col slds-size_1-of-1 " aura:id="changeIt">
+            <lightning:button label="Show More" onclick="{!c.showMore}"/>
+        </div>
+    </div>
+</aura:component>

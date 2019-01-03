@@ -1,4 +1,34 @@
-.THIS .text {
-    color:#2574a9;
-    font-size: 24px;
+.THIS .text1 {
+    color:#2574a9 !important;
+    font-size: 24px !important;
+}
+.THIS .slds-progress__item.slds-is-active .slds-progress__marker{
+    border-color: rgba(146, 182, 84, 1) !important;
+    background: rgba(146, 182, 84, 1) !important;
+    box-shadow: rgba(146, 182, 84, 1) 0 0 0 4px !important;
+}
+.THIS .slds-progress__item.slds-is-completed .slds-progress__marker{
+    border-color: rgb(37, 116, 169) !important;
+    color: rgb(37, 116, 169) !important;
+    background: rgb(37, 116, 169) !important;
+}
+
+.THIS .input-group {
+    position: relative;
+}
+
+.THIS .input-group::after{
+    content: "$";
+    position: absolute;
+    left: 5px;
+    font-size: 14px;
+    line-height: 32px;
+}
+
+.THIS .inputRight{
+    text-align: right;
+}
+
+.THIS .inputRightAmount input{
+    text-align: right;
 }

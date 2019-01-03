@@ -1,0 +1,19 @@
+<aura:component >
+    <aura:attribute name="distributorId" type="String" access="global"/>
+    <aura:attribute name="distributorNumber" type="String" access="global"/>
+	<div class="slds-m-around--medium">  
+            <div class="slds-text-title_bold slds-p-bottom_large text">Distributor Info: Step 1</div>
+            <div class="slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-6 text2">
+                    <span>Distributor Name</span>
+                </div>
+                <div class="slds-col slds-size_1-of-6 ">{!v.distributorId}</div>
+                <div class="slds-col slds-size_4-of-6 "></div>
+                <div class="slds-col slds-size_1-of-6 text2">
+                    <span>Distributor Number</span>
+                </div>
+                <div class="slds-col slds-size_1-of-6">{!v.distributorNumber}</div>
+                <div class="slds-col slds-size_4-of-6 "></div>
+            </div>
+        </div> 
+</aura:component>

@@ -1,0 +1,53 @@
+<aura:component >
+    <aura:handler event="c:PS_AddingCompetitorEvent" action="{!c.handleApplicationEvent}"/>
+    <aura:attribute name="Competitor" type="Competitor__c" default="{ 'sobjectType': 'Competitive_Sell__c',
+                                                                    'Annual_Sales__c':'', 
+                                                                    'AOR__c':'',
+                                                                    'RNC__c':'',
+                                                                    'Hard_Copy__c':'',
+                                                                    'Attached__c':''
+                                                                    }"/>
+    <aura:attribute name="CompetitorList" type="Competitor__c[]"/>
+    <aura:attribute name="Adding" type="boolean" default="false"/>
+    
+    <div>
+        <br/>
+    </div>
+    <div class="slds-p-top_large">
+        <!--Progress Bar-->
+        <lightning:progressIndicator currentStep="3" type="path" variant="base">
+            <lightning:progressStep label="Distributor Info" value="1" onclick="" />
+            <lightning:progressStep label="Requested Action" value="2"  onclick="" />
+            <lightning:progressStep label="Competitive Detail" value="3"  onclick="" />
+            <lightning:progressStep label="Summary" value="4"  onclick="" />
+        </lightning:progressIndicator> 
+    </div>  
+    
+    <div class="slds-p-top_small slds-p-left_small  slds-p-right_small">
+        <div class="slds-tabs--scoped">
+            <!--Distributor Info progress bar-->
+            <ul class="slds-tabs--scoped__nav " role="tablist">
+                <li  aura:id="step1Id" class="slds-tabs--scoped__item slds-text-title--caps slds-active"  title="Step One" role="presentation"><a class="slds-tabs--scoped__link" href="javascript:void(0);" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-1" id="tab-scoped-1__item">Step 1</a></li>
+                <li  aura:id="step2Id" class="slds-tabs--scoped__item slds-text-title--caps" title="Step Two" role="presentation"><a class="slds-tabs--scoped__link" href="javascript:void(0);" role="tab" tabindex="0" aria-selected="true" aria-controls="tab-scoped-2" id="tab-scoped-2__item">Step 2</a></li>
+            </ul>   
+            <div aura:id="stepOneDataId" id="tab-scoped-1" class="slds-tabs--scoped__content slds-show" role="tabpanel" aria-labelledby="tab-scoped-1__item">
+                <div class="slds-text-title_bold slds-p-bottom_large text">Competitive Analysis: Step 1</div>
+                <div class="slds-grid slds-wrap">
+                    
+                    <div class="slds-col slds-size_3-of-4" >
+                        <aura:iteration items="{!v.CompetitorList}" var="level" indexVar="idx">
+                            <input type="text" class="slds-input" name="idx" value="{!level.Annual_Sales__c}" disabled="true" id="idx"/>
+                        </aura:iteration>
+                        
+                        
+                        <aura:renderif isTrue="{!v.Adding}">
+                            <c:PS_AddingComptetitor/>
+                        </aura:renderif>
+                        <lightning:button onclick="{!c.add}" name="ADD Competitor" label="ADD Competitor" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</aura:component>

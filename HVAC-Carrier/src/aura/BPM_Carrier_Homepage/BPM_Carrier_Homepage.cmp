@@ -1,5 +1,5 @@
 <aura:component implements="forceCommunity:availableForAllPageTypes" >
-    <aura:renderIf isTrue="{!equals($Browser.formFactor, 'DESKTOP')}">
+    <aura:renderIf isTrue="{! !equals($Browser.formFactor, 'PHONE')}">
         <div class="slds-container ">
             <div class="slds-size_1-of-1"><br/></div>
             <div class="slds-grid slds-gutters   slds-align_absolute-center">

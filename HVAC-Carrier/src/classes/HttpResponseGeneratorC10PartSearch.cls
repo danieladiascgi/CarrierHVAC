@@ -1,0 +1,17 @@
+@isTest
+global class HttpResponseGeneratorC10PartSearch implements HttpCalloutMock {
+// Implement this interface method
+    global HTTPResponse respond(HTTPRequest req) {
+        // Optionally, only send a mock response for a specific endpoint
+        // and method.
+      //  System.assertEquals('http://example.com/example/test', req.getEndpoint());
+      //  System.assertEquals('GET', req.getMethod());
+        
+        // Create a fake response
+        HttpResponse res = new HttpResponse();
+        res.setHeader('Content-Type', 'application/json');
+        res.setBody('[{"id":"06DS5376BC0650","compressedId":"06DS5376BC0650","description":"COMPRESSOR-S-","stockingType":"P"},{"id":"06DS5376BC0600","compressedId":"06DS5376BC0600","description":"COMPRESSOR-S-","stockingType":"X"},{"id":"06DS5376BC0600 D","compressedId":"06DS5376BC0600D","description":"COMPRESSOR - DIRECT SHIP","stockingType":"X"},{"id":"06DS5376BC0150","compressedId":"06DS5376BC0150","description":"COMPRESSOR, HIGH TEMP,NO OIL","stockingType":"P"},{"id":"06DS5376BC0100","compressedId":"06DS5376BC0100","description":"COMPRESSOR-S-","stockingType":"P"},{"id":"06DS5376BC365ARP","compressedId":"06DS5376BC365ARP","description":"MD/HI REF DTY 1STG SCO OILLESS","stockingType":"P"},{"id":"06DS5376BC1250","compressedId":"06DS5376BC1250","description":"COMPRESSOR, OIL LESS","stockingType":"P"},{"id":"06DS5376BC1200","compressedId":"06DS5376BC1200","description":"COMPRESSOR-S-","stockingType":"X"},{"id":"06DS5376BC315ARP","compressedId":"06DS5376BC315ARP","description":"HI TEMP.DUTY 1 STG.SCO OILLESS","stockingType":"X"},{"id":"06DS5376BC325ARP","compressedId":"06DS5376BC325ARP","description":"MD/HI REF DTY 1STG SCO OILLESS","stockingType":"P"},{"id":"06DS5376DC328ARP","compressedId":"06DS5376DC328ARP","description":"MD/HI REF DTY 1STG SCO OILLESS","stockingType":"X"},{"id":"06DS5376DC368ARP","compressedId":"06DS5376DC368ARP","description":"MD/HI REF DTY 1STG SCO OILLESS","stockingType":"P"},{"id":"06DS5377BC0600","compressedId":"06DS5377BC0600","description":"COMPRESSOR SEMI HERMETIC","stockingType":"X"},{"id":"06DM5376BC0650","compressedId":"06DM5376BC0650","description":"COMPRESSOR, HIGH TEMP,NO OIL","stockingType":"P"},{"id":"06DS5416BC0650","compressedId":"06DS5416BC0650","description":"COMPRESSOR, HIGH TEMP,NO OIL","stockingType":"P"},{"id":"06DS5370BA0657","compressedId":"06DS5370BA0657","description":"SEMI-HERMETIC RECIP","stockingType":"X"},{"id":"06DS5377BC1200","compressedId":"06DS5377BC1200","description":"COMP.","stockingType":"X"},{"id":"06DS5377B00601","compressedId":"06DS5377B00601","description":"HIGH TEMPERATURE COMPRESSOR","stockingType":"P"},{"id":"06DX3376BC0650","compressedId":"06DX3376BC0650","description":"COMPRESSOR, HIGH TEMP,NO OIL","stockingType":"P"},{"id":"06DM5376BC1350","compressedId":"06DM5376BC1350","description":"06D MEDIUM TEMP COMPRESSOR","stockingType":"X"},{"id":"06DX5376BC1350","compressedId":"06DX5376BC1350","description":"06D COMPRESSOR HGB 380-3-60","stockingType":"X"},{"id":"06DM5376BC0600","compressedId":"06DM5376BC0600","description":"COMPRESSOR-S-","stockingType":"P"},{"id":"06DX5376BC0600","compressedId":"06DX5376BC0600","description":"COMPRESSOR 460-3 15 TON","stockingType":"X"},{"id":"06DS5416BC0600","compressedId":"06DS5416BC0600","description":"COMPRESSSOR-S-","stockingType":"D"},{"id":"06DS5416DC0650","compressedId":"06DS5416DC0650","description":"COMPRESSOR","stockingType":"X"}]');
+        res.setStatusCode(200);
+        return res;
+    }
+}

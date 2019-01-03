@@ -10,5 +10,5 @@
     <design:attribute name="city" label="location"/>
     <design:attribute name="state" label="state"/>
     <design:attribute name="zip" label="zip"/>
-    
+    <design:attribute name="Output_kquote" label="quotes to display in current dealer quotes"/>
 </design:component>

@@ -1,3 +1,3 @@
 <aura:application extends="force:slds">
-    <c:Add_Dealer_step1/>	
+    <c:PS_CompAnalysis_2/>	
 </aura:application>

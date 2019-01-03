@@ -1,7 +1,10 @@
 <design:component>
     
-     <design:attribute name="input_K_Quotes_List" label="Input K_Quotes" />
-     <design:attribute name="output_K_Quotes_List" label="Output K_Quotes" />
+    <design:attribute name="input_K_Quotes_List" label="Input K_Quotes" />
+    <design:attribute name="output_K_Quotes_List" label="Output K_Quotes" />
+    <design:attribute name="isFromCalc" label="From Calculator" />
+    <design:attribute name="Output_kquote" label="quotes to display in current dealer quotes"/>
+    <design:attribute name="CaseId" label="CaseId"/>
     
-	 <design:attribute name="isFromCalc" label="From Calculator" />
+    
 </design:component>

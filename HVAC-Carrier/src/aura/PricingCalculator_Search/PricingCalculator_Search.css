@@ -1,3 +1,6 @@
 .THIS .slds-button_icon-bare{
     display: none;
 }
+.THIS .slds-grid_align-end, .THIS .slds-grid--align-end{
+    justify-content: inherit !important;
+}

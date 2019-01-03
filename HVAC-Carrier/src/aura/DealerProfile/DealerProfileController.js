@@ -1,15 +1,9 @@
 ({
-     checkNumber : function(component, event, helper) {
-        var value = document.getElementById(event.target.id).value;
-        if(parseInt(value)>100){
-            document.getElementById(event.target.id).value = 0;
-        }
-        else if(parseInt(value)<0){
-            document.getElementById(event.target.id).value = 0;
-        }
-        var inputs  = [document.getElementById("text-input-id-1").value,document.getElementById("text-input-id-2").value,document.getElementById("text-input-id-3").value,
-                       document.getElementById("text-input-id-4").value,document.getElementById("text-input-id-5").value,document.getElementById("text-input-id-6").value,
-                       document.getElementById("text-input-id-7").value];
+    checkNumber : function(cmp, event, helper) {
+        cmp.set("v.Comment",cmp.find("text-input-id-8").get("v.value"));
+        var inputs  = [cmp.find("text-input-id-1").get("v.value"),cmp.find("text-input-id-2").get("v.value"),cmp.find("text-input-id-3").get("v.value"),
+                       cmp.find("text-input-id-4").get("v.value"),cmp.find("text-input-id-5").get("v.value"),cmp.find("text-input-id-6").get("v.value"),
+                       cmp.find("text-input-id-7").get("v.value")];
         
         var i;
         var count = 0;
@@ -19,37 +13,40 @@
             }
             count+=parseInt(inputs[i]);
         }
-        
-        component.set("v.DataList",inputs);
-        
-        var NotReady =component.get("v.NotReady");
+        cmp.set("v.DataList",inputs);
+        var NotReady = cmp.get("v.NotReady");
         
         if(count == 100){
-            component.set("v.NotReady","false");
-            component.set("v.rnc",document.getElementById("text-input-id-1").value);
-            component.set("v.rncMF",document.getElementById("text-input-id-2").value);
-            component.set("v.aor",document.getElementById("text-input-id-3").value);
-            component.set("v.com",document.getElementById("text-input-id-4").value);
-            component.set("v.dls",document.getElementById("text-input-id-5").value);
-            component.set("v.retail",document.getElementById("text-input-id-6").value);
-            component.set("v.ot",document.getElementById("text-input-id-7").value);
-			component.set("v.dograph","true");
+            cmp.set("v.NotReady","false");
+            cmp.set("v.rnc",cmp.find("text-input-id-1").get("v.value"));
+            cmp.set("v.rncMF",cmp.find("text-input-id-2").get("v.value"));
+            cmp.set("v.aor",cmp.find("text-input-id-3").get("v.value"));
+            cmp.set("v.com",cmp.find("text-input-id-4").get("v.value"));
+            cmp.set("v.dls",cmp.find("text-input-id-5").get("v.value"));
+            cmp.set("v.retail",cmp.find("text-input-id-6").get("v.value"));
+            cmp.set("v.ot",cmp.find("text-input-id-7").get("v.value"));
+            cmp.set("v.dograph","true"); 
         }
         else if(NotReady=="false") {
-            component.set("v.NotReady","true");
-            component.set("v.dograph","false");
+            cmp.set("v.NotReady","true");
+            cmp.set("v.dograph","false");
         }
     },
     
-    init : function(component, event, helper) {
+    init : function(cmp, event, helper) {
+        var device = $A.get("$Browser.formFactor");
+        if(device=="PHONE"){
+            cmp.set("v.isMobile","true");
+        }
+        
         var today = new Date();
-        component.set('v.year', today.getFullYear());
+        cmp.set('v.year', today.getFullYear());
         
         
-        var action = component.get("c.getBrand");
+        var action = cmp.get("c.getBrand");
         action.setCallback(this , function(a){
             var returnValue = a.getReturnValue();
-            component.set("v.BrandList",returnValue)
+            cmp.set("v.BrandList",returnValue)
         });
         $A.enqueueAction(action);
     },
@@ -111,72 +108,87 @@
     
     showPercentage : function(cmp, event,helper){
         
+        var size = cmp.get("v.SelectedBrandList").length;
+        var id = event.target.id.split("-")[0];
+        var totalPrevious = 0;
+        var totalCurrent = 0;
+        var totalFuture = 0;
         
-        try{
-            var totalPrevious = document.getElementById("text-input-id-current-1").value;
-            var totalCurrent = document.getElementById("text-input-id-current").value;
-            var totalFuture = document.getElementById("text-input-id-current+1").value;
-            
-            var totalId = event.target.id;
-            var id = event.target.id.split("-")[0]; 
-            var inputPrevious = document.getElementById(id + "-inputPreviousYear").value;
-            var inputCurrent = document.getElementById(id + "-inputCurrentYear").value;
-            var inputFuture = document.getElementById(id + "-inputfutureYear").value;
-            
-            if(totalPrevious!=0 && totalPrevious!=null){
-                document.getElementById(id+"-previousYear").value =  inputPrevious/totalPrevious;
-            }
-            if(totalCurrent!=0 && totalCurrent!=null){
-                document.getElementById(id + "-currentYear").value =inputCurrent/totalCurrent;
-            }
-            if(totalFuture!=0 && totalFuture!=null){
-                document.getElementById(id + "-futureYear").value = inputFuture/totalFuture;
+        var i;
+        for(i = 0; i <= size;i++){
+            try {
+            	var inputPrevious = document.getElementById(i + "-inputPreviousYear").value;
+            	//var inputPrevious = cmp.find(i + "-inputPreviousYear").get("v.fieldValue");
+                if(inputPrevious != 0){
+                    totalPrevious =  parseInt(totalPrevious) +  parseInt(inputPrevious);
+                }
+                var inputCurrent = document.getElementById(i + "-inputCurrentYear").value;
+                //var inputCurrent = cmp.find(i + "-inputCurrentYear").get("v.fieldValue");
+                if(inputCurrent != 0){
+                    totalCurrent =  parseInt(totalCurrent) +  parseInt(inputCurrent);
+                }
+                var inputFuture = document.getElementById(i + "-inputfutureYear").value;
+                //var inputFuture = cmp.find(i + "-inputfutureYear").get("v.fieldValue");
+                if(inputFuture != 0){
+                    totalFuture =  parseInt(totalFuture) +  parseInt(inputFuture);            
+                }
+            } catch(err){
+                
             }
         }
-        catch(err){
+        
+        //debugger;
+        
+        for(i = 0; i <= id;i++){
+            if(totalPrevious!=0){ var inputPrevious = document.getElementById(i + "-inputPreviousYear").value;
+            document.getElementById(i+"-previousYear").value =  parseInt((inputPrevious/totalPrevious)*100) + "%";}
+           
             
+            if(totalCurrent!=0){var inputCurrent = document.getElementById(i + "-inputCurrentYear").value;
+                                document.getElementById(i + "-currentYear").value = parseInt((inputCurrent/totalCurrent)*100)+ "%";
+                               }
+            
+            if(totalFuture!=0){
+                var inputFuture = document.getElementById(i + "-inputfutureYear").value;
+                document.getElementById(i + "-futureYear").value = parseInt((inputFuture/totalFuture)*100)+ "%";
+            }
+                
         }
         
-        
-        
+        document.getElementById("text-input-id-current-1").value = totalPrevious;
+        //cmp.find("text-input-id-current-1").set("v.value", totalPrevious);
+        document.getElementById("text-input-id-current").value = totalCurrent;
+        //cmp.find("text-input-id-current").set("v.value", totalCurrent);
+        document.getElementById("text-input-id-current+1").value = totalFuture;
+        //cmp.find("text-input-id-current+1").set("v.value", totalFuture);
+		helper.validateFields(cmp,event,helper);
     },
     
     validateFields : function(cmp,event,helper){
-        var totalPrevious = document.getElementById("text-input-id-current-1").value;
-        var totalCurrent = document.getElementById("text-input-id-current").value;
-        var totalFuture = document.getElementById("text-input-id-current+1").value;
-        var selectList=cmp.get("v.SelectedBrandList");
-        var size=selectList.length;
+        helper.validateFields(cmp,event,helper);
         
-        var i;
-        for(i=0;i<size;i++){
-            totalPrevious -= document.getElementById(i + "-inputPreviousYear").value;
-            totalCurrent -= document.getElementById(i + "-inputCurrentYear").value;
-            totalFuture -= document.getElementById(i + "-inputfutureYear").value;
-            helper.addToSObjectCollection(cmp,event,helper);
+    },
+    
+    validateGainedBusiness : function(cmp,event,helper){
+        var percent = cmp.find("text-input-percent").get("v.value");
+        var amount = cmp.find("text-input-dolarAmount").get("v.value");
+        
+        if(percent==0 && amount == 0){
+            cmp.set("v.GainedBusinessBool","false");
+        }
+        else{
+            cmp.set("v.GainedBusinessBool","true");
         }
         
-        if(totalPrevious==0 && totalCurrent==0 && totalFuture==0){
-            alert("Nice");
+        if(percent=="" || percent==null){
+            percent=0;
         }
-        else {
-            if(totalPrevious!=0){
-                alert("Total of previous year values is incorrect by " + totalPrevious*-1);
-            }
-            else if(totalCurrent!=0){
-                alert("Total of current year values is incorrect by " + totalCurrent*-1);
-            }
-                else if(totalFuture!=0){
-                    alert("Total of next year values is incorrect by " + totalFuture*-1);
-                }
-            
+        if(amount=="" || amount==null){
+            amount=0;
         }
-        
+       cmp.set("v.Percent",percent);
+        cmp.set("v.Amount",amount);
         
     }
-    
-    
-    
-    
     
 })

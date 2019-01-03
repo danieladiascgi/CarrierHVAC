@@ -1,0 +1,20 @@
+<aura:component implements="flexipage:availableForAllPageTypes,force:hasRecordId" access="global" >
+	
+    <aura:attribute name="BrandsSObjectCollection" type="Dealer_Profile__c[]"/>
+    <aura:attribute name="FromSummary" type="boolean" default="false"/>
+    
+    <aura:handler event="c:BarChartData" action="{!c.chartChange}"/>
+    
+    <ltng:require scripts="{!$Resource.ChartJS23}"
+					afterScriptsLoaded="{!c.scriptsLoaded}" />
+
+	<aura:attribute name="title" type="String" default=""/>
+
+    
+    <div>
+		<div class="slds-text-heading--medium">{!v.title}</div>
+	    <canvas id="bar-chart-grouped" height="350"></canvas>
+    </div>
+    
+    
+</aura:component>

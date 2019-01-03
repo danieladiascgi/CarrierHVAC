@@ -1,0 +1,33 @@
+<design:component>
+    <design:attribute name="distributorId" label="Distributor ID" />
+    <design:attribute name="distributorNumber" label="Distributor Name" />
+    <!--Step 2-->
+    <design:attribute name="dealerNumber" label="Dealer Number" />
+    <design:attribute name="hvpNumber" label="HVP Number" />
+    <design:attribute name="dealerName" label="Dealer Name" />
+    <design:attribute name="pricingDealer" label="Pricing Dealer" />
+    <design:attribute name="dealerAddress" label="Dealer Address" />
+    <design:attribute name="city" label="City" />
+    <design:attribute name="state" label="State" />
+    <design:attribute name="zip" label="ZIP" />
+    <!--Step 3-->
+    <design:attribute name="comments" label="Comments" />
+    <design:attribute name="additionalNotes" label="Additional Notes" />
+    <!--Step 4-->
+    <design:attribute name="inputStep4" label="input for step4"/>
+    <!--Dealer Profile-->
+    <design:attribute name="Amount" label="Amount Gained" />
+    <design:attribute name="Percent" label="Percent Gained" />
+    <design:attribute name="Comment" label="Comments" />
+    <design:attribute name="BrandsSObjectCollection" label="BrandsSObjectColletion Dealer Profile" />
+    <!--PIE CHART DATA-->
+    <design:attribute name="rnc" label="RNC" />
+    <design:attribute name="rncMF" label="RncMF" />
+    <design:attribute name="aor" label="AOR" />
+    <design:attribute name="com" label="Commercial" />
+    <design:attribute name="dls" label="DLS" />
+    <design:attribute name="retail" label="Retail" />
+    <design:attribute name="ot" label="OT" />
+    <!--Competitive Sell Request-->
+    <design:attribute name="inputList" label="input list for Competitive Sell Request"/>
+</design:component>

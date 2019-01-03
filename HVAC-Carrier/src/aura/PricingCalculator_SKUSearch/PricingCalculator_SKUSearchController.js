@@ -17,6 +17,7 @@
             var state = response.getState();
             if (state === "SUCCESS") {
                 component.set("v.data", response.getReturnValue());
+                debugger;
                 helper.sortData(component, component.get("v.sortedBy"), component.get("v.sortedDirection"));
             }
         });

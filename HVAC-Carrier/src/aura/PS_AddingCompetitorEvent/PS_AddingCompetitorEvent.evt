@@ -1,0 +1,13 @@
+<aura:event type="APPLICATION" description="Event template" >
+    
+    <aura:attribute name="Competitor" type="Competitor__c" default="{ 'sobjectType': 'Competitive_Sell__c',
+                                                                    'Annual_Sales__c':'', 
+                                                                    'AOR__c':'',
+                                                                    'RNC__c':'',
+                                                                    'Hard_Copy__c':'',
+                                                                    'Attached__c':''
+                                                                    }"/>
+    
+    
+    
+</aura:event>

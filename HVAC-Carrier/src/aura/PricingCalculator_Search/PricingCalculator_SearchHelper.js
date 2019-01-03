@@ -27,7 +27,6 @@
             }
         }
         component.set("v.data", data);
-        
         helper.generatePageList(component, pageNumber);
     },
     generatePageList : function(component, pageNumber){

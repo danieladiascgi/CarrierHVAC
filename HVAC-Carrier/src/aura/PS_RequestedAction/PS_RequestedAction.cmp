@@ -1,0 +1,130 @@
+<aura:component implements="lightning:availableForFlowScreens" controller="GetUserAccountsDistributerType" access="global">
+    
+    <aura:attribute name="RadioOption" type="String" default="option1"/>
+    <aura:attribute name="options" type="List" default="[
+                                                        {'label': 'Growth', 'value': 'Growth'},
+                                                        {'label': 'Retention', 'value': 'Retention'}
+                                                        ]"/>
+    <div>
+        <br/>
+    </div>
+    <div class="slds-p-top_large">
+        <!--Progress Bar-->
+        <lightning:progressIndicator currentStep="2" type="path" variant="base">
+            <lightning:progressStep label="Distributor Info" value="1" onclick="" />
+            <lightning:progressStep label="Requested Action" value="2"  onclick="" />
+            <lightning:progressStep label="Competitive Detail" value="3"  onclick="" />
+            <lightning:progressStep label="Summary" value="4"  onclick="" />
+        </lightning:progressIndicator> 
+    </div>   
+    
+    <div class="slds-p-top_small slds-p-left_small  slds-p-right_small">
+        <div class="slds-text-title_bold slds-p-bottom_large text">Requested Action</div>
+        
+        <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-size_1-of-6">
+            <thead>
+                <tr class="slds-line-height_reset">
+                    <th class="slds-text-title_caps" scope="col">
+                        <div class="slds-truncate" title="Action Needed">Action Needed</div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="slds-hint-parent">
+                    <td data-label="Action Needed">
+                        <div class="slds-truncate slds-col " title="Quote">                
+                            <select class="slds-input" name="Quote" id="Quote">
+                                <option value="test"></option>
+                            </select>
+                        </div>
+                    </td>
+                </tr>
+                <tr class="slds-hint-parent">
+                    <td data-label="Action Needed">
+                        <div class="slds-truncate slds-col " title="RevisedQuote">                
+                            <input type="text" class="slds-input" name="RevisedQuote" placeholder="Revised Quote" id="RevisedQuote">
+                            </input>
+                        </div>
+                    </td>
+                </tr>
+                <tr class="slds-hint-parent">
+                    <td data-label="Action Needed">
+                        <div class="slds-truncate slds-col " title="RevisedQuote">                
+                            <input type="text" class="slds-input" name="NewQuote" placeholder="New Quote" id="NewQuote">
+                            </input>
+                        </div>
+                    </td>
+                </tr>
+                
+            </tbody>
+        </table>
+        
+        Business Case Summary
+        <lightning:textarea class="slds-size_1-of-3" name="BusinessCase" label="What would you like to accomplish? Include brands, dealers and system decription, etc" />
+        
+        
+        
+        
+        <lightning:radioGroup name="radioGroup"
+                              label="Select one of the following"
+                              options="{! v.options }"
+                              value="{! v.RadioOption }"
+                              type="radio"
+                              class="customRadioCls"/>
+        
+        
+        <label for="Segment">Select Segment</label><br/>
+        <select class="slds-input slds-size_1-of-6" name="Segment" id="Segment" >
+            <option value="test"></option>
+        </select>
+        <div>
+            <br/>
+        </div>
+        
+        Impact Summary
+        <div>
+            <br/>
+        </div>
+        <div class="slds-grid slds-wrap ">
+            <div class="slds-col slds-size_1-of-6">
+                <label for="impact">Impact Area</label>
+                <select class="slds-input" name="impact" id="impact" >
+                    <option value="test"></option>
+                </select>
+            </div>
+            <div class="slds-col slds-size_1-of-6">
+                <label for="impact">Time Frame</label>
+                <input  class="slds-input" type="date" name="frame" id="frame" />
+            </div>
+        </div>
+        
+        <lightning:textarea class="slds-size_1-of-3" name="ImpactSummary"/>
+        
+        Additional Comments
+        
+        <lightning:textarea class="slds-size_1-of-3" name="ImpactSummary"/>
+        
+        
+    </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</aura:component>

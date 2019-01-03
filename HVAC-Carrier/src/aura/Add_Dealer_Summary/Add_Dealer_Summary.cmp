@@ -1,0 +1,107 @@
+<aura:component implements="lightning:availableForFlowScreens" access="global" >
+    <!--Step 1-->
+    <aura:attribute name="distributorId" type="String" access="global"/>
+    <aura:attribute name="distributorNumber" type="String" access="global"/>
+    <!--Step 2-->
+    <aura:attribute name="dealerNumber" type="String" access="global"/>
+    <aura:attribute name="hvpNumber" type="String" access="global"/>
+    <aura:attribute name="dealerName" type="String" access="global"/>
+    <aura:attribute name="pricingDealer" type="String" access="global"/>
+    <aura:attribute name="dealerAddress" type="String" access="global"/>
+    <aura:attribute name="city" type="String" access="global"/>
+    <aura:attribute name="state" type="String" access="global"/>
+    <aura:attribute name="zip" type="String" access="global"/>
+    <!--Step 3-->
+    <aura:attribute name="comments" type="String" access="global"/>
+    <aura:attribute name="additionalNotes" type="String" access="global"/>
+    <!--Step 4-->
+    <aura:attribute name="inputStep4" type="K_Quote__c[]"/>
+    <!--Dealer Profile-->
+    <aura:attribute name="Amount" type="String" />
+    <aura:attribute name="Percent" type="String" />
+    <aura:attribute name="Comment" type="String" />
+    <aura:attribute name="BrandsSObjectCollection" type="Dealer_Profile__c[]" />
+    <!--PIE CHART DATA-->
+    <aura:attribute name="rnc" type="integer"/>
+    <aura:attribute name="rncMF" type="integer"/>
+    <aura:attribute name="aor" type="integer"/>
+    <aura:attribute name="com" type="integer"/>
+    <aura:attribute name="dls" type="integer"/>
+    <aura:attribute name="retail" type="integer"/>
+    <aura:attribute name="ot" type="integer"/>
+    <!--Competitive Sell Request-->
+    <aura:attribute name="inputList" type="Competitive_Sell__c[]"/>
+    <!---->
+    <div>
+        <br/>
+    </div>
+    <div class="slds-p-top_large">
+        <lightning:progressIndicator currentStep="4" type="path" variant="base">
+            <lightning:progressStep label="Distributor Info" value="1"/>
+            <lightning:progressStep label="Dealer Profile" value="2"/>
+            <lightning:progressStep label="Competitive Sell Request" value="3"/>
+            <lightning:progressStep label="Summary" value="4"/>
+        </lightning:progressIndicator> 
+        
+    </div>   
+    <div class="slds-p-top_small slds-p-left_small  slds-p-right_small">
+        <div class="slds-text-title_bold slds-p-bottom_large text">Summary</div>
+        <!--Step 1-->
+        <div class="slds-m-around--medium"> 
+            <c:Add_Dealer_step1_Summary
+                                        distributorId = "{!v.distributorId}"
+                                        distributorNumber = "{!v.distributorNumber}"
+                                        />
+        </div>
+        <!--Step 2-->
+        <div class="slds-m-around--medium"> 
+            <c:Add_Dealer_step2_Summary 
+                                        dealerNumber = "{!v.dealerNumber}"
+                                        hvpNumber = "{!v.hvpNumber}" 
+                                        dealerName = "{!v.dealerName}" 
+                                        dealerAddress = "{!v.dealerAddress}" 
+                                        city = "{!v.city}" 
+                                        state = "{!v.state}" 
+                                        zip = "{!v.zip}"
+                                        />
+        </div>
+        <!--Step 3-->
+        <div class="slds-m-around--medium"> 
+            <c:Add_Dealer_step3_Summary 
+                                        comments = "{!v.comments}"
+                                        additionalNotes = "{!v.additionalNotes}"
+                                        />
+        </div>
+        <!--Step 4-->
+        <div class="slds-m-around--medium"> 
+            <c:Add_Dealer_step4_Summary 
+                                        DisplayData = "{!v.inputStep4}"
+                                        />
+        </div>
+        <!--Dealer Profile-->
+        <div class="slds-m-around--medium"> 
+            <c:Add_Dealer_Dealer_Profile_Summary
+                                                 Amount = "{!v.Amount}"
+                                                 Percent= "{!v.Percent}"
+                                                 Comment = "{!v.Comment}" 
+                                                 BrandsSObjectCollection = "{!v.BrandsSObjectCollection}"
+                                                 rnc = "{!v.rnc}" 
+                                                 rncMF = "{!v.rncMF}" 
+                                                 aor = "{!v.aor}" 
+                                                 com = "{!v.com}" 
+                                                 dls = "{!v.dls}" 
+                                                 retail = "{!v.retail}" 
+                                                 ot = "{!v.ot}" 
+                                                 />
+        </div>
+        <!--Competitive Sell Request-->
+        <div class="slds-m-around--medium"> 
+            <!--Meter mais pequeno tipo 3 de 4-->
+            <c:Add_Dealer_Competitive_Sell_Request_Summary
+                                                           inputList = "{!v.inputList}"          
+                                                           />
+        </div>
+    </div>
+    
+    
+</aura:component>

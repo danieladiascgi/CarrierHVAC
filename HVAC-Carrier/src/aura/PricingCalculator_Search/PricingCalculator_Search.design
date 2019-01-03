@@ -1,4 +1,4 @@
 <design:component>
-	<design:attribute name="output_K_Quotes_List" label="Output K_Quotes" />
+	<design:attribute name="sObjectCalculatorKQuote" label="Output K_Quotes" />
     <design:attribute name="isFromCalc" label="From Calculator" />
 </design:component>

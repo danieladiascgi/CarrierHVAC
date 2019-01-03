@@ -1,119 +1,226 @@
-<aura:component  implements="lightning:availableForFlowScreens" access="global" controller="DealerAddData">
-    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
-    
-    <!--Rever nomes-->
-    
-    <aura:attribute name="isFromCalc" type="Boolean"/>
-    <aura:attribute name="out_K_Quote" type="K_Quote__c" default="{ 'sobjectType': 'K_Quote',
-                                                                  'Quote_number':'', 
-                                                                  'Quote_Reference_Number':'',
-                                                                  'Quote_Description':'',
-                                                                  'Effective_Date':'',
-                                                                  'Expired_Date':''
-                                                                  
-                                                                  }"/>
-    <aura:attribute name="in_K_Quote" type="K_Quote__c" default="{ 'sobjectType': 'K_Quote',
-                                                                  'Quote_number':'', 
-                                                                  'Quote_Reference_Number':'',
-                                                                  'Quote_Description':'',
-                                                                  'Effective_Date':'',
-                                                                  'Expired_Date':''
-                                                                  
-                                                                  }"/>
-    <aura:attribute name="output_K_Quotes_List" type="K_Quote__c[]"/>
-    <aura:attribute name="input_K_Quotes_List" type="K_Quote__c[]"/>
-    
+<aura:component implements="lightning:availableForFlowScreens" access="global" controller="DealerAddData">
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+    <aura:attribute name="CaseId" type="String" access="global" />
+
+    <aura:attribute name="isFromCalc" type="Boolean" default="false" />
+    <aura:attribute name="out_K_Quote" type="K_Quote__c" default="{ 'sobjectType': 'K_Quote__c',
+                                                                  'isSelected':'',
+                                                                  'Quote_number__c':'', 
+                                                                  'Quote_Reference_Number__c':'',
+                                                                  'Quote_Description__c':'',
+                                                                  'Effective_Date_Text__c':'',
+                                                                  'Expired_Date_Text__c':''
+                                                                  }" />
+
+    <aura:attribute name="output_K_Quotes_List" type="K_Quote__c[]" />
+    <aura:attribute name="input_K_Quotes_List" type="K_Quote__c[]" />
+    <aura:attribute name="DisplayData" type="K_Quote__c[]" />
+
+    <aura:attribute name="Output_kquote" type="K_Quote__c[]" />
+    <div>
+        <br/>
+    </div>
+    <div class="slds-p-top_large">
+        <lightning:progressIndicator currentStep="1" type="Path" hasError="false" variant="base">
+            <lightning:progressStep label="Distributor Info" value="1" />
+            <lightning:progressStep label="Dealer Profile" value="2" />
+            <lightning:progressStep label="Competitive Sell Request" value="3" />
+            <lightning:progressStep label="Summary" value="4" />
+        </lightning:progressIndicator>
+    </div>
+
     <div class="slds-p-top_small slds-p-left_small  slds-p-right_small">
-        <div class="slds-text-title_bold slds-p-bottom_large text">Distributor Info: Step 4</div>
-        <div class="slds-grid slds-wrap ">
-            <div class="slds-col slds-size_3-of-6 text1" >Add Dealer to the following quotes:</div>
-            <div class="slds-col slds-size_2-of-6">
-                
-                <div class="slds-form-element__control">
-                    <div class="slds-input-has-icon slds-input-has-icon--right">
-                        <lightning:buttonIcon iconName="utility:search" variant="bare" onclick="" alternativeText="Search" class="slds-input__icon" />
-                        <input type="search" class="slds-lookup__search-input slds-input" placeholder="Search for Quotes" />
-                    </div>
-                </div>
-                
-            </div>
-            
-            <div class="slds-p-top_large slds-align_absolute-center text2">
-                <article aura:id="article1" class="slds-card">
-                    <div class="slds-card__body">
-                        <div class="slds-grid slds-wrap">
-                            <aura:renderIf isTrue="{!empty(v.input_K_Quotes_List)}">
-                                <div class="slds-size_1-of-1">
-                                    <div class="slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_warning" role="alert">
-                                        <span class="slds-assistive-text">warning</span>
-                                        <span class="slds-icon_container slds-icon-utility-warning slds-m-right_x-small" title="Description of icon when needed">
-                                            <lightning:icon iconName="utility:warning" size="small"/>
-                                        </span>
-                                        <h2>
-                                            No data to display.
-                                        </h2>
+        <div class="slds-tabs--scoped">
+            <ul class="slds-tabs--scoped__nav " role="tablist">
+                <li aura:id="step1Id" class="slds-tabs--scoped__item slds-text-title--caps" title="Step One" role="presentation"><a class="slds-tabs--scoped__link" href="javascript:void(0);" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-1" id="tab-scoped-1__item">Step 1</a></li>
+                <li aura:id="step2Id" class="slds-tabs--scoped__item slds-text-title--caps" title="Step Two" role="presentation"><a class="slds-tabs--scoped__link" href="javascript:void(0);" role="tab" tabindex="0" aria-selected="true" aria-controls="tab-scoped-2" id="tab-scoped-2__item">Step 2</a></li>
+                <li aura:id="step3Id" class="slds-tabs--scoped__item slds-text-title--caps" title="Step Three" role="presentation"><a class="slds-tabs--scoped__link" href="javascript:void(0);" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3" id="tab-scoped-3__item">Step 3</a></li>
+                <li aura:id="step4Id" class="slds-tabs--scoped__item slds-text-title--caps slds-active" title="Step Four" role="presentation"><a class="slds-tabs--scoped__link" href="javascript:void(0);" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3" id="tab-scoped-3__item">Step 4</a></li>
+            </ul>
+            <div aura:id="stepFourDataId" id="tab-scoped-4" class="slds-tabs--scoped__content slds-show" role="tabpanel" aria-labelledby="tab-scoped-4__item">
+
+                <div class="slds-text-title_bold slds-p-bottom_large text">Distributor Info: Step 4</div>
+                <div class="slds-grid slds-wrap">
+
+                    <div class="slds-col slds-size_3-of-4">
+                        <aura:if isTrue="{!! v.isFromCalc}">
+                            <div class="slds-grid slds-wrap slds-gutters">
+                                <div class="slds-col slds-size_1-of-3 text1">Add Dealer to the following quotes:</div>
+                                <div class="slds-col slds-size_2-of-3">
+                                    <div class="slds-form-element__control">
+                                        <div class="slds-input-has-icon slds-input-has-icon--right">
+                                            <ui:inputText aura:id="search-phrase" class="slds-input" updateOn="keyup" keyup="{!c.displayFilteredData}" placeholder="Quote number or Reference" />
+                                        </div>
                                     </div>
                                 </div>
-                                <aura:set attribute="else">
-                                    <div class="slds-size_1-of-1">
-                                        <table class="slds-table slds-table_bordered slds-no-row-hover slds-table_cell-buffer table">
-                                            <thead>
-                                                <tr class="slds-text-title_caps text3">
-                                                    <th scope="col">
-                                                        <div class="slds-truncate"></div>
-                                                    </th>
-                                                    <th scope="col">
-                                                        <div class="slds-truncate">Quote Number</div>
-                                                    </th>
-                                                    <th scope="col">
-                                                        <div class="slds-truncate">Quote Reference Number</div>
-                                                    </th>
-                                                    <th scope="col">
-                                                        <div class="slds-truncate">Quote Description</div>
-                                                    </th>
-                                                    <th scope="col">
-                                                        <div class="slds-truncate">Eff Date</div>
-                                                    </th>
-                                                    <th scope="col">
-                                                        <div class="slds-truncate">Exp Date</div>
-                                                    </th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>                       
-                                                <aura:iteration items="{!v.input_K_Quotes_List}" var="K_Quotes_List" indexVar="i">
-                                                    <tr class="slds-hint-parent L_tr G_fontColor" id="{!i}">
-                                                        <td>
-                                                            <ui:inputCheckbox  aura:id="quotes" value="{!K_Quotes_List.isSelected}" click="{!c.onclick}" />
-                                                        </td>
-                                                        <td scope="row" data-label="Quote Number"> 
-                                                            <span class="slds-cell-wrap" >{!K_Quotes_List.Quote_number}</span>
-                                                        </td>
-                                                        <td scope="row" data-label="Quote Ref Number" >
-                                                            <span class="slds-cell-wrap" >{!K_Quotes_List.Quote_Reference_Number}</span>
-                                                        </td>
-                                                        <td scope="row" data-label="Quote Description">
-                                                            <span class="slds-cell-wrap " >{!K_Quotes_List.Quote_Description}</span>
-                                                        </td>
-                                                        <td scope="row" data-label="Eff Date">
-                                                            <span class="slds-cell-wrap " >{!K_Quotes_List.Effective_Date}</span>
-                                                        </td>
-                                                        <td scope="row" data-label="Exp Date">
-                                                            <span class="slds-cell-wrap " >{!K_Quotes_List.Expired_Date}</span>
-                                                        </td>
-                                                    </tr>
-                                                </aura:iteration>
-                                            </tbody>
-                                        </table>
+
+                                <div class="slds-col slds-size_1-of-1 slds-p-top_large text2">
+                                    <div class="slds-grid slds-wrap">
+                                        <aura:renderIf isTrue="{!empty(v.DisplayData)}">
+                                            <div class="slds-size_1-of-1">
+                                                <div class="slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_warning" role="alert">
+                                                    <span class="slds-assistive-text">warning</span>
+                                                    <span class="slds-icon_container slds-icon-utility-warning slds-m-right_x-small" title="Description of icon when needed">
+                                                        <lightning:icon iconName="utility:warning" size="small"/>
+                                                    </span>
+                                                    <h2>
+                                                        No data to display.
+                                                    </h2>
+                                                </div>
+                                            </div>
+                                            <aura:set attribute="else">
+                                                <div class="slds-size_1-of-1">
+                                                    <table class="slds-table slds-table_bordered slds-no-row-hover slds-table_cell-buffer table">
+                                                        <thead>
+                                                            <tr class="slds-text-title_caps text3">
+                                                                <th scope="col">
+                                                                    <div class="slds-truncate"></div>
+                                                                </th>
+                                                                <th scope="col">
+                                                                    <div class="slds-truncate">Quote Number</div>
+                                                                </th>
+                                                                <th scope="col">
+                                                                    <div class="slds-truncate">Quote Reference Number</div>
+                                                                </th>
+                                                                <th scope="col">
+                                                                    <div class="slds-truncate">Quote Description</div>
+                                                                </th>
+                                                                <th scope="col">
+                                                                    <div class="slds-truncate">Eff Date</div>
+                                                                </th>
+                                                                <th scope="col">
+                                                                    <div class="slds-truncate">Exp Date</div>
+                                                                </th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <aura:iteration items="{!v.DisplayData}" var="K_Quotes_List" indexVar="i">
+                                                                <tr class="slds-hint-parent L_tr G_fontColor" id="{!i}">
+                                                                    <td>
+                                                                        <ui:inputCheckbox aura:id="quotes" value="{!K_Quotes_List.isSelected}" click="{!c.onclick}" />
+                                                                    </td>
+                                                                    <td scope="row" data-label="Quote Number">
+                                                                        <span class="slds-cell-wrap">{!K_Quotes_List.Quote_number}</span>
+                                                                    </td>
+                                                                    <td scope="row" data-label="Quote Ref Number">
+                                                                        <span class="slds-cell-wrap">{!K_Quotes_List.Quote_Reference_Number}</span>
+                                                                    </td>
+                                                                    <td scope="row" data-label="Quote Description">
+                                                                        <span class="slds-cell-wrap ">{!K_Quotes_List.Quote_Description}</span>
+                                                                    </td>
+                                                                    <td scope="row" data-label="Eff Date">
+                                                                        <span class="slds-cell-wrap ">{!K_Quotes_List.Effective_Date}</span>
+                                                                    </td>
+                                                                    <td scope="row" data-label="Exp Date">
+                                                                        <span class="slds-cell-wrap ">{!K_Quotes_List.Expired_Date}</span>
+                                                                    </td>
+                                                                </tr>
+                                                            </aura:iteration>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </aura:set>
+                                        </aura:renderIf>
                                     </div>
-                                </aura:set>
-                            </aura:renderIf>
-                        </div>
+                                </div>
+                            </div>
+                        </aura:if>
+                        <aura:if isTrue="{! v.isFromCalc}">
+                            <div class="slds-grid slds-wrap slds-gutters">
+                                <div class="slds-col slds-size_1-of-3 text1">Add Dealer to the following quotes:</div>
+                                <div class="slds-col slds-size_2-of-3">
+
+                                    <div class="slds-form-element__control">
+                                        <div class="slds-input-has-icon slds-input-has-icon--right">
+                                            <ui:inputText aura:id="search-phrase" class="slds-input" updateOn="keyup" keyup="{!c.displayFilteredDataCalc}" placeholder="Search Table" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="slds-col slds-size_1-of-1 slds-p-top_large text2">
+                                    <article aura:id="article1" class="slds-card">
+                                        <div class="slds-card__body">
+                                            <div class="slds-grid slds-wrap">
+                                                <aura:renderIf isTrue="{!empty(v.DisplayData)}">
+                                                    <div class="slds-size_1-of-1">
+                                                        <div class="slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_warning" role="alert">
+                                                            <span class="slds-assistive-text">warning</span>
+                                                            <span class="slds-icon_container slds-icon-utility-warning slds-m-right_x-small" title="Description of icon when needed">
+                                                                <lightning:icon iconName="utility:warning" size="small"/>
+                                                            </span>
+                                                            <h2>
+                                                                No data to display.
+                                                            </h2>
+                                                        </div>
+                                                    </div>
+                                                    <aura:set attribute="else">
+                                                        <div class="slds-size_1-of-1">
+                                                            <table class="slds-table slds-table_bordered slds-no-row-hover slds-table_cell-buffer table">
+                                                                <thead>
+                                                                    <tr class="slds-text-title_caps text3">
+                                                                        <th scope="col">
+                                                                            <div class="slds-truncate"></div>
+                                                                        </th>
+                                                                        <th scope="col">
+                                                                            <div class="slds-truncate">Quote Number</div>
+                                                                        </th>
+                                                                        <th scope="col">
+                                                                            <div class="slds-truncate">Quote Reference Number</div>
+                                                                        </th>
+                                                                        <th scope="col">
+                                                                            <div class="slds-truncate">Quote Description</div>
+                                                                        </th>
+                                                                        <th scope="col">
+                                                                            <div class="slds-truncate">Eff Date</div>
+                                                                        </th>
+                                                                        <th scope="col">
+                                                                            <div class="slds-truncate">Exp Date</div>
+                                                                        </th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <aura:iteration items="{!v.DisplayData}" var="K_Quotes_List" indexVar="i">
+                                                                        <tr class="slds-hint-parent L_tr G_fontColor" id="{!i}">
+                                                                            <td>
+                                                                                <ui:inputCheckbox aura:id="quotes" value="{!K_Quotes_List.isSelected}" click="{!c.onclickCalc}" />
+                                                                            </td>
+                                                                            <td scope="row" data-label="Quote Number">
+                                                                                <span class="slds-cell-wrap">{!K_Quotes_List.Quote_number__c}</span>
+                                                                            </td>
+                                                                            <td scope="row" data-label="Quote Ref Number">
+                                                                                <span class="slds-cell-wrap">{!K_Quotes_List.Quote_Reference_Number__c}</span>
+                                                                            </td>
+                                                                            <td scope="row" data-label="Quote Description">
+                                                                                <span class="slds-cell-wrap ">{!K_Quotes_List.Quote_Description__c}</span>
+                                                                            </td>
+                                                                            <td scope="row" data-label="Eff Date">
+                                                                                <span class="slds-cell-wrap ">{!K_Quotes_List.Effective_Date_Text__c}</span>
+                                                                            </td>
+                                                                            <td scope="row" data-label="Exp Date">
+                                                                                <span class="slds-cell-wrap ">{!K_Quotes_List.Expired_Date_Text__c}</span>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </aura:iteration>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </aura:set>
+                                                </aura:renderIf>
+                                            </div>
+                                        </div>
+                                    </article>
+                                </div>
+                            </div>
+
+                        </aura:if>
+                        <!--Dealer current quotes -->
                     </div>
-                </article>
+                    <div class="slds-col slds-size_1-of-4 slds-p-left_small">
+                        <c:Add_Dealer_Current_Quotes InputList="{!v.Output_kquote}" />
+                    </div>
+                </div>
             </div>
-            <div class="slds-col slds-size_1-of-1 " >
-            </div>
-            
         </div>
     </div>
 </aura:component>

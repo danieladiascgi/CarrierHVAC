@@ -5,11 +5,21 @@
 .THIS ::txtarea{
     font-size: 25px !important;
 }
-
-/*
-.THIS .btn{
-    color:#2574a9;
+.THIS .slds-tabs--scoped__item {
+    width: 100% !important;
+    text-align: center!important;
+    
 }
-.THIS .btn1{
-    background-color:#2574a9;
-}*/
+
+.THIS ul {
+    margin-left: 0 !important;
+    padding-left: 0 !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    
+}
+.THIS .slds-progress__item.slds-is-active .slds-progress__marker{
+    border-color: rgba(146, 182, 84, 1) !important;
+    background: rgba(146, 182, 84, 1) !important;
+    box-shadow: rgba(146, 182, 84, 1) 0 0 0 4px !important;
+}

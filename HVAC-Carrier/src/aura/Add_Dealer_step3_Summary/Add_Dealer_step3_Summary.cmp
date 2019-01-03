@@ -1,0 +1,25 @@
+<aura:component >
+    <aura:attribute name="comments" type="String" access="global"/>
+    <aura:attribute name="additionalNotes" type="String" access="global"/>
+    
+    <div class="slds-m-around--medium">  
+        <div class="slds-text-title_bold slds-p-bottom_large text">Distributor Info: Step 3</div>
+        <div class="slds-grid slds-wrap">
+            <div class="slds-col slds-size_1-of-6 text2">
+                <span>Comments</span>
+            </div>
+            <div class="slds-col slds-size_5-of-6 "></div>
+            <div class="slds-col slds-size_1-of-1 "><br/></div>
+            <div class="slds-col slds-size_1-of-6 ">{!v.comments}</div>
+            <div class="slds-col slds-size_5-of-6 "></div>
+            <div class="slds-col slds-size_1-of-6 text2">
+                <span>Additional Issues</span>
+            </div>
+            <div class="slds-col slds-size_5-of-6 "></div>
+            <div class="slds-col slds-size_1-of-1 "><br/></div>
+            <div class="slds-col slds-size_1-of-6">{!v.additionalNotes}</div>
+            <div class="slds-col slds-size_5-of-6 "></div>
+        </div>
+    </div>
+    
+</aura:component>

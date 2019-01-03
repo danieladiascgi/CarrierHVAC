@@ -1,0 +1,47 @@
+<aura:component >
+    
+    <aura:registerEvent name="PS_AddingCompetitorEvent" type="c:PS_AddingCompetitorEvent"/>
+    
+    <aura:attribute name="Name" 	type="String" />
+    <aura:attribute name="Annual" 	type="String" />
+    <aura:attribute name="Aor" 		type="String" />
+    <aura:attribute name="RNC" 		type="String" />
+    <aura:attribute name="Hard" 	type="String" />
+    <aura:attribute name="Attached" type="String" />
+    
+    
+    <div class="slds-grid slds-wrap ">
+        <div class="slds-col slds-size_2-of-6">
+            <label for="Name">Name</label>
+            <input type="text" class="slds-input" name="Name"  id="Name"/>
+        </div>
+        <div class="slds-col slds-size_4-of-6"/>
+        
+        <div class="slds-col slds-size_1-of-6">
+            <label for="Annual">Annual Sales</label>
+            <input type="text" class="slds-input" name="Annual"   id="Annual"/>
+        </div>
+        <div class="slds-col slds-size_1-of-6">
+            <label for="Aor">AOR</label>
+            <input type="text" class="slds-input" name="Aor"   id="Aor"/>
+        </div>
+        <div class="slds-col slds-size_1-of-6">
+            <label for="RNC">RNC</label>
+            <input type="text" class="slds-input" name="RNC"   id="RNC"/>
+        </div>
+        <div class="slds-col slds-size_3-of-6"/>
+        <div class="slds-col slds-size_1-of-6">
+            <label for="Hard">Hard</label>
+            <input type="text" class="slds-input" name="Hard"  id="Hard"/>
+        </div>
+        <div class="slds-col slds-size_1-of-6">
+            <label for="Attached">Attached</label>
+            <input type="text" class="slds-input" name="Attached"  id="Attached"/>
+        </div>
+    </div>
+    
+    <lightning:button onclick="{!c.save}" name="Save" label="Save" />
+    
+    
+    
+</aura:component>

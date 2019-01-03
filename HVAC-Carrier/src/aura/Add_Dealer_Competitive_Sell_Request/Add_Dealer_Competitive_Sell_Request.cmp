@@ -1,0 +1,124 @@
+<aura:component  implements="lightning:availableForFlowScreens" access="global" controller="GetBrandValue" >
+    
+    
+    <aura:handler name="render" value="{!this}" action="{!c.onRender}"/>
+
+    <aura:handler name="init" action="{!c.init}" value="{!this}" />
+    <aura:attribute name="TempList" type="List" />
+    <aura:attribute name="canRender" type="boolean" default="false"/>
+    <aura:attribute name="modelList" type="List"/>
+    <aura:attribute name="modelListSelected" type="List"/>
+    <aura:attribute name="OutputObject" type="Competitive_Sell__c" default="{ 'sobjectType': 'Competitive_Sell__c',
+                                                                            'Your_Model__c':'', 
+                                                                            'Requested_Sell__c':'',
+                                                                            'Competitors_Model__c':'',
+                                                                            'Competitors_Sell__c':'',
+                                                                            'Buy_1__c':'',
+                                                                            'DGM_1__c':'',
+                                                                            'Buy_2__c':'',
+                                                                            'DGM_2__c':''
+                                                                            }"/>
+    <aura:attribute name="OutputList" type="Competitive_Sell__c[]"/>
+    <div>
+        <br/>
+    </div>
+    <div class="slds-p-top_large">
+        <lightning:progressIndicator currentStep="3" type="path" hasError="false" variant="base">
+            <lightning:progressStep label="Distributor Info" value="1"/>
+            <lightning:progressStep label="Dealer Profile" value="2"/>
+            <lightning:progressStep label="Competitive Sell Request" value="3"/>
+            <lightning:progressStep label="Summary" value="4"/>
+        </lightning:progressIndicator>
+        <br/>
+        <br/>
+    </div>
+    <div class="slds-wrap slds-grid">
+        <div class="slds-size_1-of-1">
+            <div class="slds-text-title_bold slds-p-bottom_large slds-p-left_small text">
+                Competitive Sell Request
+            </div>
+        </div>
+        <div class="slds-size_1-of-1">
+            <table class="slds-table slds-table_bordered slds-no-row-hover slds-table_cell-buffer table">
+                <thead>
+                    <tr class="slds-text-title_caps text3">
+                    	<th scope="col">
+                            <div class="slds-truncate"></div>
+                        </th>
+                        <th scope="col">
+                            <div class="slds-truncate">Your Model</div>
+                        </th>
+                        <th scope="col">
+                            <div class="slds-truncate">Requested Sell</div>
+                        </th>
+                        <th scope="col">
+                            <div class="slds-truncate">Competitive Model</div>
+                        </th>
+                        <th scope="col">
+                            <div class="slds-truncate">Competitive Sell</div>
+                        </th>
+                        <th scope="col">
+                            <div class="slds-truncate">Buy 1</div>
+                        </th>
+                        <th scope="col">
+                            <div class="slds-truncate">DGM 1</div>
+                        </th>
+                        <th scope="col">
+                            <div class="slds-truncate">Buy 2</div>
+                        </th>
+                        <th scope="col">
+                            <div class="slds-truncate">DGM 2</div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>     
+                    <aura:iteration items="{!v.TempList}" var="level" indexVar="idx">
+                        <tr class="slds-hint-parent L_tr G_fontColor" id="{!idx}">
+                        	<td scope="row" data-label="delete">
+                                <lightning:button  name = "{!idx}" variant="error"  iconName="utility:delete"  onclick="{! c.RemoveBrand }" />
+                            </td>
+                            <td class="noPad" scope="row" data-label="Your Model">
+                                <input class="slds-input" name="{!idx}" type="String" list="acctlist" id="{!idx+'acctlistInput'}" onchange="{!c.onSingleSelectChange}"/>
+                                <datalist id="acctlist">
+                                    <aura:iteration items="{!v.modelList}" var="model" >
+                                        <option text="{!model}" value="{!model.id}"/>
+                                    </aura:iteration>
+                                </datalist>
+                                
+                                
+                                <!--lightning:select class="single" name="{!idx}"  onchange="{!c.onSingleSelectChange}">
+                                    <aura:iteration items="{!v.modelList}" var="model" >
+                                        <option text="{!model}" value="{!model.id}"/>
+                                    </aura:iteration>
+                                </lightning:select-->
+                            
+                            </td>
+                            <td scope="row" data-label="Requested Sell">
+                                <input id="{!idx+'requestSell'}"  type="number" class="slds-input" formatter="currency"  onchange="{!c.redesignThis}"/>
+                            </td>
+                            <td scope="row" data-label="Competitive Model">
+                                <input id="{!idx+'compMod'}"  type="String" class="slds-input"  onchange="{!c.redesignThis}"/>
+                            </td>
+                            <td scope="row" data-label="Competitive Sell" >
+                                <input id="{!idx+'compSell'}" type="number" class="slds-input"  formatter="currency" onchange="{!c.redesignThis}"/>
+                            </td>
+                            <td scope="row" data-label="Buy 1">
+                                <input id="{!idx+'buy1'}" type="String" class="slds-input"  onchange="{!c.redesignThis}"/>
+                            </td>
+                            <td scope="row" data-label="DGM 1">
+                                <input id="{!idx+'dgm1'}" type="String" class="slds-input"  onchange="{!c.redesignThis}"/>
+                            </td>
+                            <td scope="row" data-label="Buy 2">
+                                <input id="{!idx+'buy2'}" type="String" class="slds-input"  onchange="{!c.redesignThis}"/>
+                            </td>
+                            <td scope="row" data-label="DGM 2">
+                                <input id="{!idx+'dgm2'}" type="String"  class="slds-input"  onchange="{!c.redesignThis}"/>
+                            </td>
+                        </tr>
+                    </aura:iteration>
+                </tbody>
+            </table>
+        </div>   
+    </div>
+    <lightning:button class="slds-m-top_medium" onclick="{!c.add}" name="ADD MODEL" label="ADD MODEL" />
+</aura:component>
